@@ -18,9 +18,9 @@ public class MainController {
 		return "main";
 	}
 	
-	@RequestMapping(value = { "/about" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/help" }, method = RequestMethod.GET)
 	public String aboutPage(Model model) {
-		return "about";
+		return "help";
 	}
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
