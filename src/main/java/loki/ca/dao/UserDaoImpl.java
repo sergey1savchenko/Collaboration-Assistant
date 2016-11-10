@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
 
 	private static String SQL_SELECT_USER = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, u.is_active, r.id AS r_id, r.role "
 			+ "FROM users AS u INNER JOIN user_roles AS ur ON u.id=ur.user_id INNER JOIN roles AS r ON ur.role_id=r.id";
-	private static String SQL_SELECT_USER_BY_ID = SQL_SELECT_USER + " WHERE id=?";
+	private static String SQL_SELECT_USER_BY_ID = SQL_SELECT_USER + " WHERE u.id=?";
 	private static String SQL_SELECT_USER_BY_EMAIL = SQL_SELECT_USER + " WHERE email=?";
 	private static String SQL_INSERT_USER = "INSERT INTO users (email, password, first_name, second_name, last_name, is_active) VALUES (?, ?, ?, ?, ?, ?)";
 	private static String SQL_UPDATE_USER = "UPDATE users SET email=?, password=?, first_name=?, second_name=?, last_name=?, is_active=? WHERE id=?";
@@ -93,6 +93,7 @@ public class UserDaoImpl implements UserDao {
 			public int getBatchSize() {
 				return user.getRoles().size();
 			}
+			
 		});
 	}
 

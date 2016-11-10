@@ -6,6 +6,12 @@ package loki.ca.model;
 public class University {
 
 	private int id;
+	
+	public University() {}
+	
+	public University(int id) {
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;

@@ -7,6 +7,10 @@ public class Role {
 	private String name;
 	
 	public Role() {}
+	
+	public Role(int id) {
+		this.id = id;
+	}
 
 	public Role(String name) {
 		this.name = name;
@@ -53,4 +57,8 @@ public class Role {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + "]";
+	}
 }

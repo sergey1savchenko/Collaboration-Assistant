@@ -23,8 +23,8 @@ public class AttachmentDaoImpl implements AttachmentDao {
 
 	private static String SQL_SELECT_ATTACHMENT = "SELECT id, text, attachment_link, mime_type FROM attachments";
 	private static String SQL_SELECT_ATTACHMENT_BY_ID = SQL_SELECT_ATTACHMENT + " WHERE id=?";
-	private static String SQL_ADD_ATTACHMENT_TO_PROJECT = "INSERT INTO attachments (text, attachment_link, mime_type, project_id) VALEUS (?, ?, ?, ?)";
-	private static String SQL_ADD_ATTACHMENT_TO_TEAM = "INSERT INTO attachments (text, attachment_link, mime_type, team_id) VALEUS (?, ?, ?, ?)";
+	private static String SQL_ADD_ATTACHMENT_TO_PROJECT = "INSERT INTO attachments (text, attachment_link, mime_type, project_id) VALUES (?, ?, ?, ?)";
+	private static String SQL_ADD_ATTACHMENT_TO_TEAM = "INSERT INTO attachments (text, attachment_link, mime_type, team_id) VALUES (?, ?, ?, ?)";
 	private static String SQL_UPDATE_ATTACHMENT = "UPDATE attachments SET text=?, attachment_link=?, mime_type=? WHERE id=?";
 	private static String SQL_DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 	private static String SQL_SELECT_TEAM_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
@@ -34,7 +34,8 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	private JdbcTemplate jdbcTemplate;
 
 	public Attachment getAttachmentById(int id) {
-		return jdbcTemplate.queryForObject(SQL_SELECT_ATTACHMENT_BY_ID, new AttachmentRowMapper(), id);
+		List<Attachment> att = jdbcTemplate.query(SQL_SELECT_ATTACHMENT_BY_ID, new AttachmentRowMapper(), id);
+		return att.isEmpty() ? null : att.get(0);
 	}
 
 	public void addAttachmentToProject(final Attachment attachment, final Project project) {

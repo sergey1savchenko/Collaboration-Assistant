@@ -7,6 +7,10 @@ public class Project {
 
 	private int id;
 
+	public Project(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

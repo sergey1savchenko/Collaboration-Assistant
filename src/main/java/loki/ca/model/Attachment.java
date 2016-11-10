@@ -92,4 +92,9 @@ public class Attachment {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Attachment [id=" + id + ", text=" + text + ", link=" + link + ", mimeType=" + mimeType + "]";
+	}
+	
 }

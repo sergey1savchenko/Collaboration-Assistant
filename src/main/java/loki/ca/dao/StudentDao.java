@@ -1,6 +1,12 @@
 package loki.ca.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import loki.ca.model.Project;
 import loki.ca.model.Student;
+import loki.ca.model.StudentProjectStatus;
+import loki.ca.model.StudentProjectStatusType;
 
 public interface StudentDao {
 
@@ -12,6 +18,8 @@ public interface StudentDao {
 	
 	void updateStudent(Student student);
 	
-	//List<Student> getStudentsByProject(Project project);
+	Map<Student, StudentProjectStatusType> getStudentsByProject(Project project);
+	
+	List<StudentProjectStatus> getStudentProjectStatuses(Student student, Project project);
 
 }

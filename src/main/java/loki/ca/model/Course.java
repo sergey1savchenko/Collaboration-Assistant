@@ -7,6 +7,10 @@ public class Course {
 	private String title;
 	
 	public Course() {}
+	
+	public Course(int id) {
+		this.id = id;
+	}
 
 	public Course(String title) {
 		this.title = title;

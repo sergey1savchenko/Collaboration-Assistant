@@ -83,5 +83,10 @@ public class MarkType {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "MarkType [id=" + id + ", title=" + title + ", hasText=" + hasText + ", hasInt=" + hasInt + "]";
+	}
 	
 }

@@ -90,6 +90,17 @@ public class Student extends User {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + getId() + ", email=" + getEmail() + ", password=" + getPassword()
+				+ ", firstName=" + getFirstName() + ", secondName=" + getSecondName() + ", lastName="
+				+ getLastName() + ", isActive=" + isActive() + ", roles=" + getRoles() + ", appFormId=" 
+				+ appFormId + ", course=" + course + ", university=" + university + ", photoSrc="
+				+ photoSrc + "]";
+	}
+	
+	
 	
 	
 	
