@@ -9,28 +9,28 @@
 	<http use-expressions="true">
 		<intercept-url pattern="/login" access="isAnonymous()" />
 		<intercept-url pattern="/main" access="isAuthenticated()" />
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/curator/**" access="hasRole('ROLE_CURATOR')" />
-		<intercept-url pattern="/hr/**" access="hasRole('ROLE_HR')" />
-		<intercept-url pattern="/student/**" access="hasRole('ROLE_STUDENT')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/curator/**" access="hasRole('CURATOR')" />
+		<intercept-url pattern="/hr/**" access="hasRole('HR')" />
+		<intercept-url pattern="/student/**" access="hasRole('STUDENT')" />
 
 		<form-login login-page='/login' login-processing-url="/j_spring_security_check"
-			default-target-url="/main" always-use-default-target="false"
+			default-target-url="/projects" always-use-default-target="false"
 			authentication-failure-url="/login?error=true" username-parameter="username"
 			password-parameter="password" />
 
-		<logout logout-url="/logout" logout-success-url="/main"
+		<logout logout-url="/logout" logout-success-url="/login?logout"
 			delete-cookies="JSESSIONID" invalidate-session="true" />
 	</http>
 
 	<authentication-manager>
+		<!-- authentication from database -->
 		<authentication-provider>
-			<user-service>
-				<user name="admin" password="12345" authorities="ROLE_ADMIN" />
-				<user name="curator" password="12345" authorities="ROLE_CURATOR" />
-				<user name="hr" password="12345" authorities="ROLE_HR" />
-				<user name="student" password="12345" authorities="ROLE_STUDENT" />
-			</user-service>
+			<password-encoder hash="bcrypt" />
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select users.email as username, users.password, 1 as enabled from 
+users where users.email=?"
+				authorities-by-username-query="select users.email as username, roles.role from ((users INNER JOIN user_roles ON users.id = user_roles.user_id) INNER JOIN roles ON user_roles.role_id = roles.id) WHERE users.email = ?" />
 		</authentication-provider>
 	</authentication-manager>
 
