@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 
+.springBeans
 *.pydevproject
 .project
 .metadata
@@ -12,6 +13,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
+database.properties
 .classpath
 .settings/
 .loadpath
