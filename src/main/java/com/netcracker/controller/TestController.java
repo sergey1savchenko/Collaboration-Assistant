@@ -72,7 +72,7 @@ public class TestController {
 			markTypeDao.add(mt);
 			System.out.println("MarkType id generated: " + mt.getId());
 			System.out.println("MarkType retrieved by id: " + markTypeDao.getById(mt.getId()));
-			markTypeDao.allow(mt, project, MarkTypeScope.MEETINGS);
+			markTypeDao.allow(mt, project, 0);
 			System.out.println("Allowed for project:");
 			for (MarkType m : markTypeDao.getAllowed(project, MarkTypeScope.MEETINGS))
 				System.out.println(m);

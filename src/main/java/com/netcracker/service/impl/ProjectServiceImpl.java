@@ -9,15 +9,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.dao.ProjectDAO;
+import com.netcracker.model.MarkType;
 import com.netcracker.model.Project;
+import com.netcracker.service.MarkTypeService;
 import com.netcracker.service.ProjectService;
 
 @Service
-@Transactional (readOnly = true)
+@Transactional(readOnly = true)
 public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private ProjectDAO projectDAO;
+
+	@Autowired
+	private MarkTypeService markTypeService;
 
 	@Override
 	public List<Project> getAll() {
@@ -29,10 +34,24 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.getById(id);
 	}
 
+	@Override
+	public Project getByTitle(String title) {
+		return projectDAO.getByTitle(title);
+	}
+
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void add(Project project) throws SQLException {
 		projectDAO.add(project);
+	}
+
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	@Override
+	public void addByTemplate(Project projectNew, Project projectTemplate) throws SQLException {
+		projectDAO.add(projectNew);
+		List<MarkType> mt = markTypeService.getById(projectTemplate.getId());
+		for (MarkType mtype : mt)
+			markTypeService.allow(mtype, projectDAO.getByTitle(projectNew.getTitle()), mtype.getScope());
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)

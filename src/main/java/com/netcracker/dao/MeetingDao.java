@@ -1,9 +1,6 @@
 package com.netcracker.dao;
 
 import com.netcracker.model.Meeting;
-import com.netcracker.model.Project;
-import com.netcracker.model.Team;
-
 import java.sql.SQLException;
 import java.util.List;
 

@@ -10,8 +10,12 @@ public interface ProjectService {
 	List<Project> getAll();
 
 	Project getById(int id);
+	
+	Project getByTitle(String title);
 
 	void add(Project project) throws SQLException;
+	
+	void addByTemplate(Project projectNew, Project projectTemplate) throws SQLException;
 
 	void update(Project project) throws SQLException;
 

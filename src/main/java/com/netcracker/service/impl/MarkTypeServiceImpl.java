@@ -21,7 +21,7 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 	private MarkTypeDAO markTypeDAO;
 
 	@Override
-	public MarkType getById(int id) {
+	public List<MarkType> getById(int id) {
 		return markTypeDAO.getById(id);
 	}
 
@@ -45,7 +45,7 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public void allow(MarkType markType, Project project, MarkTypeScope scope) {
+	public void allow(MarkType markType, Project project, int scope) {
 		markTypeDAO.allow(markType, project, scope);
 	}
 

@@ -10,6 +10,8 @@ public interface ProjectDAO {
 	List<Project> getAll();
 
 	Project getById(int id);
+	
+	Project getByTitle(String title);
 
 	void add(Project project) throws SQLException;
 

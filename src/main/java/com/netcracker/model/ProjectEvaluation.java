@@ -1,11 +1,5 @@
 package com.netcracker.model;
 
-
-import org.springframework.jdbc.core.RowMapper;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  * Created by Oleksandr on 09.11.2016.
  */

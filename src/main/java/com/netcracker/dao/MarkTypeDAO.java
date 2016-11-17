@@ -8,7 +8,7 @@ import com.netcracker.model.Project;
 
 public interface MarkTypeDAO {
 
-	MarkType getById(int id);
+	List<MarkType> getById(int id);
 	
 	void add(MarkType markType);
 	
@@ -16,7 +16,7 @@ public interface MarkTypeDAO {
 	
 	void delete(MarkType markType);
 	
-	void allow(MarkType markType, Project project, MarkTypeScope scope);
+	void allow(MarkType markType, Project project, int scope);
 	
 	void disallow(MarkType markType, Project project, MarkTypeScope scope);
 	

@@ -1,5 +1,6 @@
 package com.netcracker.controller;
 
+import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ public class ProjectController {
 	private ProjectService projectService;
 
 	@RequestMapping(value = { "/", "/projects" }, method = RequestMethod.GET)
-	public String projectsPage(Model model) {
+	public String projectsPage(Model model) throws SQLException {
 		model.addAttribute("projects", projectService.getAll());
 		return "projects";
 	}
