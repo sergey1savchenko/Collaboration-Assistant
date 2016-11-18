@@ -23,6 +23,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	private static final String SQL_SELECT_ALL_PROJECTS = "SELECT projects.id, projects.title as project_title, projects.description, projects.start_date, projects.end_date, projects.university_id, universities.title as university_title FROM (projects INNER JOIN universities ON projects.university_id = universities.id)";
 	private static final String SQL_SELECT_PROJECT_BY_ID = SQL_SELECT_ALL_PROJECTS + " WHERE projects.id = ?";
+	private static final String SQL_SELECT_PROJECT_BY_TITLE = SQL_SELECT_ALL_PROJECTS + " WHERE projects.title = ?";
 	private static final String SQL_INSERT_PROJECT = "INSERT INTO projects (title, description, start_date, end_date, university_id) VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE_PROJECT = "UPDATE projects SET title = ?, description = ?, start_date = ?, end_date = ?, university_id = ? WHERE projects.id = ?";
 	private static final String SQL_DELETE_PROJECT = "DELETE FROM projects WHERE projects.id = ?";
@@ -39,6 +40,11 @@ public class ProjectDaoImpl implements ProjectDao {
 	public Project getById(int id) {
 		List<Project> projects = jdbcTemplate.query(SQL_SELECT_PROJECT_BY_ID, new ProjectMapper(), id);
 		return projects.isEmpty()? null: projects.get(0);
+	}
+	
+	@Override
+	public Project getByTitle(String title) {
+		return jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TITLE, new ProjectMapper(), title);
 	}
 
 	@Override
@@ -59,7 +65,7 @@ public class ProjectDaoImpl implements ProjectDao {
 		}, keyHolder);
 		project.setId(keyHolder.getKey().intValue());
 	}
-
+	
 	@Override
 	public void update(Project project) {
 		jdbcTemplate.update(SQL_UPDATE_PROJECT, project.getTitle(), project.getDescription(), project.getStartDate(),

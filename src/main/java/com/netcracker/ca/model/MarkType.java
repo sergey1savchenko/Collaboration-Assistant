@@ -9,6 +9,8 @@ public class MarkType {
 	private boolean hasText;
 
 	private boolean hasInt;
+	
+	private MarkTypeScope scope;
 
 	public MarkType() {
 	}
@@ -50,6 +52,14 @@ public class MarkType {
 	public void setHasInt(boolean hasInt) {
 		this.hasInt = hasInt;
 	}
+	
+	public MarkTypeScope getScope() {
+		return scope;
+	}
+
+	public void setScope(MarkTypeScope scope) {
+		this.scope = scope;
+	}
 
 	@Override
 	public int hashCode() {
@@ -75,6 +85,7 @@ public class MarkType {
 
 	@Override
 	public String toString() {
-		return "MarkType [id=" + id + ", title=" + title + ", hasText=" + hasText + ", hasInt=" + hasInt + "]";
+		return "MarkType [id=" + id + ", title=" + title + ", hasText=" + hasText + ", hasInt=" + hasInt + ", scope="
+				+ scope + "]";
 	}
 }

@@ -9,6 +9,8 @@ public interface ProjectDao {
 	List<Project> getAll();
 
 	Project getById(int id);
+	
+	Project getByTitle(String title);
 
 	void add(Project project);
 

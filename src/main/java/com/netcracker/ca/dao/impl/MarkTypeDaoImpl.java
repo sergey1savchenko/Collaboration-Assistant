@@ -21,7 +21,7 @@ import com.netcracker.ca.model.MarkTypeScope;
 @Repository
 public class MarkTypeDaoImpl implements MarkTypeDao {
 
-	private static String SQL_SELECT_MARK_TYPE_BY_ID = "SELECT * FROM marktypes WHERE id=?";
+	private static String SQL_SELECT_MARK_TYPE_BY_ID = "SELECT marktypes.id, marktypes.title, marktypes.has_text, marktypes.has_int, allow_marktypes.scope FROM marktypes INNER JOIN allow_marktypes ON marktypes.id = allow_marktypes.marktype_id WHERE allow_marktypes.project_id=?";
 	private static String SQL_INSERT_MARK_TYPE = "INSERT INTO marktypes (title, has_text, has_int) VALUES (?, ?, ?)";
 	private static String SQL_UPDATE_MARK_TYPE = "UPDATE marktypes SET title=?, has_text=?, has_int=? WHERE id=?";
 	private static String SQL_DELETE_MARK_TYPE = "DELETE FROM marktypes WHERE id=?";
@@ -83,6 +83,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 			markType.setTitle(rs.getString("title"));
 			markType.setHasText(rs.getBoolean("has_text"));
 			markType.setHasInt(rs.getBoolean("has_int"));
+			markType.setScope(MarkTypeScope.values()[rs.getInt("scope")]);
 			return markType;
 		}
 	}
