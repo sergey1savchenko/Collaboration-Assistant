@@ -22,7 +22,7 @@ import com.netcracker.ca.model.Team;
 public class TeamDaoImpl implements TeamDao {
 
 	private static final String SQL_SELECT_ALL_TEAMS = "SELECT teams.id, teams.title as team_title, teams.project_id, projects.title as project_title FROM teams INNER JOIN projects ON teams.project_id = projects.id";
-	private static final String SQL_SELECT_TEAM_BY_ID = SQL_SELECT_ALL_TEAMS + " WHERE id = ?";
+	private static final String SQL_SELECT_TEAM_BY_ID = SQL_SELECT_ALL_TEAMS + " WHERE teams.id = ?";
 	private static final String SQL_INSERT_TEAM = "INSERT INTO teams (title, project_id) VALUES (?, ?)";
 	private static final String SQL_UPDATE_TEAM = "UPDATE teams SET title = ?, project_id = ? WHERE id = ?";
 	private static final String SQL_DELETE_TEAM = "DELETE FROM teams WHERE id = ?";

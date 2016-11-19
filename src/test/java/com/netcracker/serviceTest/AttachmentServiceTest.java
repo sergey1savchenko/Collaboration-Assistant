@@ -38,16 +38,10 @@ public class AttachmentServiceTest {
 	
 	@Test
     public void addToProjectTest() {
-		attachmentService.addToProject(attachment, project.getId());
-		verify(attachmentDao).addToProject(attachment, project.getId());
+		attachmentService.add(attachment);
+		verify(attachmentDao).add(attachment);
 	}
-	
-	@Test
-    public void addToTeamTest() {
-		attachmentService.addToTeam(attachment, project.getId(), team.getId());
-		verify(attachmentDao).addToTeam(attachment, project.getId(), team.getId());
-	}
-	
+
 	@Test
     public void updateTest() {
 		attachmentService.update(attachment);

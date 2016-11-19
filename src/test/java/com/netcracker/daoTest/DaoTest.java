@@ -50,7 +50,7 @@ public class DaoTest {
 	private TeamDao mockedTeam = mock(TeamDao.class);
 	private UserDao mockedUser = mock(UserDao.class);
 	
-	Attachment attachment = new Attachment("text", "link", "mimeType");
+	Attachment attachment = new Attachment("text", "link", "mimeType", new Project());
 	Feedback feedback = new Feedback(1, "generalReport", "techReport", "interviewer", new InterviewStatus(), new User(), new Student(), new Project());
 	MarkType markType = new MarkType("title", false, false);
 	Meeting meeting = new Meeting(1, "title", "address", new Timestamp(0), new Project(), new Team());
@@ -64,14 +64,12 @@ public class DaoTest {
 	
 	@Test
 	public void AttachmentDaoTest() {
-	    mockedAttachment.addToProject(attachment, project.getId());
-	    mockedAttachment.addToTeam(attachment, project.getId(), team.getId());
+	    mockedAttachment.add(attachment);
 	    mockedAttachment.delete(attachment.getId());
 	    mockedAttachment.getById(1);
 	    mockedAttachment.update(attachment);
 	    
-	    verify(mockedAttachment).addToProject(attachment, project.getId());
-	    verify(mockedAttachment).addToTeam(attachment, project.getId(), team.getId());
+	    verify(mockedAttachment).add(attachment);
 	    verify(mockedAttachment).delete(attachment.getId());
 	    verify(mockedAttachment).getById(1);
 	    verify(mockedAttachment).update(attachment);

@@ -76,6 +76,18 @@ public class ProjectDaoImpl implements ProjectDao {
 	public void delete(int id)  {
 		jdbcTemplate.update(SQL_DELETE_PROJECT, id);
 	}
+	
+	@Override
+	public void addCurator(int curatorId, int projectId, int teamId) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void removeCurator(int curatorId, int projectId, int teamId) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private static class ProjectMapper implements RowMapper<Project> {
 
@@ -93,4 +105,5 @@ public class ProjectDaoImpl implements ProjectDao {
 			return project;
 		}
 	}
+
 }

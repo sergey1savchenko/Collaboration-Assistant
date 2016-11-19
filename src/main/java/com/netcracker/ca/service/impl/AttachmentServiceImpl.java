@@ -25,14 +25,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public void addToProject(Attachment attachment, int projectId) {
-		attachmentDao.addToProject(attachment, projectId);
-	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	@Override
-	public void addToTeam(Attachment attachment, int projectId, int teamId) {
-		attachmentDao.addToTeam(attachment, projectId, teamId);
+	public void add(Attachment attachment) {
+		attachmentDao.add(attachment);
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)

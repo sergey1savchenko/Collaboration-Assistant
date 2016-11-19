@@ -21,7 +21,9 @@ import com.netcracker.ca.model.Role;
 public class RoleDaoImpl implements RoleDao {
 
 	private static String SQL_SELECT_ALL_ROLES = "SELECT * FROM roles";
-	private static String SQL_SELECT_ROLE_BY_ID = "SELECT * FROM roles WHERE id=?";
+	private static String SQL_SELECT_ROLE = "SELECT * FROM roles";
+	private static String SQL_SELECT_ROLE_BY_ID = SQL_SELECT_ROLE + " WHERE id=?";
+	private static String SQL_SELECT_ROLE_BY_NAME = SQL_SELECT_ROLE + " WHERE role=?";
 	private static String SQL_INSERT_ROLE = "INSERT INTO roles (role) VALUES (?)";
 	private static String SQL_UPDATE_ROLE = "UPDATE roles SET role=? WHERE id=?";
 	private static String SQL_DELETE_ROLE = "DELETE FROM roles WHERE id=?";
@@ -35,6 +37,13 @@ public class RoleDaoImpl implements RoleDao {
 	
 	public Role getById(int id) {
 		List<Role> roles = jdbcTemplate.query(SQL_SELECT_ROLE_BY_ID, new RoleRowMapper(), id);
+		return roles.isEmpty() ? null: roles.get(0);
+	}
+	
+
+	@Override
+	public Role getByName(String name) {
+		List<Role> roles = jdbcTemplate.query(SQL_SELECT_ROLE_BY_NAME, new RoleRowMapper(), name);
 		return roles.isEmpty() ? null: roles.get(0);
 	}
 
@@ -68,6 +77,5 @@ public class RoleDaoImpl implements RoleDao {
 			return role;
 		}
 	}
-
 
 }

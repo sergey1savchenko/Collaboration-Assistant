@@ -17,4 +17,8 @@ public interface ProjectDao {
 	void update(Project project);
 
 	void delete(int id);
+	
+	void addCurator(int curatorId, int projectId, int teamId);
+	
+	void removeCurator(int curatorId, int projectId, int teamId);
 }

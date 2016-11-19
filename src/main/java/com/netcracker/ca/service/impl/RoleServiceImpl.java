@@ -22,6 +22,16 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> getAll() {
 		return roleDao.getAll();
 	}
+	
+	@Override
+	public Role getById(int id) {
+		return roleDao.getById(id);
+	}
+
+	@Override
+	public Role getByName(String name) {
+		return roleDao.getByName(name);
+	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
@@ -40,4 +50,6 @@ public class RoleServiceImpl implements RoleService {
 	public void delete(int id) {
 		roleDao.delete(id);
 	}
+
+
 }

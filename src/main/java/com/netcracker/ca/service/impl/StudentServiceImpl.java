@@ -1,5 +1,7 @@
 package com.netcracker.ca.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,6 +38,16 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void update(Student student) {
 		studentDao.update(student);
+	}
+
+	@Override
+	public List<Student> getByProject(int projectId) {
+		return studentDao.getByProject(projectId);
+	}
+
+	@Override
+	public List<Student> getByTeam(int teamId) {
+		return studentDao.getByTeam(teamId);
 	}
 
 }

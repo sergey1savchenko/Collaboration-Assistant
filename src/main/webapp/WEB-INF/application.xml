@@ -31,14 +31,13 @@
 		</property>
 	</bean>
 
-	<bean id="velocityEngine"
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="velocityProperties">
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="/WEB-INF/emails/" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings"> 
 			<props>
-				<prop key="resource.loader">class</prop>
-				<prop key="class.resource.loader.class">
-					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-				</prop>
+				<prop key="locale">en_US</prop>
 			</props>
 		</property>
 	</bean>

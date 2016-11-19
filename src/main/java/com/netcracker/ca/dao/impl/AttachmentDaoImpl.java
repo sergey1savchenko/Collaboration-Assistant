@@ -37,34 +37,20 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		return att.isEmpty() ? null : att.get(0);
 	}
 
-	public void addToProject(final Attachment attachment, final int projectId) {
+	public void add(final Attachment attachment) {
+		final boolean isTeamAttm = attachment.getTeam() != null;
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement ps = con.prepareStatement(SQL_ADD_ATTACHMENT_TO_PROJECT, new String[] { "id" });
+				String sql = isTeamAttm ? SQL_ADD_ATTACHMENT_TO_TEAM : SQL_ADD_ATTACHMENT_TO_PROJECT;
+				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setString(1, attachment.getText());
 				ps.setString(2, attachment.getLink());
 				ps.setString(3, attachment.getMimeType());
-				ps.setInt(4, projectId);
-				return ps;
-			}
-		}, keyHolder);
-		attachment.setId(keyHolder.getKey().intValue());
-	}
-
-	public void addToTeam(final Attachment attachment, final int projectId, final int teamId) {
-		
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdbcTemplate.update(new PreparedStatementCreator() {
-
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement ps = con.prepareStatement(SQL_ADD_ATTACHMENT_TO_TEAM, new String[] { "id" });
-				ps.setString(1, attachment.getText());
-				ps.setString(2, attachment.getLink());
-				ps.setString(3, attachment.getMimeType());
-				ps.setInt(4, projectId);
-				ps.setInt(5, teamId);
+				ps.setInt(4, attachment.getProject().getId());
+				if (isTeamAttm)
+					ps.setInt(5,  attachment.getTeam().getId());
 				return ps;
 			}
 		}, keyHolder);
