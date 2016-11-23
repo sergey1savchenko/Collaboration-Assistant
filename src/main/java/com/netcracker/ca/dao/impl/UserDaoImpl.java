@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public User getById(int id) {
+	public User getById(Integer id) {
 		List<User> users = jdbcTemplate.query(SQL_SELECT_USER_BY_ID, new UserRowMapper(), id);
 		return users.isEmpty() ? null : users.get(0);
 	}
@@ -77,9 +77,6 @@ public class UserDaoImpl implements UserDao {
 	public void update(User user) {
 		jdbcTemplate.update(SQL_UPDATE_USER, user.getEmail(), user.getFirstName(), user.getSecondName(),
 				user.getLastName(), user.isActive(), user.getId());
-	}
-
-	public void updateRole(User user) {
 		jdbcTemplate.update(SQL_UPDATE_USER_ROLE, user.getRole().getId(), user.getId());
 	}
 
@@ -126,5 +123,10 @@ public class UserDaoImpl implements UserDao {
 			return user;
 		}
 		
+	}
+
+	@Override
+	public void delete(Integer id) {
+		throw new UnsupportedOperationException();
 	}
 }

@@ -104,9 +104,16 @@ public class MeetingEvaluation {
 
 	@Override
 	public String toString() {
-		return "MeetingEvaluation{" + "id=" + id + ", intValue=" + intValue + ", textValue='" + textValue + '\''
-				+ ", student=" + student.getFirstName() + " " + student.getLastName() + ", curator="
-				+ curator.getFirstName() + " " + curator.getLastName() + ", marktype=" + marktype.getTitle()
-				+ ", meeting=" + meeting.getTitle() + ", attendance=" + attendance + '}';
+		StringBuilder builder = new StringBuilder("MeetingEvaluation");
+		return builder
+			.append(" [id=").append(id)
+			.append(", intValue=").append(intValue)
+			.append(", textValue=").append(textValue)
+			.append(", student.id=").append(student != null? student.getId(): 0)
+			.append(", curator.id=").append(curator != null? curator.getId(): 0)
+			.append(", marktype.id=").append(marktype != null ? marktype.getId(): 0)
+			.append(", attencanceId=").append(attendanceId)
+			.append(", attendance=").append(attendance)
+			.append("]").toString();
 	}
 }

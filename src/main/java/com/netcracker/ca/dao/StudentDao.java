@@ -4,15 +4,9 @@ import java.util.List;
 
 import com.netcracker.ca.model.Student;
 
-public interface StudentDao {
-
-	Student getById(int id);
+public interface StudentDao extends Dao<Student, Integer> {
 	
 	Student getByAppFormId(int appFormId);
-	
-	void add(Student student);
-	
-	void update(Student student);
 	
 	List<Student> getByProject(int projectId);
 	

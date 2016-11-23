@@ -68,7 +68,7 @@ public class MeetingEvaluationDaoImpl implements MeetingEvaluationDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_ME, id);
 	}
 
@@ -105,6 +105,12 @@ public class MeetingEvaluationDaoImpl implements MeetingEvaluationDao {
 			me.setAttendance(rs.getBoolean("is_present"));
 			return me;
 		}
+	}
+
+	@Override
+	public MeetingEvaluation getById(Integer key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

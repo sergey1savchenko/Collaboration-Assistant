@@ -135,17 +135,18 @@ public class ProjectEvaluation {
 
     public void setStudentInProjectId(int studentInProjectId) {this.studentInProjectId = studentInProjectId; }
 
-    @Override
-    public String toString() {
-        return "ProjectEvaluation{" +
-                "id=" + id +
-                ", intValue=" + intValue +
-                ", textValue='" + textValue + '\'' +
-                ", student=" + student.getFirstName() + " " + student.getLastName() +
-                ", curator=" + curator.getFirstName() + " " + curator.getLastName() +
-                ", marktype=" + marktype.getTitle() +
-                ", project=" + project.getTitle() +
-                ", stInProjectId=" + studentInProjectId +
-                '}';
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("ProjectEvaluation");
+		return builder
+				.append(" [id=").append(id)
+				.append(", intValue=").append(intValue)
+				.append(", textValue=").append(textValue)
+				.append(", student.id=").append(student != null? student.getId(): 0)
+				.append(", curator.id=").append(curator != null? curator.getId(): 0)
+				.append(", marktype.id=").append(marktype != null ? marktype.getId(): 0)
+				.append(", project.id=").append(project != null ? project.getId(): 0)
+				.append(", studentInProjectId").append(studentInProjectId)
+				.append("]").toString();
+	}
 }

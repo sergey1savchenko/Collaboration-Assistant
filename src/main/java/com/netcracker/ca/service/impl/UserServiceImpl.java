@@ -45,12 +45,6 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	@Override
-	public void updateRole(User user) {
-		userDao.updateRole(user);
-	}
-
 	@Override
 	public List<User> getByRole(String role) {
 		return userDao.getByRole(role);

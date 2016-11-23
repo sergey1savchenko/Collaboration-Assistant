@@ -67,7 +67,7 @@ public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_PE, id);
 	}
 
@@ -101,5 +101,11 @@ public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 			pe.setProjectTitle(rs.getString("title"));
 			return pe;
 		}
+	}
+
+	@Override
+	public ProjectEvaluation getById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

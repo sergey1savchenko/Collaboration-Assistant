@@ -54,6 +54,10 @@ public class InterviewStatus {
 
 	@Override
 	public String toString() {
-		return "InterviewStatus [id=" + id + ", description=" + description + "]";
+		StringBuilder builder = new StringBuilder("InterviewStatus");
+		return builder
+			.append(" [id=").append(id)
+			.append(", description=").append(description)
+			.append("]").toString();
 	}
 }

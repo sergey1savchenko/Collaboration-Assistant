@@ -53,6 +53,10 @@ public class ProjectStatus {
 
 	@Override
 	public String toString() {
-		return "StudentProjectStatusType [id=" + id + ", description=" + description + "]";
+		StringBuilder builder = new StringBuilder("ProjectStatus");
+		return builder
+			.append(" [id=").append(id)
+			.append(", description=").append(description)
+			.append("]").toString();
 	}
 }

@@ -108,5 +108,19 @@ public class Participation {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("Participation");
+		return builder
+				.append(" [id=").append(id)
+				.append(", student.id=").append(student != null? student.getId(): 0)
+				.append(", project.id=").append(project != null? project.getId(): 0)
+				.append(", status.id=").append(status != null ? status.getId(): 0)
+				.append(", team.id=").append(team != null ? team.getId(): 0)
+				.append(", comment=").append(comment)
+				.append(", assigned=").append(assigned)
+				.append("]").toString();
+	}
 
 }

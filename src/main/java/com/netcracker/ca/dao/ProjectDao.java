@@ -4,19 +4,11 @@ import java.util.List;
 
 import com.netcracker.ca.model.Project;
 
-public interface ProjectDao {
+public interface ProjectDao extends Dao<Project, Integer> {
 
 	List<Project> getAll();
-
-	Project getById(int id);
 	
 	Project getByTitle(String title);
-
-	void add(Project project);
-
-	void update(Project project);
-
-	void delete(int id);
 	
 	void addCurator(int curatorId, int projectId, int teamId);
 	

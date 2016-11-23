@@ -33,7 +33,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public MarkType getById(int id) {
+	public MarkType getById(Integer id) {
 		List<MarkType> markTypes = jdbcTemplate.query(SQL_SELECT_MARK_TYPE_BY_ID, new MarkTypeRowMapper(), id);
 		return markTypes.isEmpty()? null: markTypes.get(0);
 	}
@@ -58,7 +58,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 				markType.getId());
 	}
 
-	public void delete(int markTypeId) {
+	public void delete(Integer markTypeId) {
 		jdbcTemplate.update(SQL_DELETE_MARK_TYPE, markTypeId);
 	}
 

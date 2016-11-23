@@ -57,6 +57,10 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
+		StringBuilder builder = new StringBuilder("Role");
+		return builder
+			.append(" [id=").append(id)
+			.append(", name=").append(name)
+			.append("]").toString();
 	}
 }

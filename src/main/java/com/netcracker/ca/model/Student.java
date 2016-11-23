@@ -81,12 +81,24 @@ public class Student extends User {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Student [id=" + getId() + ", email=" + getEmail() + ", password=" + getPassword() + ", firstName="
-				+ getFirstName() + ", secondName=" + getSecondName() + ", lastName=" + getLastName() + ", isActive="
-				+ isActive() + ", role=" + getRole() + ", appFormId=" + appFormId + ", course=" + course
-				+ ", university=" + university + ", photoSrc=" + photoSrc + "]";
+		StringBuilder builder = new StringBuilder("Student");
+		return builder
+			.append(" [id=").append(getId())
+			.append(", email=").append(getEmail())
+			.append(", password=").append(getPassword())
+			.append(", firstName=").append(getFirstName())
+			.append(", secondName=").append(getSecondName())
+			.append(", lastName=").append(getLastName())
+			.append(", isActive=").append(isActive())
+			.append(", role.id=").append(getRole().getId())
+			.append(", appFormId=").append(appFormId)
+			.append(", university.id=").append(university != null ? university.getId(): 0)
+			.append(", course.id=").append(course != null ? course.getId(): 0)
+			.append(", photoSrc=").append(photoSrc)
+			.append("]").toString();
 	}
+
 }

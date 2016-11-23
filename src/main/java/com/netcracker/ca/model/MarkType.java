@@ -85,7 +85,13 @@ public class MarkType {
 
 	@Override
 	public String toString() {
-		return "MarkType [id=" + id + ", title=" + title + ", hasText=" + hasText + ", hasInt=" + hasInt + ", scope="
-				+ scope + "]";
+		StringBuilder builder = new StringBuilder("MarkType");
+		return builder
+			.append(" [id=").append(id)
+			.append(", title=").append(title)
+			.append(", hasText=").append(hasText)
+			.append(", hasInt=").append(hasInt)
+			.append(", scope=").append(scope)
+			.append("]").toString();
 	}
 }

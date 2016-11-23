@@ -37,7 +37,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 
 	@Override
-	public Project getById(int id) {
+	public Project getById(Integer id) {
 		List<Project> projects = jdbcTemplate.query(SQL_SELECT_PROJECT_BY_ID, new ProjectMapper(), id);
 		return projects.isEmpty()? null: projects.get(0);
 	}
@@ -73,7 +73,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 
 	@Override
-	public void delete(int id)  {
+	public void delete(Integer id)  {
 		jdbcTemplate.update(SQL_DELETE_PROJECT, id);
 	}
 	
