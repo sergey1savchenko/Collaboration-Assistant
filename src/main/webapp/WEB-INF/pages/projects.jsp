@@ -1,55 +1,59 @@
-<%@include file="header.jsp"%>
+<%@include file="header.jsp" %>
 <div class="container">
-	<div class="wrapper">
-		<security:authorize access="isAnonymous()">
-			<div class="jumbotron">
-				<img src="<c:url value="/resources/img/logo.png"/>"
-					class="img-rounded main-logo" />
-				<h2 class="welcome-header">Welcome to Collaboration Assistant!</h2>
+    <div class="wrapper">
+        <div class="above-grid"><span>Projects</span>
+            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#addDialog">Add</button>
+        </div>
+        <div class="simple-grid" id="projectGrid"></div>
+    </div>
 
-				<p class="text">Please log in to get started</p>
-				<div class="text-center">
-					<a class="btn btn-large btn-primary btn-log-in"
-						href="<c:url value="/login"/>">Log In</a>
-				</div>
-			</div>
-		</security:authorize>
-		<security:authorize access="isAuthenticated()">
-			<div class="jumbotron">
-				<h2 class="welcome-header inner">Welcome,
-					${pageContext.request.userPrincipal.name}!</h2>
-				<security:authorize access="hasRole('ADMIN')">
-					<div class="panel panel-success">
-						<div class="panel-heading">
-							<h3 class="panel-title">Projects</h3>
-						</div>
-						<br>
-						<table class="table table-striped table-bordered">
-							<tr>
-								<th>ID</th>
-								<th>Title</th>
-								<th>Description</th>
-								<th>Start Date</th>
-								<th>End Date</th>
-								<th>University</th>
-							</tr>
-							<c:forEach var="project" items="${projects}">
-								<tr>
-									<td><c:out value="${project.id}" /></td>
-									<td><c:out value="${project.title}" /></td>
-									<td><c:out value="${project.description}" /></td>
-									<td><c:out value="${project.startDate}" /></td>
-									<td><c:out value="${project.endDate}" /></td>
-									<td><c:out value="${project.getUniversity().title}" /></td>
-								</tr>
-							</c:forEach>
-						</table>
-					</div>
-				</security:authorize>
-			</div>
-		</security:authorize>
-	</div>
+    <div class="modal fade" id="addDialog" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create a new project</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="new-project">
+                        <div class="form-group">
+                            <label for="project-title">Title:</label>
+                            <input type="text" class="form-control" id="project-title" name="project-title"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-description">Description:</label>
+                            <input type="text" class="form-control" id="project-description"
+                                   name="project-description"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-start">Start date:</label>
+                            <input type="date" class="form-control" id="project-start" name="project-start"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-end">End date:</label>
+                            <input type="date" class="form-control" id="project-end" name="project-end"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-university">University:</label>
+                            <select class="form-control" id="project-university" name="project-university">
+                                <c:forEach var="university" items="${universities}">
+                                    <option value="<c:out value="${university.id}" />"><c:out
+                                            value="${university.title}"/></option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="onCreateVerify();">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>
+<script type="text/javascript" src="resources/js/pages/projects.js"></script>
 </body>
 </html>
