@@ -8,9 +8,18 @@
 
 	<context:component-scan base-package="com.netcracker.ca.controller" />
 	<context:annotation-config />
+	<bean id="conversionService"
+		  class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	</bean>
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
