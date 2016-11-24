@@ -5,7 +5,6 @@
 	version="3.1">
 	<display-name>Collaboration-Assistant</display-name>
 
-<<<<<<< HEAD
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -44,50 +43,7 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!--  
-	<context-param>
-		<param-name>log4jConfiguration</param-name>
-		<param-value>/WEB-INF/properties/log4j2.properties</param-value>
-	</context-param> -->
 	
-</web-app>
-=======
-    <!-- Loads Spring Security config file -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>        
-        	/WEB-INF/application.xml,
-        	/WEB-INF/repository.xml,
-            /WEB-INF/spring-security.xml
-        </param-value>
-    </context-param>
- 
- 
-    <!-- Spring MVC -->
-    <servlet>
-        <servlet-name>mvc-dispatcher</servlet-name>
-        <servlet-class>
-            org.springframework.web.servlet.DispatcherServlet
-        </servlet-class>   
-        <load-on-startup>1</load-on-startup>
-    </servlet>
- 
-    <servlet-mapping>
-        <servlet-name>mvc-dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
- 
-    <!-- Spring Security Filter -->
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
- 
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
- 	
  	<!-- Errors -->
  	<error-page>
     	<error-code>404</error-code>
@@ -95,4 +51,4 @@
 	</error-page>
 	
 </web-app>
->>>>>>> 5970fbc57061e364e854899e9001fcfff1624a21
+ 
