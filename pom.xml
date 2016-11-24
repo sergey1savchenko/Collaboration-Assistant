@@ -82,6 +82,13 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.3</version>
 		</dependency>
+
+		<!-- xlsx view -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
 		
 		<!-- Spring Security START -->
 		<!-- http://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
