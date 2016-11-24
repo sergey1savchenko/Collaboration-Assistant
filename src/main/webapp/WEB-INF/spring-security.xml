@@ -7,9 +7,10 @@
      http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
 	<http use-expressions="true">
+ 
 		<intercept-url pattern="/login" access="isAnonymous()" />
-		<intercept-url pattern="/main" access="isAuthenticated()" />
-		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+<!-- 	<intercept-url pattern="/main" access="isAuthenticated()" />	 -->
+		<intercept-url pattern="/projects" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/curator/**" access="hasRole('CURATOR')" />
 		<intercept-url pattern="/hr/**" access="hasRole('HR')" />
 		<intercept-url pattern="/student/**" access="hasRole('STUDENT')" />

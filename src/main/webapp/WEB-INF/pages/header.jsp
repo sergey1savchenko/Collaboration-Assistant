@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="resources/img/icon.ico"
 	type="image/x-icon">
 <link rel="stylesheet" href="resources/style/style.css">
@@ -22,6 +23,11 @@
 <link rel="stylesheet" href="resources/style/style.css">
 <link rel="stylesheet" href="resources/style/bootstrap.min.css">
 <link rel="stylesheet" href="resources/style/bootstrap-theme.min.css">
+<link rel="stylesheet" href="resources/js/jqueryui/jquery-ui.min.css">
+<link rel="stylesheet" href="resources/js/jqueryui/jquery-ui.structure.min.css">
+<link rel="stylesheet" href="resources/js/jqueryui/jquery-ui.theme.min.css">
+<link rel="stylesheet" href="resources/style/jsgrid.min.css">
+<link rel="stylesheet" href="resources/style/jsgrid-theme.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -32,9 +38,16 @@
 	src="resources/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript"
 	src="resources/js/jquery.tablesorter.widgets.min.js"></script>
+<script type="text/javascript"
+			src="resources/js/jquery.tablesorter.widgets.min.js"></script>
+<script type="text/javascript" src="resources/js/jqueryui/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="resources/js/jsgrid.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="resources/js/webutils.js"></script>
 <script>
 	$(function() {
-		$('table').tablesorter({
+		$('table.static').tablesorter({
 			widgets : [ 'zebra', 'columns' ],
 			usNumberFormat : false,
 			sortReset : true,
@@ -44,7 +57,7 @@
 </script>
 <title>Collaboration Assistant</title>
 </head>
-<body onload='document.login.username.focus();'>
+<body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid grey">
 			<div class="navbar-header">

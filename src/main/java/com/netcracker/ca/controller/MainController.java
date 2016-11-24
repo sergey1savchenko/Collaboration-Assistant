@@ -1,5 +1,7 @@
 package com.netcracker.ca.controller;
 
+import com.netcracker.ca.service.UniversityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,11 @@ public class MainController {
 	public String aboutPage(Model model) {
 		return "about";
 	}
+	
+	@RequestMapping(value = { "/main" }, method = RequestMethod.GET)
+	public String mainPage(Model model) {
+		return "home";
+	}
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage(Model model) {
@@ -45,4 +52,19 @@ public class MainController {
 	public String studentPage(Model model) {
 		return "student";
 	}
+
+	@Autowired
+	private UniversityService universityService;
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String mainPage() {
+		return "home";
+	}
+
+	@RequestMapping(value = "/projects", method = RequestMethod.GET)
+	public String projectsPage(Model model) {
+		model.addAttribute("universities", universityService.getAll());
+		return "projects";
+	}
+
 }

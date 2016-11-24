@@ -68,7 +68,21 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- Spring framework END -->
-
+		
+		<!-- Apache Velocity -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		
+		<!--  Java Mail API -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+		
 		<!-- Spring Security START -->
 		<!-- http://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<dependency>
@@ -161,11 +175,21 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
-		<!-- JavaMail API -->
+		<!-- Jackson Json Mapper -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.3</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.7.2</version>
 		</dependency>
 
 		<!-- FreeMarker -->

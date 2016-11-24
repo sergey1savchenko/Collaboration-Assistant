@@ -18,6 +18,6 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(RepositoryException.class)
 	public String handle(RepositoryException e) {
 		logger.error("Internal exception", e);
-		return "fail";
+		return "errorPage";
 	}
 }
