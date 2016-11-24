@@ -5,15 +5,7 @@ import java.util.List;
 import com.netcracker.ca.model.MarkType;
 import com.netcracker.ca.model.MarkTypeScope;
 
-public interface MarkTypeDao {
-
-	MarkType getById(int id);
-	
-	void add(MarkType markType);
-	
-	void update(MarkType markType);
-	
-	void delete(int id);
+public interface MarkTypeDao extends Dao<MarkType, Integer> {
 	
 	void allow(int markTypeId, int projectId, MarkTypeScope scope);
 	

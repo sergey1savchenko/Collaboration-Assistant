@@ -46,7 +46,7 @@ public class StudentDaoImpl implements StudentDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public Student getById(int id) {
+	public Student getById(Integer id) {
 		List<Student> students = jdbcTemplate.query(SQL_SELECT_STUDENT_BY_ID, new StudentRowMapper(), id);
 		return students.isEmpty() ? null : students.get(0);
 	}
@@ -143,6 +143,11 @@ public class StudentDaoImpl implements StudentDao {
 			student.setPhotoSrc(rs.getString("af_photo"));
 			return student;
 		}
+	}
+
+	@Override
+	public void delete(Integer id) {
+		throw new UnsupportedOperationException();
 	}
 
 }

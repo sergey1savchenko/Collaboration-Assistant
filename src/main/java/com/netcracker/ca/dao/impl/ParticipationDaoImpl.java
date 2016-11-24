@@ -59,7 +59,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Participation getById(int id) {
+	public Participation getById(Integer id) {
 		List<Participation> participations = jdbcTemplate.query(SQL_SELECT_PARTICIPATION_BY_ID,
 				new ParticipationRowMapper(), id);
 		return participations.isEmpty() ? null : participations.get(0);
@@ -233,7 +233,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_PARTICIPATION, id);
 	}
 	

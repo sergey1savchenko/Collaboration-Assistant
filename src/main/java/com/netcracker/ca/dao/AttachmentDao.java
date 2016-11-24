@@ -4,15 +4,7 @@ import java.util.List;
 
 import com.netcracker.ca.model.Attachment;
 
-public interface AttachmentDao {
-
-	Attachment getById(int id);
-	
-	void add(Attachment attachment);
-	
-	void update(Attachment attachment);
-	
-	void delete(int id);
+public interface AttachmentDao extends Dao<Attachment, Integer> {
 	
 	List<Attachment> getTeamAttachments(int teamId);
 	

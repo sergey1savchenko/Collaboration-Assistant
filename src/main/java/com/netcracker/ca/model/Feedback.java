@@ -115,8 +115,15 @@ public class Feedback {
 
 	@Override
 	public String toString() {
-		return "Feedback [id=" + id + ", generalReport=" + generalReport + ", techReport=" + techReport
-				+ ", interviewer=" + interviewer + ", interviewStatus=" + interviewStatus + ", hr=" + hr + ", student="
-				+ student + ", project=" + project + "]";
+		StringBuilder builder = new StringBuilder("Feedback");
+		return builder
+			.append(" [generalReport=").append(generalReport)
+			.append(", techReport=").append(techReport)
+			.append(", interviewer=").append(interviewer)
+			.append(", interviewStatus.id=").append(interviewStatus != null? interviewStatus.getId(): 0)
+			.append(", hr.id=").append(hr != null? hr.getId(): 0)
+			.append(", student.id=").append(student != null? student.getId(): 0)
+			.append(", project.id=").append(project != null? project.getId(): 0)
+			.append("]").toString();
 	}
 }

@@ -68,6 +68,11 @@ public class Team {
 
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", title=" + title + ", project=" + project + "]";
+		StringBuilder builder = new StringBuilder("Student");
+		return builder
+			.append(" [id=").append(id)
+			.append(", title=").append(title)
+			.append(", project.id=").append(project != null ? project.getId(): 0)
+			.append("]").toString();
 	}
 }

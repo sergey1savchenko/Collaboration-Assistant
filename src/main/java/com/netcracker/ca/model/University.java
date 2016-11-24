@@ -78,6 +78,12 @@ public class University {
 
 	@Override
 	public String toString() {
-		return "University [id=" + id + ", title=" + title + ", description=" + description + ", city=" + city + "]";
+		StringBuilder builder = new StringBuilder("Student");
+		return builder
+			.append(" [id=").append(id)
+			.append(", title=").append(title)
+			.append(", description=").append(description)
+			.append(", city=").append(city)
+			.append("]").toString();
 	}
 }

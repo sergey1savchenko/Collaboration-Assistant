@@ -7,13 +7,7 @@ import com.netcracker.ca.model.ProjectEvaluation;
 /**
  * Created by Oleksandr on 12.11.2016.
  */
-public interface ProjectEvaluationDao {
-
-    void add(ProjectEvaluation pe);
-
-    void update(ProjectEvaluation pe);
-
-    void delete(int id);
+public interface ProjectEvaluationDao extends Dao<ProjectEvaluation, Integer> {
 
     List<ProjectEvaluation> getEvaluationsOfTeam(int id);
 

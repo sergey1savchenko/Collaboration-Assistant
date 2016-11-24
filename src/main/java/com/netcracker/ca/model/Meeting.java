@@ -75,13 +75,14 @@ public class Meeting {
 
     @Override
     public String toString() {
-        return "Meeting{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", address='" + address + '\'' +
-                ", datetime=" + datetime +
-                ", project=" + project.getTitle() +
-                ", team=" + team.getTitle() +
-                '}';
+    	StringBuilder builder = new StringBuilder("Meeting");
+		return builder
+			.append(" [id=").append(id)
+			.append(", title=").append(title)
+			.append(", address=").append(address)
+			.append(", datetime=").append(datetime)
+			.append(", project.id=").append(project != null ? project.getId(): 0)
+			.append(", team.id=").append(team != null ? team.getId(): 0)
+			.append("]").toString();
     }
 }

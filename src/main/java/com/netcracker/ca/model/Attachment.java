@@ -101,6 +101,12 @@ public class Attachment {
 
 	@Override
 	public String toString() {
-		return "Attachment [id=" + id + ", text=" + text + ", link=" + link + ", mimeType=" + mimeType + "]";
+		StringBuilder builder = new StringBuilder("Attachment");
+		return builder
+			.append(" [id=").append(id)
+			.append(", text=").append(text)
+			.append(", link=").append(link)
+			.append(", mimeType=").append(mimeType)
+			.append("]").toString();
 	}
 }

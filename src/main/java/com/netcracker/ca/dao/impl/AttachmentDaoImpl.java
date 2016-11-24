@@ -32,7 +32,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public Attachment getById(int id) {
+	public Attachment getById(Integer id) {
 		List<Attachment> att = jdbcTemplate.query(SQL_SELECT_ATTACHMENT_BY_ID, new AttachmentRowMapper(), id);
 		return att.isEmpty() ? null : att.get(0);
 	}
@@ -62,7 +62,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 				attachment.getId());
 	}
 
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_ATTACHMENT, id);
 	}
 
@@ -85,4 +85,5 @@ public class AttachmentDaoImpl implements AttachmentDao {
 			return attachment;
 		}
 	}
+
 }

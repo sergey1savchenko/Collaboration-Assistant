@@ -27,6 +27,4 @@ public class Mail {
 		this.content = content;
 	}
 	
-	
-	
 }

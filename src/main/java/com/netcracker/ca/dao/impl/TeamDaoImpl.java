@@ -36,7 +36,7 @@ public class TeamDaoImpl implements TeamDao {
 		return jdbcTemplate.query(SQL_SELECT_ALL_TEAMS, new TeamMapper());
 	}
 
-	public Team getById(int id) {
+	public Team getById(Integer id) {
 		return jdbcTemplate.queryForObject(SQL_SELECT_TEAM_BY_ID, new TeamMapper(), id);
 	}
 
@@ -58,7 +58,7 @@ public class TeamDaoImpl implements TeamDao {
 		jdbcTemplate.update(SQL_UPDATE_TEAM, team.getTitle(), team.getProject().getId(), team.getId());
 	}
 
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_TEAM, id);
 	}
 

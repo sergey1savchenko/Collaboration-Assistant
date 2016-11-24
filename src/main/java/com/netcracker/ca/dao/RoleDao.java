@@ -4,17 +4,10 @@ import java.util.List;
 
 import com.netcracker.ca.model.Role;
 
-public interface RoleDao {
+public interface RoleDao extends Dao<Role, Integer> {
 
 	List<Role> getAll();
 	
-	Role getById(int id);
-	
 	Role getByName(String name);
 	
-	void add(Role role);
-	
-	void update(Role role);
-	
-	void delete(int id);
 }

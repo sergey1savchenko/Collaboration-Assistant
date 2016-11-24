@@ -39,7 +39,7 @@ public class FeedbackDaoImpl implements FeedbackDao {
 	}
 
 	@Override
-	public Feedback getById(int id) {
+	public Feedback getById(Integer id) {
 		List<Feedback> feedbacks = jdbcTemplate.query(SQL_SELECT_FEEDBACK_BY_ID, new FeedbackMapper(), id);
 		return feedbacks.isEmpty()? null: feedbacks.get(0);
 	}
@@ -74,7 +74,7 @@ public class FeedbackDaoImpl implements FeedbackDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_FEEDBACK, id);
 	}
 

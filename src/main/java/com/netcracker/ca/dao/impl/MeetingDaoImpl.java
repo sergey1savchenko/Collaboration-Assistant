@@ -64,7 +64,7 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_MEETING, id);
 	}
 
@@ -92,5 +92,11 @@ public class MeetingDaoImpl implements MeetingDao {
 			meeting.setTeam(new Team(rs.getInt("id"), rs.getString("title"), project));
 			return meeting;
 		}
+	}
+
+	@Override
+	public Meeting getById(Integer key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

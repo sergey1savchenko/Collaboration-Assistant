@@ -58,6 +58,10 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", title=" + title + "]";
+		StringBuilder builder = new StringBuilder("Course");
+		return builder
+			.append(" [id=").append(id)
+			.append(", title=").append(title)
+			.append("]").toString();
 	}
 }

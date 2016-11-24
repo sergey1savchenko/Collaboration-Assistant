@@ -101,7 +101,14 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", title=" + title + ", description=" + description + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", university=" + university + "]";
+		StringBuilder builder = new StringBuilder("Project");
+		return builder
+				.append(" [id=").append(id)
+				.append(", title=").append(title)
+				.append(", description=").append(description)
+				.append(", startDate=").append(startDate)
+				.append(", endDate=").append(endDate)
+				.append(", university.id=").append(university != null ? university.getId(): 0)
+				.append("]").toString();
 	}
 }

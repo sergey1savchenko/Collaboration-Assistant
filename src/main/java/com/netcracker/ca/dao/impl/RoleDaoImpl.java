@@ -35,11 +35,10 @@ public class RoleDaoImpl implements RoleDao {
 		return jdbcTemplate.query(SQL_SELECT_ALL_ROLES, new RoleRowMapper());
 	}
 	
-	public Role getById(int id) {
+	public Role getById(Integer id) {
 		List<Role> roles = jdbcTemplate.query(SQL_SELECT_ROLE_BY_ID, new RoleRowMapper(), id);
 		return roles.isEmpty() ? null: roles.get(0);
 	}
-	
 
 	@Override
 	public Role getByName(String name) {
@@ -64,7 +63,7 @@ public class RoleDaoImpl implements RoleDao {
 		jdbcTemplate.update(SQL_UPDATE_ROLE, role.getName(), role.getId());
 	}
 
-	public void delete(int id) {
+	public void delete(Integer id) {
 		jdbcTemplate.update(SQL_DELETE_ROLE, id);
 	}
 
