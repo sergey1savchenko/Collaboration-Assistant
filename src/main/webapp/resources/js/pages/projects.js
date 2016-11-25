@@ -1,8 +1,10 @@
 $(function () {
-    $("#projectGrid").jsGrid({
+    $("#projectGrid").jsGrid({								//!
+    	
         height: "90%",
         width: "100%",
-
+        
+    	
         filtering: true,
         editing: true,
         sorting: true,
@@ -12,8 +14,8 @@ $(function () {
         controller: {
             loadData: function () {
                 var deferred = $.Deferred();
-                $.ajax({
-                    url: '/project',
+                $.ajax({									//GET
+                    url: '/CA-Project/project',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -28,7 +30,7 @@ $(function () {
                 var deferred = $.Deferred();
                 return $.ajax({
                     method: "PUT",
-                    url: "/project",
+                    url: "/CA-Project/project",				//!
                     data: JSON.stringify(item),
                     contentType: "application/json; charset=utf-8"
                 }).done(function(){
@@ -43,15 +45,16 @@ $(function () {
             deleteItem: function (item) {
                 return $.ajax({
                     method: "DELETE",
-                    url: "/project/" + item.id
+                    url: "/CA-Project/project/" + item.id	//!
                 }).fail(function () {
                     WebUtils.show('Failed to delete');
                 });
             }
 
         },
-        deleteConfirm: "Do you really want to delete the project?",
-        fields: [
+        deleteConfirm: "Do you really want to delete the project?",		//!
+        fields: [														//!!
+        			// from DB
             {name: "title", type: "text", title: "Title", validate: "required"},
             {name: "id", type: 'link', url: '/teams?prj={id}', width: 70, title: 'Settings'},
             {name: "description", type: "text",  title: "Description"},
@@ -59,12 +62,17 @@ $(function () {
             {name: "endDate", type: "jsDate", width: 150, title: "End date", validate: "required"},
             {
                 name: "university", source: 'project-university', title: "University", type: 'dictionary'
+                							// select id from jsp page
             },
             {type: "control", editButton: true, deleteButton: true, modeSwitchButton: false, clearFilterButton: true}
 
         ]
 
     });
+    
+    
+    
+    //-
     $.validator.addMethod(
         "endLaterThenStart",
         function (value, element) {
@@ -111,7 +119,7 @@ function onCreateAction() {
         university: WebUtils.getItemByDomainAndId('project-university', $("#project-university").val())
     };
     $.ajax({
-        url: "/project",
+        url: "/CA-Project/project",
         method: 'POST',
         data: JSON.stringify(item),
         contentType: "application/json; charset=utf-8",

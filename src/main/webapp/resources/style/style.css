@@ -62,3 +62,7 @@ input[type="password"] {
   padding: 3px 25px;
   width: 100%;
 }
+
+.simple-grid {
+	margin-bottom: 75px;
+}
