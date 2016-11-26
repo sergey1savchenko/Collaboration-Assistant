@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.netcracker.ca.dao.ProjectDao;
 import com.netcracker.ca.dao.UserDao;
+import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.CuratorshipService;
 
@@ -25,8 +26,8 @@ public class CuratorshipServiceImpl implements CuratorshipService {
 	}
 	
 	@Override
-	public void removeFromProject(int curatorId, int projectId, int teamId) {
-		projectDao.removeCurator(curatorId, projectId, teamId);
+	public void removeFromProject(int curatorId, int projectId) {
+		projectDao.removeCurator(curatorId, projectId);
 	}
 
 	@Override
@@ -39,6 +40,9 @@ public class CuratorshipServiceImpl implements CuratorshipService {
 		return userDao.getCuratorsByTeam(teamId);
 	}
 
-	
+	@Override
+	public Project getCurrentProject(int curatorId) {
+		return projectDao.getCurrentForCurator(curatorId);
+	}
 
 }

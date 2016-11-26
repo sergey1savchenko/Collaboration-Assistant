@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.netcracker.ca.utils.RepositoryException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class ControllerExceptionHandler {
 	
-	private Logger logger = LogManager.getLogger("Error");
+	private Logger logger = LogManager.getLogger("Error.Controller");
 	
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(RepositoryException.class)

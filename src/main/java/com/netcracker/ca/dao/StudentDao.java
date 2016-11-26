@@ -11,5 +11,5 @@ public interface StudentDao extends Dao<Student, Integer> {
 	List<Student> getByProject(int projectId);
 	
 	List<Student> getByTeam(int teamId);
-
+	
 }

@@ -19,7 +19,6 @@ public class ProjectController {
         return projectService.getAll();
     }
 
-
     @RequestMapping(value = "/project", method = RequestMethod.POST, produces = "application/json")
     public Project create(@RequestBody Project project) {
         projectService.add(project);

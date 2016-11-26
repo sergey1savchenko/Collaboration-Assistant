@@ -3,6 +3,7 @@ package com.netcracker.ca.service;
 import java.util.List;
 
 import com.netcracker.ca.model.Participation;
+import com.netcracker.ca.model.dto.ParticipationDto;
 
 public interface ParticipationService {
 
@@ -23,5 +24,7 @@ public interface ParticipationService {
 	void delete(int id);
 	
 	void deleteByStudentAndProject(int studentId, int projectId);
+	
+	void updateAll(List<ParticipationDto> partDtos, int projectId);
 	
 }

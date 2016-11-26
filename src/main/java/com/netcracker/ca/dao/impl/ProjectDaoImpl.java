@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class ProjectDaoImpl implements ProjectDao {
 	private static final String SQL_INSERT_PROJECT = "INSERT INTO projects (title, description, start_date, end_date, university_id) VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE_PROJECT = "UPDATE projects SET title = ?, description = ?, start_date = ?, end_date = ?, university_id = ? WHERE projects.id = ?";
 	private static final String SQL_DELETE_PROJECT = "DELETE FROM projects WHERE projects.id = ?";
+	
+	private static final String SQL_INSERT_CURATOR = "INSERT INTO curators_in_project (user_id, project_id, team_id) VALUES (?, ?, ?)";
+	private static final String SQL_DELETE_CURATOR = "DELETE FROM curators_in_project WHERE user_id=? AND project_id=?";
+	
+	private static final String SQL_SELECT_CURRENT_FOR_STUDENT = SQL_SELECT_ALL_PROJECTS + " INNER JOIN students_in_project AS sp ON projects.id=sp.project_id "
+			+ "INNER JOIN application_forms AS af ON sp.app_form_id=af.id WHERE af.id=? AND projects.end_date>?";
+	private static final String SQL_SELECT_CURRENT_FOR_CURATOR = SQL_SELECT_ALL_PROJECTS + " INNER JOIN curators_in_project AS cp ON projects.id=cp.project_id "
+			+ "WHERE cp.user_id=? AND projects.end_date>?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -79,14 +88,24 @@ public class ProjectDaoImpl implements ProjectDao {
 	
 	@Override
 	public void addCurator(int curatorId, int projectId, int teamId) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.update(SQL_INSERT_CURATOR, curatorId, projectId, teamId);
 	}
 	
 	@Override
-	public void removeCurator(int curatorId, int projectId, int teamId) {
-		// TODO Auto-generated method stub
-		
+	public void removeCurator(int curatorId, int projectId) {
+		jdbcTemplate.update(SQL_DELETE_CURATOR, curatorId, projectId);
+	}
+	
+	@Override
+	public Project getCurrentForStudent(int studentId) {
+		List<Project> projects = jdbcTemplate.query(SQL_SELECT_CURRENT_FOR_STUDENT, new ProjectMapper(), studentId, new Date());
+		return projects.isEmpty() ? null: projects.get(0);
+	}
+
+	@Override
+	public Project getCurrentForCurator(int curatorId) {
+		List<Project> projects = jdbcTemplate.query(SQL_SELECT_CURRENT_FOR_CURATOR, new ProjectMapper(), curatorId, new Date());
+		return projects.isEmpty() ? null: projects.get(0);
 	}
 
 	private static class ProjectMapper implements RowMapper<Project> {
@@ -105,5 +124,7 @@ public class ProjectDaoImpl implements ProjectDao {
 			return project;
 		}
 	}
+
+	
 
 }

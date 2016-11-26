@@ -89,6 +89,11 @@ public class UserDaoImpl implements UserDao {
 	public List<User> getCuratorsByTeam(int teamId) {
 		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_TEAM, new UserNoRoleMapper(), teamId);
 	}
+	
+	@Override
+	public void delete(Integer id) {
+		throw new UnsupportedOperationException();
+	}
 
 	private static class UserRowMapper implements RowMapper<User> {
 
@@ -123,10 +128,5 @@ public class UserDaoImpl implements UserDao {
 			return user;
 		}
 		
-	}
-
-	@Override
-	public void delete(Integer id) {
-		throw new UnsupportedOperationException();
 	}
 }

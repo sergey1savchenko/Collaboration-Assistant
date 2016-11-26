@@ -39,15 +39,15 @@ public class ParticipationDaoImpl implements ParticipationDao {
 			+ " WHERE af_id=? AND pr_id=?";
 	private static String SQL_SELECT_BY_STUDENT = "SELECT p.id AS p_id, p.app_form_id AS af_id, pr.id AS pr_id, pr.title AS pr_title, pr.description AS pr_desc, "
 			+ "pr.start_date AS pr_start, pr.end_date AS pr_end, pr.university_id AS un_id, p.comment, p.datetime, st.id AS st_id, st.description AS st_desc, t.id AS t_id, t.title AS t_title "
-			+ "FROM students_in_project AS p INNER JOIN projects AS pr ON p.project_id=pr.id INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id "
-			+ "INNER JOIN teams AS t ON p.team_id=t.id WHERE p.app_form_id=?";
+			+ "FROM users AS u INNER JOIN students_in_project AS p ON u.id=p.app_form_id INNER JOIN projects AS pr ON p.project_id=pr.id "
+			+ "INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id INNER JOIN teams AS t ON p.team_id=t.id WHERE app_form_id=?";
 	private static String SQL_SELECT_BY_PROJECT = "SELECT p.id AS p_id, u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, u.is_active, af.id AS af_id, af.photo_scope AS af_photo, "
-			+ "af.course_id AS c_id, af.university_id as un_id, p.project_id AS pr_id, p.comment, p.datetime, st.id AS st_id, st.description AS st_desc, t.id AS t_id, t.title AS t_title"
+			+ "af.course_id AS c_id, af.university_id as un_id, p.project_id AS pr_id, p.comment, p.datetime, st.id AS st_id, st.description AS st_desc, t.id AS t_id, t.title AS t_title "
 			+ "FROM students_in_project AS p INNER JOIN application_forms AS af ON p.app_form_id=af.id INNER JOIN users AS u ON af.user_id=u.id "
 			+ "INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id INNER JOIN teams AS t ON p.team_id=t.id WHERE p.project_id=?";
 	private static String SQL_SELECT_BY_TEAM = "SELECT p.id AS p_id, u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, u.is_active, af.id AS af_id, af.photo_scope AS af_photo, "
 			+ "af.course_id AS c_id, af.university_id as unst_id, pr.id AS pr_id, pr.title AS pr_title, pr.description AS pr_desc, "
-			+ "pr.start_date AS pr_start, pr.end_date AS pr_end, pr.university_id AS unpr_id, p.comment, p.datetime, st.id AS st_id, st.description AS st_desc, p.team_id AS t_id"
+			+ "pr.start_date AS pr_start, pr.end_date AS pr_end, pr.university_id AS unpr_id, p.comment, p.datetime, st.id AS st_id, st.description AS st_desc, p.team_id AS t_id "
 			+ "FROM students_in_project AS p INNER JOIN application_forms AS af ON p.app_form_id=af.id INNER JOIN users AS u ON af.user_id=u.id INNER JOIN projects AS pr ON p.project_id=pr.id "
 			+ "INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id WHERE p.team_id=?";
 	private static String SQL_INSERT_PARTICIPATION = "INSERT INTO students_in_project (status_type_id, comment, assigned, team_id) VALUES (?, ?, ?, ?)";
@@ -241,7 +241,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 	public void deleteByStudentAndProject(int studentId, int projectId) {
 		jdbcTemplate.update(SQL_DELETE_PARTICIPATION_BY_STUDENT_AND_PROJECT, studentId, projectId);
 	}
-
+	
 	private static class ParticipationRowMapper implements RowMapper<Participation> {
 
 		@Override
@@ -261,7 +261,5 @@ public class ParticipationDaoImpl implements ParticipationDao {
 		}
 
 	}
-
-	
 
 }

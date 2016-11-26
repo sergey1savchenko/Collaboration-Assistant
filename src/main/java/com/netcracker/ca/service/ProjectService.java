@@ -19,4 +19,5 @@ public interface ProjectService {
 	void delete(int id);
 	
 	void addByTemplate(Project projectNew, Project projectTemplate);
+
 }

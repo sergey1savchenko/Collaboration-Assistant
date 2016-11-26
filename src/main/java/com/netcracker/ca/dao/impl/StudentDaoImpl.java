@@ -102,6 +102,11 @@ public class StudentDaoImpl implements StudentDao {
 	public List<Student> getByTeam(int teamId) {
 		return jdbcTemplate.query(SQL_SELECT_STUDENTS_BY_TEAM, new StudentsRowMapper(), teamId);
 	}
+	
+	@Override
+	public void delete(Integer id) {
+		throw new UnsupportedOperationException();
+	}
 
 	private static class StudentRowMapper implements RowMapper<Student> {
 
@@ -143,11 +148,6 @@ public class StudentDaoImpl implements StudentDao {
 			student.setPhotoSrc(rs.getString("af_photo"));
 			return student;
 		}
-	}
-
-	@Override
-	public void delete(Integer id) {
-		throw new UnsupportedOperationException();
 	}
 
 }
