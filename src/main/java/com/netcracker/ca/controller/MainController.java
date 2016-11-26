@@ -52,6 +52,12 @@ public class MainController {
 	public String studentPage(Model model) {
 		return "student";
 	}
+	
+//	@RequestMapping(value = "/team", method = RequestMethod.GET)
+//	public String teamPage(Model model,int prj) {
+//		model.addAttribute("projectId", prj);
+//		return "teams";
+//	}
 
 	@Autowired
 	private UniversityService universityService;
