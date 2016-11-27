@@ -12,4 +12,8 @@ public interface TeamDao extends Dao<Team, Integer> {
 	List<Team> getByProject(Project project);
 	
 	Team getByTitle(String title);
+	
+	Team getCurrentForStudent(int studentId);
+	
+	Team getCurrentForCurator(int curatorId);
 }

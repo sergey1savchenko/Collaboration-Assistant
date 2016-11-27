@@ -78,7 +78,7 @@ public class University {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder("Student");
+		StringBuilder builder = new StringBuilder("University");
 		return builder
 			.append(" [id=").append(id)
 			.append(", title=").append(title)

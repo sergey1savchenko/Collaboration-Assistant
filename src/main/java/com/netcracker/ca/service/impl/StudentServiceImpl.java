@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.netcracker.ca.dao.ProjectDao;
 import com.netcracker.ca.dao.StudentDao;
-import com.netcracker.ca.model.Project;
+import com.netcracker.ca.dao.TeamDao;
 import com.netcracker.ca.model.Student;
+import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.StudentService;
 
 @Service
@@ -21,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
 	private StudentDao studentDao;
 	
 	@Autowired
-	private ProjectDao projectDao;
+	private TeamDao teamDao;
 
 	@Override
 	public Student getById(int id) {
@@ -33,13 +32,11 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.getByAppFormId(appFormId);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void add(Student student) {
 		studentDao.add(student);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void update(Student student) {
 		studentDao.update(student);
@@ -56,8 +53,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Project getCurrentProject(int studentId) {
-		return projectDao.getCurrentForStudent(studentId);
+	public Team getCurrent(int studentId) {
+		return teamDao.getCurrentForStudent(studentId);
 	}
 
 }

@@ -18,7 +18,4 @@ public interface ProjectDao extends Dao<Project, Integer> {
 	
 	void removeCurator(int curatorId, int projectId);
 	
-	Project getCurrentForStudent(int studentId);
-	
-	Project getCurrentForCurator(int curatorId);
 }

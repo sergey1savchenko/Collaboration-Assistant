@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.netcracker.ca.dao.UserDao;
 import com.netcracker.ca.model.Role;
 import com.netcracker.ca.model.User;
+import com.netcracker.ca.model.UserAuth;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -37,17 +38,35 @@ public class UserDaoImpl implements UserDao {
 	private static String SQL_SELECT_CURATORS_BY_PROJECT = SQL_SELECT_CURATORS + " WHERE cp.project_id=?";
 	private static String SQL_SELECT_CURATORS_BY_TEAM = SQL_SELECT_CURATORS + " WHERE cp.team_id=?";
 
+	private static String SQL_SELECT_USER_AUTH_BY_EMAIL = "SELECT u.id AS u_id, u.email, u.password, u.is_active, r.id AS r_id, r.role FROM users AS u "
+			+ "INNER JOIN user_roles AS ur ON u.id=ur.user_id INNER JOIN roles AS r ON ur.role_id=r.id WHERE u.email=?";
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Override
 	public User getById(Integer id) {
 		List<User> users = jdbcTemplate.query(SQL_SELECT_USER_BY_ID, new UserRowMapper(), id);
 		return users.isEmpty() ? null : users.get(0);
 	}
 
+	@Override
 	public User getByEmail(String email) {
 		List<User> users = jdbcTemplate.query(SQL_SELECT_USER_BY_EMAIL, new UserRowMapper(), email);
 		return users.isEmpty() ? null : users.get(0);
+	}
+
+	@Override
+	public UserAuth getUserAuth(String email) {
+		List<UserAuth> list = jdbcTemplate.query(SQL_SELECT_USER_AUTH_BY_EMAIL, new RowMapper<UserAuth>() {
+
+			@Override
+			public UserAuth mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new UserAuth(rs.getInt("u_id"), rs.getString("email"), rs.getString("password"),
+						rs.getBoolean("is_active"), new Role(rs.getInt("r_id"), rs.getString("role")));
+			}
+		}, email);
+		return list.isEmpty() ? null : list.get(0);
 	}
 
 	@Override
@@ -55,6 +74,7 @@ public class UserDaoImpl implements UserDao {
 		return jdbcTemplate.query(SQL_SELECT_USER_BY_ROLE, new UserRowMapper(), role);
 	}
 
+	@Override
 	public void add(final User user) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
@@ -74,6 +94,7 @@ public class UserDaoImpl implements UserDao {
 		jdbcTemplate.update(SQL_INSERT_USER_ROLE, user.getId(), user.getRole().getId());
 	}
 
+	@Override
 	public void update(User user) {
 		jdbcTemplate.update(SQL_UPDATE_USER, user.getEmail(), user.getFirstName(), user.getSecondName(),
 				user.getLastName(), user.isActive(), user.getId());
@@ -89,7 +110,7 @@ public class UserDaoImpl implements UserDao {
 	public List<User> getCuratorsByTeam(int teamId) {
 		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_TEAM, new UserNoRoleMapper(), teamId);
 	}
-	
+
 	@Override
 	public void delete(Integer id) {
 		throw new UnsupportedOperationException();
@@ -113,7 +134,7 @@ public class UserDaoImpl implements UserDao {
 			return user;
 		}
 	}
-	
+
 	private static class UserNoRoleMapper implements RowMapper<User> {
 
 		@Override
@@ -127,6 +148,6 @@ public class UserDaoImpl implements UserDao {
 			user.setActive(rs.getBoolean("is_active"));
 			return user;
 		}
-		
+
 	}
 }

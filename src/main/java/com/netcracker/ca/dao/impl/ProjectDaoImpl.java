@@ -22,7 +22,9 @@ import com.netcracker.ca.model.University;
 @Repository
 public class ProjectDaoImpl implements ProjectDao {
 
-	private static final String SQL_SELECT_ALL_PROJECTS = "SELECT projects.id, projects.title as project_title, projects.description, projects.start_date, projects.end_date, projects.university_id, universities.title as university_title FROM (projects INNER JOIN universities ON projects.university_id = universities.id)";
+	private static final String SQL_SELECT_ALL_PROJECTS = "SELECT p.id, p.title as p_title, p.description, p.start_date, p.end_date, p.university_id, un.title as un_title "
+			+ "FROM projects AS p INNER JOIN universities AS un ON p.university_id = un.id";
+	private static final String SQL_SELECT_ALL_PROJECTS_LIMITED = SQL_SELECT_ALL_PROJECTS + " LIMIT ?,?";
 	private static final String SQL_SELECT_PROJECT_BY_ID = SQL_SELECT_ALL_PROJECTS + " WHERE projects.id = ?";
 	private static final String SQL_SELECT_PROJECT_BY_TITLE = SQL_SELECT_ALL_PROJECTS + " WHERE projects.title = ?";
 	private static final String SQL_INSERT_PROJECT = "INSERT INTO projects (title, description, start_date, end_date, university_id) VALUES (?, ?, ?, ?, ?)";
@@ -31,11 +33,6 @@ public class ProjectDaoImpl implements ProjectDao {
 	
 	private static final String SQL_INSERT_CURATOR = "INSERT INTO curators_in_project (user_id, project_id, team_id) VALUES (?, ?, ?)";
 	private static final String SQL_DELETE_CURATOR = "DELETE FROM curators_in_project WHERE user_id=? AND project_id=?";
-	
-	private static final String SQL_SELECT_CURRENT_FOR_STUDENT = SQL_SELECT_ALL_PROJECTS + " INNER JOIN students_in_project AS sp ON projects.id=sp.project_id "
-			+ "INNER JOIN application_forms AS af ON sp.app_form_id=af.id WHERE af.id=? AND projects.end_date>?";
-	private static final String SQL_SELECT_CURRENT_FOR_CURATOR = SQL_SELECT_ALL_PROJECTS + " INNER JOIN curators_in_project AS cp ON projects.id=cp.project_id "
-			+ "WHERE cp.user_id=? AND projects.end_date>?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -43,6 +40,11 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public List<Project> getAll() {
 		return jdbcTemplate.query(SQL_SELECT_ALL_PROJECTS, new ProjectMapper());
+	}
+	
+	@Override
+	public List<Project> getAll(int limit, int offset) {
+		return jdbcTemplate.query(SQL_SELECT_ALL_PROJECTS_LIMITED, new ProjectMapper(), limit, offset);
 	}
 
 	@Override
@@ -95,41 +97,24 @@ public class ProjectDaoImpl implements ProjectDao {
 	public void removeCurator(int curatorId, int projectId) {
 		jdbcTemplate.update(SQL_DELETE_CURATOR, curatorId, projectId);
 	}
-	
-	@Override
-	public Project getCurrentForStudent(int studentId) {
-		List<Project> projects = jdbcTemplate.query(SQL_SELECT_CURRENT_FOR_STUDENT, new ProjectMapper(), studentId, new Date());
-		return projects.isEmpty() ? null: projects.get(0);
-	}
-
-	@Override
-	public Project getCurrentForCurator(int curatorId) {
-		List<Project> projects = jdbcTemplate.query(SQL_SELECT_CURRENT_FOR_CURATOR, new ProjectMapper(), curatorId, new Date());
-		return projects.isEmpty() ? null: projects.get(0);
-	}
 
 	private static class ProjectMapper implements RowMapper<Project> {
 
 		public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Project project = new Project();
 			project.setId(rs.getInt("id"));
-			project.setTitle(rs.getString("project_title"));
+			project.setTitle(rs.getString("p_title"));
 			project.setDescription(rs.getString("description"));
 			project.setStartDate(rs.getTimestamp("start_date"));
 			project.setEndDate(rs.getTimestamp("end_date"));
 			University university = new University();
 			university.setId(rs.getInt("university_id"));
-			university.setTitle(rs.getString("university_title"));
+			university.setTitle(rs.getString("un_title"));
 			project.setUniversity(university);
 			return project;
 		}
 	}
 
-	@Override
-	public List<Project> getAll(int limit, int offset) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean existsWithTitle(String title) {

@@ -23,49 +23,24 @@ public class MainController {
 		return "login";
 	}
 
+	@RequestMapping(value = { "/", "/main" }, method = RequestMethod.GET)
+	public String mainPage(Model model) {
+		return "home";
+	}
+	
 	@RequestMapping(value = { "/about" }, method = RequestMethod.GET)
 	public String aboutPage(Model model) {
 		return "about";
 	}
 	
-	@RequestMapping(value = { "/main" }, method = RequestMethod.GET)
-	public String mainPage(Model model) {
-		return "home";
+	@RequestMapping(value="/404")
+	public String error404(){
+		//System.out.println("custom error handler");
+		return "/errorPage";
 	}
-
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String adminPage(Model model) {
-		return "admin";
-	}
-
-	@RequestMapping(value = "/curator", method = RequestMethod.GET)
-	public String curatorPage(Model model) {
-		return "curator";
-	}
-
-	@RequestMapping(value = "/hr", method = RequestMethod.GET)
-	public String hrPage(Model model) {
-		return "hr";
-	}
-
-	@RequestMapping(value = "/student", method = RequestMethod.GET)
-	public String studentPage(Model model) {
-		return "student";
-	}
-	
-//	@RequestMapping(value = "/team", method = RequestMethod.GET)
-//	public String teamPage(Model model,int prj) {
-//		model.addAttribute("projectId", prj);
-//		return "teams";
-//	}
 
 	@Autowired
 	private UniversityService universityService;
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String mainPage() {
-		return "home";
-	}
 
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String projectsPage(Model model) {

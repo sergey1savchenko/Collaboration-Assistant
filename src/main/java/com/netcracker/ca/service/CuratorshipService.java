@@ -2,7 +2,7 @@ package com.netcracker.ca.service;
 
 import java.util.List;
 
-import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
 
 public interface CuratorshipService {
@@ -15,6 +15,6 @@ public interface CuratorshipService {
 	
 	List<User> getByTeam(int teamId);
 	
-	Project getCurrentProject(int curatorId);
+	Team getCurrent(int curatorId);
 	
 }

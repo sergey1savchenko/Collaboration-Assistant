@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.netcracker.ca.dao.ProjectDao;
+import com.netcracker.ca.dao.TeamDao;
 import com.netcracker.ca.dao.UserDao;
 import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.CuratorshipService;
 
@@ -19,6 +21,9 @@ public class CuratorshipServiceImpl implements CuratorshipService {
 	
 	@Autowired
 	private ProjectDao projectDao;
+	
+	@Autowired
+	private TeamDao teamDao;
 
 	@Override
 	public void addToProject(int curatorId, int projectId, int teamId) {
@@ -41,8 +46,8 @@ public class CuratorshipServiceImpl implements CuratorshipService {
 	}
 
 	@Override
-	public Project getCurrentProject(int curatorId) {
-		return projectDao.getCurrentForCurator(curatorId);
+	public Team getCurrent(int curatorId) {
+		return teamDao.getCurrentForCurator(curatorId);
 	}
 
 }
