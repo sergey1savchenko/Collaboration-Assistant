@@ -2,10 +2,15 @@ package com.netcracker.ca.controller;
 
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.UniversityService;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +58,8 @@ public class MainController {
 	private ProjectService projectService;
 	@Autowired
 	private MarkTypeService markTypeService;
+	@Autowired
+	private TeamService teamService;
 	
 	@RequestMapping(value = "/admNewProject", method = RequestMethod.GET)
 	public String admNewProject(Model model) {
@@ -62,11 +69,12 @@ public class MainController {
 		return "admNewProject";
 	}
 	
-	@RequestMapping(value = "/admProjectTeams", method = RequestMethod.GET)
-	public String admProjectTeams(Model model) {
+	@RequestMapping(value = "/admProjectTeams{projectId}", method = RequestMethod.GET)
+	public String admProjectTeams(@PathVariable int projectId, HttpServletRequest request, Model model) {
+		model.addAttribute("projectTeams", teamService.getByProject(projectService.getById(projectId)));
 		model.addAttribute("universities", universityService.getAll());
-		model.addAttribute("projects", projectService.getAll());
-		model.addAttribute("markTypes", markTypeService.getAll());
+		model.addAttribute("project", projectService.getById(projectId));
 		return "admProjectTeams";
 	}
+	
 }

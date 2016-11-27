@@ -25,7 +25,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	private static final String SQL_SELECT_ALL_PROJECTS = "SELECT p.id, p.title as p_title, p.description, p.start_date, p.end_date, p.university_id, un.title as un_title "
 			+ "FROM projects AS p INNER JOIN universities AS un ON p.university_id = un.id";
 	private static final String SQL_SELECT_ALL_PROJECTS_LIMITED = SQL_SELECT_ALL_PROJECTS + " LIMIT ?,?";
-	private static final String SQL_SELECT_PROJECT_BY_ID = SQL_SELECT_ALL_PROJECTS + " WHERE projects.id = ?";
+	private static final String SQL_SELECT_PROJECT_BY_ID = SQL_SELECT_ALL_PROJECTS + " WHERE p.id = ?";
 	private static final String SQL_SELECT_PROJECT_BY_TITLE = SQL_SELECT_ALL_PROJECTS + " WHERE projects.title = ?";
 	private static final String SQL_INSERT_PROJECT = "INSERT INTO projects (title, description, start_date, end_date, university_id) VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE_PROJECT = "UPDATE projects SET title = ?, description = ?, start_date = ?, end_date = ?, university_id = ? WHERE projects.id = ?";
