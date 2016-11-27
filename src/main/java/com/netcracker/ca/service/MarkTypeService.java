@@ -20,4 +20,6 @@ public interface MarkTypeService {
 	void disallow(int markTypeId, int projectId, MarkTypeScope scope);
 
 	List<MarkType> getAllowed(int projectId, MarkTypeScope scope);
+	
+	List<MarkType> getAll();
 }

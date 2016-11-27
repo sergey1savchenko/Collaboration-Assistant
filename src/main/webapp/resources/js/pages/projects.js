@@ -5,7 +5,7 @@ $(function () {
         width: "100%",
         
     	
-        filtering: true,
+        filtering: false,
         editing: true,
         sorting: true,
         paging: false,

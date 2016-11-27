@@ -18,9 +18,17 @@ public class ProjectController {
     public List<Project> getAll() {
         return projectService.getAll();
     }
-
+    
+    // to change             "/projectWithEvals"
     @RequestMapping(value = "/project", method = RequestMethod.POST, produces = "application/json")
     public Project create(@RequestBody Project project) {
+        projectService.add(project);
+        return project;
+    }
+    
+    // to change
+    @RequestMapping(value = "/projectWithCopiedEvals", method = RequestMethod.POST, produces = "application/json")
+    public Project projectWithCopiedEvals(@RequestBody Project project) {
         projectService.add(project);
         return project;
     }

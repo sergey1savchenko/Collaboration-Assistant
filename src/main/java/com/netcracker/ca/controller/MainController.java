@@ -1,5 +1,7 @@
 package com.netcracker.ca.controller;
 
+import com.netcracker.ca.service.MarkTypeService;
+import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,5 +49,20 @@ public class MainController {
 		model.addAttribute("universities", universityService.getAll());
 		return "projects";
 	}
+	
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private MarkTypeService markTypeService;
+	
+	@RequestMapping(value = "/admNewProject", method = RequestMethod.GET)
+	public String admNewProject(Model model) {
+		model.addAttribute("universities", universityService.getAll());
+		model.addAttribute("projects", projectService.getAll());
+		model.addAttribute("markTypes", markTypeService.getAll());
+		return "admNewProject";
+	}
+	
+	
 
 }

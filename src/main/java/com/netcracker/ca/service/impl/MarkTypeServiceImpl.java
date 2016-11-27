@@ -58,4 +58,10 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 	public List<MarkType> getAllowed(int projectId, MarkTypeScope scope) {
 		return markTypeDao.getAllowed(projectId, scope);
 	}
+	
+	@Override
+	public List<MarkType> getAll() {
+		return markTypeDao.getAll();
+	}
+	
 }

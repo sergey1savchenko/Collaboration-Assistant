@@ -20,7 +20,8 @@ import com.netcracker.ca.model.MarkTypeScope;
 
 @Repository
 public class MarkTypeDaoImpl implements MarkTypeDao {
-
+	
+	private static String SQL_SELECT_ALL_MARKTYPES = "SELECT * FROM marktypes";
 	private static String SQL_SELECT_MARK_TYPE_BY_ID = "SELECT marktypes.id, marktypes.title, marktypes.has_text, marktypes.has_int, allow_marktypes.scope FROM marktypes INNER JOIN allow_marktypes ON marktypes.id = allow_marktypes.marktype_id WHERE allow_marktypes.project_id=?";
 	private static String SQL_INSERT_MARK_TYPE = "INSERT INTO marktypes (title, has_text, has_int) VALUES (?, ?, ?)";
 	private static String SQL_UPDATE_MARK_TYPE = "UPDATE marktypes SET title=?, has_text=?, has_int=? WHERE id=?";
@@ -74,7 +75,11 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 		return jdbcTemplate.query(SQL_SELECT_ALLOWED_FOR_PROJECT, new MarkTypeRowMapper(), projectId,
 				scope.ordinal());
 	}
-
+	
+	public List<MarkType> getAll() {
+		return jdbcTemplate.query(SQL_SELECT_ALL_MARKTYPES, new OnlyMarkTypeRowMapper());
+	}
+	
 	private static class MarkTypeRowMapper implements RowMapper<MarkType> {
 
 		public MarkType mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -87,4 +92,17 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 			return markType;
 		}
 	}
+	
+	private static class OnlyMarkTypeRowMapper implements RowMapper<MarkType> {
+
+		public MarkType mapRow(ResultSet rs, int rowNum) throws SQLException {
+			MarkType markType = new MarkType();
+			markType.setId(rs.getInt("id"));
+			markType.setTitle(rs.getString("title"));
+			markType.setHasText(rs.getBoolean("has_text"));
+			markType.setHasInt(rs.getBoolean("has_int"));
+			return markType;
+		}
+	}
+	
 }
