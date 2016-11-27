@@ -85,55 +85,29 @@ public class ProjectEvaluation {
 
     public int getStudentId() {return student.getId(); }
 
-    public void setStudentId(int id) {student.setId(id); }
-
     public String getStudentFirstName() {return student.getFirstName(); }
-
-    public void setStudentFirstName(String lastName) {student.setLastName(lastName); }
 
     public String getStudentLastName() {return student.getFirstName(); }
 
-    public void setStudentLastName(String lastName) {student.setLastName(lastName); }
-
     public int getCuratorId() {return curator.getId(); }
-
-    public void setCuratorId(int id) {curator.setId(id); }
 
     public String getCuratorFirstName() {return curator.getFirstName(); }
 
-    public void setCuratorFirstName(String lastName) {curator.setLastName(lastName); }
-
     public String getCuratorLastName() {return curator.getFirstName(); }
-
-    public void setCuratorLastName(String lastName) {curator.setLastName(lastName); }
 
     public int getMarkTypeId() {return marktype.getId(); }
 
-    public void setMarkTypeId(int id) {marktype.setId(id); }
-
     public String getMarkTypeTitle() {return marktype.getTitle(); }
-
-    public void setMarkTypeTitle(String title) {marktype.setTitle(title); }
 
     public boolean getMarkTypeHasInt() {return marktype.hasInt(); }
 
-    public void setMarkTypeHasInt(boolean hasInt) {marktype.setHasInt(hasInt); }
-
     public boolean getMarkTypeHasText() {return marktype.hasText(); }
-
-    public void setMarkTypeHasText(boolean hasText) {marktype.setHasText(hasText); }
 
     public int getProjectId() {return project.getId(); }
 
-    public void setProjectId(int id) {project.setId(id); }
-
     public String getProjectTitle() {return project.getTitle(); }
 
-    public void setProjectTitle(String title) {project.setTitle(title); }
-
     public int getStudentInProjectId() {return studentInProjectId; }
-
-    public void setStudentInProjectId(int studentInProjectId) {this.studentInProjectId = studentInProjectId; }
 
 	@Override
 	public String toString() {

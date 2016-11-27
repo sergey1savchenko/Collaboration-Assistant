@@ -29,7 +29,8 @@ public class MeetingDaoImpl implements MeetingDao {
 	private static String SQL_INSERT_MEETING = "INSERT INTO meetings (address, title, datetime, project_id, team_id) VALUES (?, ?, ?, ?, ?)";
 	private static String SQL_UPDATE_MEETING = "UPDATE meetings SET address=?, title=?, datetime=?, project_id=?, team_id=? WHERE id=?";
 	private static String SQL_DELETE_MEETING = "DELETE FROM meetings WHERE id=?";
-	private static String SQL_SELECT_ALL_MEETINGS = "SELECT meetings.id, meetings.title, datetime, projects.id, projects.title, teams.id, teams.title"
+	private static String SQL_SELECT_ALL_MEETINGS = "SELECT meetings.id AS mid, meetings.title AS mtitle, address, datetime, "
+			+ "projects.id AS pid, projects.title AS ptitle, teams.id AS tid, teams.title AS ttitle"
 			+ "FROM meetings INNER JOIN projects ON meetings.project_id = projects.id"
 			+ "INNER JOIN teams ON meetings.team_id = teams.id";
 	private static String SQL_SELECT_TEAM_MEETINGS = SQL_SELECT_ALL_MEETINGS + " WHERE teams.id=?";
@@ -81,15 +82,15 @@ public class MeetingDaoImpl implements MeetingDao {
 	private static class MeetingMapper implements RowMapper<Meeting> {
 		public Meeting mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Meeting meeting = new Meeting();
-			meeting.setId(rs.getInt("id"));
+			meeting.setId(rs.getInt("mid"));
 			meeting.setAddress(rs.getString("address"));
-			meeting.setTitle(rs.getString("title"));
+			meeting.setTitle(rs.getString("mtitle"));
 			meeting.setDatetime(rs.getTimestamp("datetime"));
 			Project project = new Project();
-			project.setId(rs.getInt("id"));
-			project.setTitle(rs.getString("title"));
+			project.setId(rs.getInt("pid"));
+			project.setTitle(rs.getString("ptitle"));
 			meeting.setProject(project);
-			meeting.setTeam(new Team(rs.getInt("id"), rs.getString("title"), project));
+			meeting.setTeam(new Team(rs.getInt("tid"), rs.getString("ttitle"), project));
 			return meeting;
 		}
 	}
