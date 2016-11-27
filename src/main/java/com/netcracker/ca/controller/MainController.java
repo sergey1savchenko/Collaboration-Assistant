@@ -40,16 +40,15 @@ public class MainController {
 		//System.out.println("custom error handler");
 		return "/errorPage";
 	}
-
-	@Autowired
-	private UniversityService universityService;
-
+	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String projectsPage(Model model) {
 		model.addAttribute("universities", universityService.getAll());
 		return "projects";
 	}
 	
+	@Autowired
+	private UniversityService universityService;
 	@Autowired
 	private ProjectService projectService;
 	@Autowired
@@ -63,6 +62,11 @@ public class MainController {
 		return "admNewProject";
 	}
 	
-	
-
+	@RequestMapping(value = "/admProjectTeams", method = RequestMethod.GET)
+	public String admProjectTeams(Model model) {
+		model.addAttribute("universities", universityService.getAll());
+		model.addAttribute("projects", projectService.getAll());
+		model.addAttribute("markTypes", markTypeService.getAll());
+		return "admProjectTeams";
+	}
 }
