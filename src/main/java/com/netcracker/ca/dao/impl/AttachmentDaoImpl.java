@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.netcracker.ca.dao.AttachmentDao;
 import com.netcracker.ca.model.Attachment;
+import com.netcracker.ca.model.Project;
 
 @Repository
 public class AttachmentDaoImpl implements AttachmentDao {
@@ -28,6 +29,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	private static String SQL_DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 	private static String SQL_SELECT_TEAM_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
 	private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
+	private static String SQL_SELECT_PROJECT_BY_TEAM = "SELECT project_id FROM teams WHERE id=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -39,6 +41,10 @@ public class AttachmentDaoImpl implements AttachmentDao {
 
 	public void add(final Attachment attachment) {
 		final boolean isTeamAttm = attachment.getTeam() != null;
+		if(isTeamAttm && attachment.getProject() == null) {
+			int projectId = jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TEAM, new Object[] { attachment.getTeam().getId() }, int.class);
+			attachment.setProject(new Project(projectId));
+		}
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 

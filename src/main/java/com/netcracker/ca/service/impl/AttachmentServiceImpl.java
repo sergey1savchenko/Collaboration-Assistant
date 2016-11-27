@@ -3,44 +3,62 @@ package com.netcracker.ca.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.netcracker.ca.dao.AttachmentDao;
 import com.netcracker.ca.model.Attachment;
+import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.Team;
+import com.netcracker.ca.model.dto.AttachmentDto;
 import com.netcracker.ca.service.AttachmentService;
+import com.netcracker.ca.service.StorageService;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class AttachmentServiceImpl implements AttachmentService {
 
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	@Autowired
+	private StorageService storageService;
+	
 
 	@Override
-	public Attachment getById(int id) {
-		return attachmentDao.getById(id);
+	public Attachment add(AttachmentDto attDto) {
+		StringBuilder builder = new StringBuilder();
+		if(attDto.getTeamId() != 0)
+			builder.append("/team/").append(attDto.getTeamId());
+		else
+			builder.append("/project/").append(attDto.getProjectId());
+		builder.append('/').append(attDto.getName());
+		String link = builder.toString();
+		storageService.store(attDto.getInput(), link);
+		Attachment att = new Attachment();
+		att.setTeam(new Team(attDto.getTeamId()));
+		att.setMimeType(attDto.getMimeType());
+		att.setText(attDto.getText());
+		att.setLink(link);
+		attachmentDao.add(att);
+		return att;
 	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	
 	@Override
-	public void add(Attachment attachment) {
-		attachmentDao.add(attachment);
+	public Resource getAsResource(int id) {
+		Attachment att = attachmentDao.getById(id);
+		return storageService.retrieve(att.getLink());
 	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	@Override
-	public void update(Attachment attachment) {
-		attachmentDao.update(attachment);
-	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	
 	@Override
 	public void delete(int id) {
+		Attachment att = attachmentDao.getById(id);
+		storageService.delete(att.getLink());
 		attachmentDao.delete(id);
 	}
-
+	
 	@Override
 	public List<Attachment> getTeamAttachments(int teamId) {
 		return attachmentDao.getTeamAttachments(teamId);
@@ -50,4 +68,5 @@ public class AttachmentServiceImpl implements AttachmentService {
 	public List<Attachment> getProjectAttachments(int projectId) {
 		return attachmentDao.getProjectAttachments(projectId);
 	}
+
 }

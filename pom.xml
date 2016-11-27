@@ -68,15 +68,15 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- Spring framework END -->
-		
+
 		<!-- Apache Velocity -->
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
-		
-		<!--  Java Mail API -->
+
+		<!-- Java Mail API -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -89,7 +89,7 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.15</version>
 		</dependency>
-		
+
 		<!-- Spring Security START -->
 		<!-- http://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<dependency>
@@ -212,7 +212,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.9</version>
 		</dependency>
-
+		
 	</dependencies>
 
 	<build>

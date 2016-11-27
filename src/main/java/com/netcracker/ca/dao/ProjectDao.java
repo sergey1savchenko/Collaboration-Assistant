@@ -8,7 +8,11 @@ public interface ProjectDao extends Dao<Project, Integer> {
 
 	List<Project> getAll();
 	
+	List<Project> getAll(int limit, int offset);
+	
 	Project getByTitle(String title);
+	
+	boolean existsWithTitle(String title);
 	
 	void addCurator(int curatorId, int projectId, int teamId);
 	

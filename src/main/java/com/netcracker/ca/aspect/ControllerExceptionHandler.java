@@ -3,21 +3,21 @@ package com.netcracker.ca.aspect;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.netcracker.ca.utils.RepositoryException;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class ControllerExceptionHandler {
 	
-	private Logger logger = LogManager.getLogger("Error.Controller");
+	private Logger logger = LogManager.getLogger("Error.Respository");
 	
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(RepositoryException.class)
-	public String handle(RepositoryException e) {
+	public ResponseEntity<String> handle(RepositoryException e) {
 		logger.error("Internal exception", e);
-		return "errorPage";
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal exception");
 	}
 }

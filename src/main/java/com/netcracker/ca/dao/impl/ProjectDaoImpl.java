@@ -125,6 +125,18 @@ public class ProjectDaoImpl implements ProjectDao {
 		}
 	}
 
+	@Override
+	public List<Project> getAll(int limit, int offset) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean existsWithTitle(String title) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 
 }
