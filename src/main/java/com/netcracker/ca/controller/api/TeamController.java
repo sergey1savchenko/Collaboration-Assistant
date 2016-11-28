@@ -24,7 +24,7 @@ public class TeamController {
     }
     
     @RequestMapping(value = "/teamStudents{teamId}", method = RequestMethod.GET, produces = "application/json")
-    public List<User> teamCStudents(@PathVariable int teamId) {
+    public List<User> teamStudents(@PathVariable int teamId) {
         return userService.getTeamStudents(teamId);
     }
     
@@ -44,7 +44,7 @@ public class TeamController {
     	teamService.update(team);
     }
     
-    @RequestMapping(value = "/team/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/teamDelete{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") int id) {
     	teamService.delete(id);
     }
