@@ -51,8 +51,8 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(SQL_INSERT_MARK_TYPE, new String[] { "id" });
 				ps.setString(1, markType.getTitle());
-				ps.setBoolean(2, markType.hasText());
-				ps.setBoolean(3, markType.hasInt());
+				ps.setBoolean(2, markType.getHasText());
+				ps.setBoolean(3, markType.getHasInt());
 				return ps;
 			}
 		}, keyHolder);
@@ -61,7 +61,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 
 	@Override
 	public void update(MarkType markType) {
-		jdbcTemplate.update(SQL_UPDATE_MARK_TYPE, markType.getTitle(), markType.hasText(), markType.hasInt(),
+		jdbcTemplate.update(SQL_UPDATE_MARK_TYPE, markType.getTitle(), markType.getHasText(), markType.getHasInt(),
 				markType.getId());
 	}
 
@@ -94,7 +94,6 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 	@Override
 	public boolean isAllowed(int id) {
 		return jdbcTemplate.query(SQL_ALLOW_EXISTS, new ExistsResultExtractor(), id);
-
 	}
 
 	private static class MarkTypeRowMapper implements RowMapper<MarkType> {

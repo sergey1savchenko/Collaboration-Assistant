@@ -19,6 +19,8 @@ public class UserAuth implements UserDetails {
 	private boolean isActive;
 
 	private Role role;
+	
+	public UserAuth() {}
 
 	public UserAuth(int id, String username, String password, boolean isActive, Role role) {
 		this.id = id;

@@ -35,7 +35,7 @@ public class MarkType {
 		this.title = title;
 	}
 
-	public boolean hasText() {
+	public boolean getHasText() {
 		return hasText;
 	}
 
@@ -43,7 +43,7 @@ public class MarkType {
 		this.hasText = hasText;
 	}
 
-	public boolean hasInt() {
+	public boolean getHasInt() {
 		return hasInt;
 	}
 

@@ -74,14 +74,14 @@ public class ParticipationServiceImpl implements ParticipationService {
 
 	@Override
 	public void updateAll(List<ParticipationDto> partDtos, int projectId) {
-		ProjectStatus invitedStatus = projectStatusDao.getByDesc("Involved");
+		ProjectStatus involved = projectStatusDao.getByDesc("Involved");
 		for(ParticipationDto partDto: partDtos) {
 			if(partDto.getId() == 0) {
 				Participation p = new Participation();
 				p.setStudent(new Student(partDto.getStudentId()));
 				p.setTeam(new Team(partDto.getTeamId()));
 				p.setProject(new Project(projectId));
-				p.setStatus(invitedStatus);
+				p.setStatus(involved);
 				p.setComment("Invited to project");
 				p.setAssigned(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 				participationDao.add(p);

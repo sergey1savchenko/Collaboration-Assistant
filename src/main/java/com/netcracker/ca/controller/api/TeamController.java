@@ -10,7 +10,7 @@ import com.netcracker.ca.service.UserService;
 import java.util.List;
 
 @RestController
-public class TeamController {
+public class TeamController extends BaseApiController {
 
     @Autowired
     private TeamService teamService;

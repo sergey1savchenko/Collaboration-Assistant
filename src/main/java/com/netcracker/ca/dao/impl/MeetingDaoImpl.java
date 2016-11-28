@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import com.netcracker.ca.dao.MeetingDao;
 import com.netcracker.ca.model.Meeting;
 import com.netcracker.ca.model.Project;
-import com.netcracker.ca.model.Team;
 
 /**
  * Created by Oleksandr on 10.11.2016.
@@ -26,32 +25,46 @@ import com.netcracker.ca.model.Team;
 @Repository
 public class MeetingDaoImpl implements MeetingDao {
 
-	private static String SQL_INSERT_MEETING = "INSERT INTO meetings (address, title, datetime, project_id, team_id) VALUES (?, ?, ?, ?, ?)";
+	private static String SQL_INSERT_PROJECT_MEETING = "INSERT INTO meetings (address, title, datetime, project_id) VALUES (?, ?, ?, ?)";
+	private static String SQL_INSERT_TEAM_MEETING = "INSERT INTO meetings (address, title, datetime, project_id, team_id) VALUES (?, ?, ?, ?, ?)";
 	private static String SQL_UPDATE_MEETING = "UPDATE meetings SET address=?, title=?, datetime=?, project_id=?, team_id=? WHERE id=?";
 	private static String SQL_DELETE_MEETING = "DELETE FROM meetings WHERE id=?";
-	private static String SQL_SELECT_ALL_MEETINGS = "SELECT meetings.id AS mid, meetings.title AS mtitle, address, datetime, "
-			+ "projects.id AS pid, projects.title AS ptitle, teams.id AS tid, teams.title AS ttitle"
-			+ "FROM meetings INNER JOIN projects ON meetings.project_id = projects.id"
-			+ "INNER JOIN teams ON meetings.team_id = teams.id";
-	private static String SQL_SELECT_TEAM_MEETINGS = SQL_SELECT_ALL_MEETINGS + " WHERE teams.id=?";
-	private static String SQL_SELECT_PROJECT_MEETINGS = SQL_SELECT_ALL_MEETINGS + " WHERE projects.id=?";
+	private static String SQL_SELECT_MEETING = "SELECT id, title, address, datetime FROM meetings";
+	private static String SQL_SELECT_MEETING_BY_ID = SQL_SELECT_MEETING + " WHERE id=?";
+	private static String SQL_SELECT_TEAM_MEETINGS = SQL_SELECT_MEETING + " WHERE team_id=?";
+	private static String SQL_SELECT_PROJECT_MEETINGS = SQL_SELECT_MEETING + " WHERE project_id=?";
+	private static String SQL_SELECT_PROJECT_BY_TEAM = "SELECT project_id FROM teams WHERE id=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+
+	@Override
+	public Meeting getById(Integer id) {
+		List<Meeting> meetings = jdbcTemplate.query(SQL_SELECT_MEETING_BY_ID, new MeetingMapper(), id);
+		return meetings.isEmpty() ? null: meetings.get(0);
+	}
 
 	@Override
 	public void add(final Meeting meeting) {
+		final boolean isTeamMeeting = meeting.getTeam() == null;
+		if(isTeamMeeting && meeting.getProject() == null) {
+			int projectId = jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TEAM, new Object[] { meeting.getTeam().getId() }, int.class);
+			meeting.setProject(new Project(projectId));
+		}
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement ps = con.prepareStatement(SQL_INSERT_MEETING, new String[] { "id" });
+				String sql = isTeamMeeting ? SQL_INSERT_TEAM_MEETING : SQL_INSERT_PROJECT_MEETING;
+				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setString(1, meeting.getAddress());
 				ps.setString(2, meeting.getTitle());
 				ps.setTimestamp(3, meeting.getDatetime());
 				ps.setInt(4, meeting.getProject().getId());
-				ps.setInt(5, meeting.getTeam().getId());
+				if(isTeamMeeting)
+					ps.setInt(5, meeting.getTeam().getId());
 				return ps;
 			}
 		}, keyHolder);
@@ -82,22 +95,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	private static class MeetingMapper implements RowMapper<Meeting> {
 		public Meeting mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Meeting meeting = new Meeting();
-			meeting.setId(rs.getInt("mid"));
+			meeting.setId(rs.getInt("id"));
 			meeting.setAddress(rs.getString("address"));
-			meeting.setTitle(rs.getString("mtitle"));
+			meeting.setTitle(rs.getString("title"));
 			meeting.setDatetime(rs.getTimestamp("datetime"));
-			Project project = new Project();
-			project.setId(rs.getInt("pid"));
-			project.setTitle(rs.getString("ptitle"));
-			meeting.setProject(project);
-			meeting.setTeam(new Team(rs.getInt("tid"), rs.getString("ttitle"), project));
 			return meeting;
 		}
 	}
 
-	@Override
-	public Meeting getById(Integer key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

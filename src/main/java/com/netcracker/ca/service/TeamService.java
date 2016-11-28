@@ -6,8 +6,6 @@ import com.netcracker.ca.model.Team;
 
 public interface TeamService {
 
-	List<Team> getAll();
-
 	Team getById(int id);
 
 	void add(Team team);
@@ -15,6 +13,8 @@ public interface TeamService {
 	void update(Team team);
 
 	void delete(int id);
+	
+	List<Team> getAll();
 
 	List<Team> getByProject(int projectId);
 

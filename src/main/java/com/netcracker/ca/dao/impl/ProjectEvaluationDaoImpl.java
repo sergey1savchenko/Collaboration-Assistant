@@ -50,8 +50,8 @@ public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(SQL_INSERT_PE, new String[] { "id" });
 				ps.setInt(1, pe.getStudentInProjectId());
-				ps.setInt(2, pe.getMarkTypeId());
-				ps.setInt(3, pe.getCuratorId());
+				ps.setInt(2, pe.getMarktype().getId());
+				ps.setInt(3, pe.getCurator().getId());
 				ps.setInt(4, pe.getIntValue());
 				ps.setString(5, pe.getTextValue());
 				return ps;
@@ -62,7 +62,7 @@ public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 
 	@Override
 	public void update(ProjectEvaluation pe) {
-		jdbcTemplate.update(SQL_UPDATE_PE, pe.getStudentInProjectId(), pe.getMarkTypeId(), pe.getCuratorId(),
+		jdbcTemplate.update(SQL_UPDATE_PE, pe.getStudentInProjectId(), pe.getMarktype().getId(), pe.getCurator().getId(),
 				pe.getIntValue(), pe.getTextValue(), pe.getId());
 	}
 
