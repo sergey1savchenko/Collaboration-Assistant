@@ -9,7 +9,7 @@ public interface TeamDao extends Dao<Team, Integer> {
 	
 	List<Team> getAll();
 
-	List<Team> getByProject(Project project);
+	List<Team> getByProject(int projectId);
 	
 	Team getByTitle(String title);
 	

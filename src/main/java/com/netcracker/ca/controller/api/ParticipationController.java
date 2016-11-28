@@ -1,4 +1,4 @@
-package com.netcracker.ca.controller;
+package com.netcracker.ca.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,7 @@ import com.netcracker.ca.model.dto.ParticipationDtos;
 import com.netcracker.ca.service.ParticipationService;
 
 @RestController
-public class ParticipationRestController {
+public class ParticipationController extends BaseApiController {
 	
 	@Autowired
 	private ParticipationService participationService;

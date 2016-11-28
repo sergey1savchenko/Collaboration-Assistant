@@ -10,14 +10,14 @@ public interface MarkTypeService {
 	MarkType getById(int id);
 
 	void add(MarkType markType);
-
+	
 	void update(MarkType markType);
-
+	
 	void delete(int id);
+	
+	void allow(List<Integer> markTypeIds, int projectId, MarkTypeScope scope);
 
-	void allow(int markTypeId, int projectId, MarkTypeScope scope);
-
-	void disallow(int markTypeId, int projectId, MarkTypeScope scope);
-
+	List<MarkType> getAll();
+	
 	List<MarkType> getAllowed(int projectId, MarkTypeScope scope);
 }

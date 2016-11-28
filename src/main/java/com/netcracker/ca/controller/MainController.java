@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class MainController {
+public class MainController extends BaseController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(Model model, @RequestParam(value = "error", required = false) String error,

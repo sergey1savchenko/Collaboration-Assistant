@@ -10,14 +10,17 @@ public interface ProjectService {
 
 	Project getById(int id);
 	
-	Project getByTitle(String title);
-
-	void add(Project project);
+	Project getByIdWithUsers(int id);
+	
+	void add(Project project, List<Integer> meetingMarkTypeIds, List<Integer> projectMarkTypeIds);
 
 	void update(Project project);
 
 	void delete(int id);
 	
-	void addByTemplate(Project projectNew, Project projectTemplate);
+	List<Project> getAll(int limit, int offset);
+	
+	int count();
+	
 
 }

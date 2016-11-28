@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("hr")
-public class HRController {
+public class HRController extends BaseController {
 
 	@RequestMapping("")
 	public String projects() {

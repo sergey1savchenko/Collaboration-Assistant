@@ -1,6 +1,7 @@
 package com.netcracker.ca.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netcracker.ca.dao.StudentDao;
 import com.netcracker.ca.dao.TeamDao;
 import com.netcracker.ca.model.Student;
-import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.StudentService;
 
 @Service
@@ -18,9 +18,6 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentDao studentDao;
-	
-	@Autowired
-	private TeamDao teamDao;
 
 	@Override
 	public Student getById(int id) {
@@ -53,8 +50,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Team getCurrent(int studentId) {
-		return teamDao.getCurrentForStudent(studentId);
+	public Map<Integer, List<Student>> getByProjectInTeams(int projectId) {
+		return studentDao.getByProjectInTeams(projectId);
 	}
 
 }

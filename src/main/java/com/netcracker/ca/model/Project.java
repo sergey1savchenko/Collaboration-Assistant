@@ -1,6 +1,7 @@
 package com.netcracker.ca.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Project {
 
@@ -10,6 +11,7 @@ public class Project {
 	private Timestamp startDate;
 	private Timestamp endDate;
 	private University university;
+	private List<Team> teams;
 
 	public Project() {
 	}
@@ -76,6 +78,14 @@ public class Project {
 	public void setUniversity(University university) {
 		this.university = university;
 	}
+	
+	public List<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
+	}
 
 	@Override
 	public int hashCode() {
@@ -102,13 +112,9 @@ public class Project {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("Project");
-		return builder
-				.append(" [id=").append(id)
-				.append(", title=").append(title)
-				.append(", description=").append(description)
-				.append(", startDate=").append(startDate)
-				.append(", endDate=").append(endDate)
-				.append(", university.id=").append(university != null ? university.getId(): 0)
-				.append("]").toString();
+		return builder.append(" [id=").append(id).append(", title=").append(title).append(", description=")
+				.append(description).append(", startDate=").append(startDate).append(", endDate=").append(endDate)
+				.append(", university.id=").append(university != null ? university.getId() : 0).append("]").toString();
 	}
+
 }

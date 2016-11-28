@@ -23,35 +23,37 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.netcracker.ca.model.Attachment;
-import com.netcracker.ca.model.dto.AttachmentDto;
+import com.netcracker.ca.service.AttachmentFactory;
 import com.netcracker.ca.service.AttachmentService;
 import com.netcracker.ca.utils.StorageException;
 
 @RestController
-public class AttachmentController {
+public class AttachmentController extends BaseApiController {
 	
 	Logger logger = LogManager.getLogger("Error.Files");
 
 	@Autowired
 	private AttachmentService attService;
+	
+	@Autowired
+	private AttachmentFactory attFactory;
 
-	@RequestMapping("admin/project/{projectId}/files")
+	@RequestMapping("admin/api/project/{projectId}/files")
 	public List<Attachment> getProjectAttachments(@PathVariable int projectId) {
 		return attService.getProjectAttachments(projectId);
 	}
 
-	@PostMapping("admin/project/{projectId}/file")
+	@PostMapping("admin/api/project/{projectId}/file")
 	public Attachment uploadForProject(@RequestParam MultipartFile file, @RequestParam("text") String text,
 			@PathVariable int projectId) throws IOException {
 		//add validation for file (not empty, <maxSize)
 		try (InputStream input = file.getInputStream()) {
-			AttachmentDto attDto = new AttachmentDto(input, file.getName(), text, file.getContentType(), projectId,
-					false);
-			return attService.add(attDto);
+			Attachment att = attFactory.build(file.getName(), text, file.getContentType(), projectId, false);
+			return attService.add(att,input);
 		}
 	}
 
-	@GetMapping("admin/file/{fileId}")
+	@GetMapping("admin/api/file/{fileId}")
 	public ResponseEntity<Resource> download(@PathVariable int fileId) throws IOException {
 		Resource resource = attService.getAsResource(fileId);
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -60,7 +62,7 @@ public class AttachmentController {
 		return new ResponseEntity<Resource>(resource, responseHeaders, HttpStatus.OK);
 	}
 
-	@DeleteMapping("admin/file/{fileId}")
+	@DeleteMapping("admin/api/file/{fileId}")
 	public void delete(@PathVariable int fileId) {
 		attService.delete(fileId);
 	}

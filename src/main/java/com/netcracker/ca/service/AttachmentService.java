@@ -1,16 +1,15 @@
 package com.netcracker.ca.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.netcracker.ca.model.Attachment;
-import com.netcracker.ca.model.dto.AttachmentDto;
 
 public interface AttachmentService {
 
-	Attachment add(AttachmentDto attDto);
+	Attachment add(Attachment att, InputStream is);
 	
 	Resource getAsResource(int id);
 

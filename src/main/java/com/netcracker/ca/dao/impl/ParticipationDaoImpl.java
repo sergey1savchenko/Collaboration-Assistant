@@ -50,8 +50,9 @@ public class ParticipationDaoImpl implements ParticipationDao {
 			+ "pr.start_date AS pr_start, pr.end_date AS pr_end, pr.university_id AS unpr_id, p.comment, p.datetime, st.id AS st_id, st.description AS st_desc, p.team_id AS t_id "
 			+ "FROM students_in_project AS p INNER JOIN application_forms AS af ON p.app_form_id=af.id INNER JOIN users AS u ON af.user_id=u.id INNER JOIN projects AS pr ON p.project_id=pr.id "
 			+ "INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id WHERE p.team_id=?";
-	private static String SQL_INSERT_PARTICIPATION = "INSERT INTO students_in_project (status_type_id, comment, assigned, team_id) VALUES (?, ?, ?, ?)";
-	private static String SQL_UPDATE_PARTICIPATION = "UPDATE students_in_project SET status_type_id=?, comment=?, assigned=?, team_id=? WHERE id=?";
+	private static String SQL_INSERT_PARTICIPATION = "INSERT INTO students_in_project (app_form_id, project_id, status_type_id, comment, datetime, team_id) "
+			+ "SELECT ?, ?, ?, ? WHERE NOT EXISTS (SELECT * FROM students_in_project WHERE app_form_id=? AND project_id=?)";
+	private static String SQL_UPDATE_PARTICIPATION = "UPDATE students_in_project SET status_type_id=?, comment=?, datetime=?, team_id=? WHERE id=?";
 	private static String SQL_DELETE_PARTICIPATION = "DELETE FROM students_in_project WHERE id=?";
 	private static String SQL_DELETE_PARTICIPATION_BY_STUDENT_AND_PROJECT = "DELETE FROM students_in_project WHERE app_form_id=? AND project_id=?";
 	
@@ -215,10 +216,14 @@ public class ParticipationDaoImpl implements ParticipationDao {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(SQL_INSERT_PARTICIPATION, new String[] { "id" });
-				ps.setInt(1, participation.getStatus().getId());
-				ps.setString(2, participation.getComment());
-				ps.setTimestamp(3, Timestamp.valueOf(participation.getAssigned()));
-				ps.setInt(4, participation.getTeam().getId());
+				ps.setInt(1, participation.getStudent().getAppFormId());
+				ps.setInt(2, participation.getProject().getId());
+				ps.setInt(3, participation.getStatus().getId());
+				ps.setString(4, participation.getComment());
+				ps.setTimestamp(5, Timestamp.valueOf(participation.getAssigned()));
+				ps.setInt(6, participation.getTeam().getId());
+				ps.setInt(7, participation.getStudent().getAppFormId());
+				ps.setInt(8, participation.getProject().getId());
 				return ps;
 			}
 		}, keyHolder);

@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.MarkTypeDao;
 import com.netcracker.ca.model.MarkType;
 import com.netcracker.ca.model.MarkTypeScope;
 import com.netcracker.ca.service.MarkTypeService;
+import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.utils.ServiceException;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class MarkTypeServiceImpl implements MarkTypeService {
 
 	@Autowired
@@ -24,38 +25,38 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 		return markTypeDao.getById(id);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void add(MarkType markType) {
 		markTypeDao.add(markType);
 	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	
 	@Override
 	public void update(MarkType markType) {
 		markTypeDao.update(markType);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void delete(int id) {
+		if (markTypeDao.isAllowed(id))
+			throw new ServiceException("MarkType is already used in project(s)");
 		markTypeDao.delete(id);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public void allow(int markTypeId, int projectId, MarkTypeScope scope) {
-		markTypeDao.allow(markTypeId, projectId, scope);
-	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	@Override
-	public void disallow(int markTypeId, int projectId, MarkTypeScope scope) {
-		markTypeDao.disallow(markTypeId, projectId, scope);
+	public List<MarkType> getAll() {
+		return markTypeDao.getAll();
 	}
 
 	@Override
 	public List<MarkType> getAllowed(int projectId, MarkTypeScope scope) {
 		return markTypeDao.getAllowed(projectId, scope);
 	}
+
+	@Override
+	public void allow(List<Integer> markTypeIds, int projectId, MarkTypeScope scope) {
+		for (Integer markTypeId : markTypeIds) {
+			markTypeDao.allow(markTypeId, projectId, scope);
+		}
+	}
+
 }

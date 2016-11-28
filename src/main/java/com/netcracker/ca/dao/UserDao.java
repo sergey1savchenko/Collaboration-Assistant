@@ -12,9 +12,4 @@ public interface UserDao extends Dao<User, Integer> {
 	UserAuth getUserAuth(String email);
 	
 	List<User> getByRole(String role);
-	
-	List<User> getCuratorsByProject(int projectId);
-	
-	List<User> getCuratorsByTeam(int teamId);
-
 }

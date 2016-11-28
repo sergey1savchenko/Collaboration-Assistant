@@ -1,6 +1,7 @@
 package com.netcracker.ca.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
@@ -19,6 +20,6 @@ public interface StudentService {
 	
 	List<Student> getByTeam(int teamId);
 	
-	Team getCurrent(int studentId);
+	Map<Integer, List<Student>> getByProjectInTeams(int projectId);
 
 }

@@ -79,8 +79,8 @@ public class TeamDaoImpl implements TeamDao {
 	}
 
 	@Override
-	public List<Team> getByProject(Project project) {
-		return jdbcTemplate.query(SQL_SELECT_ALL_TEAMS_OF_PROJECT, new TeamMapper(), project.getId());
+	public List<Team> getByProject(int projectId) {
+		return jdbcTemplate.query(SQL_SELECT_ALL_TEAMS_OF_PROJECT, new TeamMapper(), projectId);
 	}
 
 	@Override

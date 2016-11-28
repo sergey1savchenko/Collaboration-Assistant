@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @RequestMapping("student")
 @SessionAttributes("team")
-public class StudentController {
+public class StudentController extends BaseController {
 
 	@RequestMapping("")
 	public String project(HttpSession session) {

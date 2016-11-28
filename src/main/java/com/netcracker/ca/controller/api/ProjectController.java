@@ -1,37 +1,53 @@
 package com.netcracker.ca.controller.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.netcracker.ca.model.Project;
-import com.netcracker.ca.service.ProjectService;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.Team;
+import com.netcracker.ca.model.dto.ProjectMarkTypesDto;
+import com.netcracker.ca.service.ProjectService;
+
 @RestController
-public class ProjectController {
+public class ProjectController extends BaseApiController {
 
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value = "/project", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping({"admin/api/projects", "hr/api/projects"})
     public List<Project> getAll() {
         return projectService.getAll();
     }
 
-    @RequestMapping(value = "/project", method = RequestMethod.POST, produces = "application/json")
-    public Project create(@RequestBody Project project) {
-        projectService.add(project);
+    @PostMapping("admin/api/project")
+    public Project create(@RequestBody ProjectMarkTypesDto dto) {
+        projectService.add(dto.getProject(), dto.getMeetingMarkTypeIds(), dto.getProjectMarkTypeIds());
+        return dto.getProject();
+    }
+    
+    @GetMapping({"admin/api/project/{projectId}", "hr/api/project/{projectId}"})
+    public Project get(@PathVariable int projectId) {
+        Project project = projectService.getByIdWithUsers(projectId);
+        for(Team team: project.getTeams())
+        	team.setProject(null);
         return project;
     }
 
-    @RequestMapping(value = "/project", method = RequestMethod.PUT)
+    @PutMapping("admin/api/project")
     public void update(@RequestBody Project project) {
         projectService.update(project);
     }
 
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") int id) {
+    @DeleteMapping("admin/api/project/{id}")
+    public void delete(@PathVariable int id) {
         projectService.delete(id);
     }
 }

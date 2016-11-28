@@ -13,7 +13,7 @@ import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.TeamService;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class TeamServiceImpl implements TeamService {
 
 	@Autowired
@@ -29,31 +29,38 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.getById(id);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void add(Team team) {
 		teamDao.add(team);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void update(Team team) {
 		teamDao.update(team);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void delete(int id) {
 		teamDao.delete(id);
 	}
 
 	@Override
-	public List<Team> getByProject(Project project) {
-		return teamDao.getByProject(project);
+	public List<Team> getByProject(int projectId) {
+		return teamDao.getByProject(projectId);
 	}
 
 	@Override
 	public Team getByTitle(String title) {
 		return teamDao.getByTitle(title);
+	}
+
+	@Override
+	public Team getCurrentForStudent(int studentId) {
+		return teamDao.getCurrentForStudent(studentId);
+	}
+
+	@Override
+	public Team getCurrentForCurator(int curatorId) {
+		return teamDao.getCurrentForCurator(curatorId);
 	}
 }

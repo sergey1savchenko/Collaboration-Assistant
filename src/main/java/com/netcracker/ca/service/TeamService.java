@@ -2,7 +2,6 @@ package com.netcracker.ca.service;
 
 import java.util.List;
 
-import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Team;
 
 public interface TeamService {
@@ -17,7 +16,11 @@ public interface TeamService {
 
 	void delete(int id);
 
-	List<Team> getByProject(Project project);
+	List<Team> getByProject(int projectId);
 
 	Team getByTitle(String title);
+	
+	Team getCurrentForStudent(int studentId);
+	
+	Team getCurrentForCurator(int curatorId);
 }

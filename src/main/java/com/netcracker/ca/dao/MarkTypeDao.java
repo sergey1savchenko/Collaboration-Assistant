@@ -11,5 +11,9 @@ public interface MarkTypeDao extends Dao<MarkType, Integer> {
 	
 	void disallow(int markTypeId, int projectId, MarkTypeScope scope);
 	
+	List<MarkType> getAll();
+	
 	List<MarkType> getAllowed(int projectId, MarkTypeScope scope);	
+	
+	boolean isAllowed(int id);
 }

@@ -1,10 +1,14 @@
 package com.netcracker.ca.model;
 
+import java.util.List;
+
 public class Team {
 
 	private int id;
 	private String title;
 	private Project project;
+	private List<User> curators;
+	private List<Student> students;
 
 	public Team() {
 	}
@@ -42,6 +46,22 @@ public class Team {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+	
+	public List<User> getCurators() {
+		return curators;
+	}
+
+	public void setCurators(List<User> curators) {
+		this.curators = curators;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 	@Override
