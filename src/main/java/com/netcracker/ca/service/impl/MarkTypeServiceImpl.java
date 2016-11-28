@@ -57,4 +57,5 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 			markTypeDao.allow(markTypeId, projectId, scope);
 		}
 	}
+	
 }

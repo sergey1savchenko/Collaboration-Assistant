@@ -69,5 +69,5 @@ public class UserServiceImpl implements UserService {
 		users.addAll(studentService.getByTeam(teamId));
 		return users;
 	}
-
+	
 }

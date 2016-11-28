@@ -32,6 +32,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/style/bootstrap-confirmation.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
 <script type="text/javascript"

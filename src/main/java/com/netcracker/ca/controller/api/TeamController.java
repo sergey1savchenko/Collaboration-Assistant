@@ -15,19 +15,6 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
     
-    @Autowired
-    private UserService userService;
-    
-    @RequestMapping(value = "/teamCurators{teamId}", method = RequestMethod.GET, produces = "application/json")
-    public List<User> teamCurators(@PathVariable int teamId) {
-        return userService.getTeamCurators(teamId);
-    }
-    
-    @RequestMapping(value = "/teamStudents{teamId}", method = RequestMethod.GET, produces = "application/json")
-    public List<User> teamCStudents(@PathVariable int teamId) {
-        return userService.getTeamStudents(teamId);
-    }
-    
     @RequestMapping(value = "/team", method = RequestMethod.GET, produces = "application/json")
     public List<Team> getAll() {
         return teamService.getAll();
