@@ -19,5 +19,9 @@ public interface UserService {
 	List<User> getAssociatedWithProject(int projectId);
 	
 	List<User> getAssociatedWithTeam(int teamId);
+
+	List<User> getTeamCurators(int teamId);
+	
+	List<User> getTeamStudents(int teamId);
 	
 }

@@ -3,7 +3,9 @@ package com.netcracker.ca.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.netcracker.ca.model.Team;
+import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.TeamService;
+import com.netcracker.ca.service.UserService;
 
 import java.util.List;
 
@@ -12,7 +14,20 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
-
+    
+    @Autowired
+    private UserService userService;
+    
+    @RequestMapping(value = "/teamCurators{teamId}", method = RequestMethod.GET, produces = "application/json")
+    public List<User> teamCurators(@PathVariable int teamId) {
+        return userService.getTeamCurators(teamId);
+    }
+    
+    @RequestMapping(value = "/teamStudents{teamId}", method = RequestMethod.GET, produces = "application/json")
+    public List<User> teamCStudents(@PathVariable int teamId) {
+        return userService.getTeamStudents(teamId);
+    }
+    
     @RequestMapping(value = "/team", method = RequestMethod.GET, produces = "application/json")
     public List<Team> getAll() {
         return teamService.getAll();

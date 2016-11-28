@@ -65,5 +65,18 @@ public class UserServiceImpl implements UserService {
 		users.addAll(studentDao.getByTeam(teamId));
 		return users;
 	}
-
+	
+	@Override
+	public List<User> getTeamCurators(int teamId){
+		List<User> users = new ArrayList<>();
+		users.addAll(userDao.getCuratorsByTeam(teamId));
+		return users;
+	}
+	
+	@Override
+	public List<User> getTeamStudents(int teamId){
+		List<User> users = new ArrayList<>();
+		users.addAll(studentDao.getByTeam(teamId));
+		return users;
+	}
 }
