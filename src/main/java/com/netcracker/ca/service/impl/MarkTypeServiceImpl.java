@@ -10,7 +10,6 @@ import com.netcracker.ca.dao.MarkTypeDao;
 import com.netcracker.ca.model.MarkType;
 import com.netcracker.ca.model.MarkTypeScope;
 import com.netcracker.ca.service.MarkTypeService;
-import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.utils.ServiceException;
 
 @Service
@@ -58,5 +57,4 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 			markTypeDao.allow(markTypeId, projectId, scope);
 		}
 	}
-
 }

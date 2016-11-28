@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import com.netcracker.ca.dao.ProjectDao;
 import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.University;
-import com.netcracker.ca.utils.jdbc.ExistsResultExtractor;
 
 @Repository
 public class ProjectDaoImpl implements ProjectDao {

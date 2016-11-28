@@ -27,13 +27,13 @@ public class MarkTypeController extends BaseApiController {
 
     @PostMapping("admin/api/property")
     public MarkType create(@RequestBody MarkType markType) {
-    	markTypeService.save(markType);
+    	markTypeService.add(markType);
         return markType;
     }
 
     @PutMapping("admin/api/property")
     public void update(@RequestBody MarkType markType) {
-    	markTypeService.save(markType);
+    	markTypeService.update(markType);
     }
 
     @DeleteMapping("admin/api/property/{id}")

@@ -7,10 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -23,7 +21,6 @@ import com.netcracker.ca.utils.jdbc.ExistsResultExtractor;
 
 @Repository
 public class MarkTypeDaoImpl implements MarkTypeDao {
-
 	private static String SQL_SELECT_MARK_TYPE = "SELECT m.id, m.title, m.has_text, m.has_int FROM marktypes AS m";
 	private static String SQL_SELECT_MARK_TYPE_BY_ID = SQL_SELECT_MARK_TYPE + " WHERE m.id=?";
 	private static String SQL_INSERT_MARK_TYPE = "INSERT INTO marktypes (title, has_text, has_int) VALUES (?, ?, ?)";
@@ -98,7 +95,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 	public boolean isAllowed(int id) {
 		return jdbcTemplate.query(SQL_ALLOW_EXISTS, new ExistsResultExtractor(), id);
 	}
-
+	
 	private static class MarkTypeRowMapper implements RowMapper<MarkType> {
 
 		public MarkType mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -107,9 +104,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 			markType.setTitle(rs.getString("title"));
 			markType.setHasText(rs.getBoolean("has_text"));
 			markType.setHasInt(rs.getBoolean("has_int"));
-			markType.setScope(MarkTypeScope.values()[rs.getInt("scope")]);
 			return markType;
 		}
 	}
-
 }

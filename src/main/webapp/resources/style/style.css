@@ -66,3 +66,11 @@ input[type="password"] {
 .simple-grid {
 	margin-bottom: 75px;
 }
+
+.bottomButton {
+	margin-bottom: 75px;
+}
+
+.noDiv {
+display:none;
+}

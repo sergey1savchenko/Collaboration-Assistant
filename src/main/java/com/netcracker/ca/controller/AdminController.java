@@ -6,15 +6,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.netcracker.ca.model.Project;
+import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ParticipationService;
 import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.service.UniversityService;
 
 @Controller
 @RequestMapping("admin")
 public class AdminController extends BaseController {
 
+	@Autowired
+	private MarkTypeService markTypeService;
+	
+	@Autowired
+	private UniversityService universityService;
+	
 	@Autowired
 	private ProjectService projectService;
 
@@ -22,7 +30,8 @@ public class AdminController extends BaseController {
 	private ParticipationService participationService;
 
 	@GetMapping({ "", "projects" })
-	public String projects() {
+	public String projects(Model model) {
+		model.addAttribute("universities", universityService.getAll());
 		return "admProjects";
 	}
 
@@ -32,7 +41,10 @@ public class AdminController extends BaseController {
 	}
 
 	@GetMapping("create-project")
-	public String createProject() {
+	public String createProject(Model model) {
+		model.addAttribute("universities", universityService.getAll());
+		model.addAttribute("projects", projectService.getAll());
+		model.addAttribute("markTypes", markTypeService.getAll());
 		return "admNewProject";
 	}
 

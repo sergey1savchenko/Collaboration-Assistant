@@ -1,7 +1,5 @@
 package com.netcracker.ca.controller;
 
-import com.netcracker.ca.service.UniversityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,15 +35,6 @@ public class MainController extends BaseController {
 	public String error404(){
 		//System.out.println("custom error handler");
 		return "/errorPage";
-	}
-
-	@Autowired
-	private UniversityService universityService;
-
-	@RequestMapping(value = "/projects", method = RequestMethod.GET)
-	public String projectsPage(Model model) {
-		model.addAttribute("universities", universityService.getAll());
-		return "projects";
 	}
 
 }

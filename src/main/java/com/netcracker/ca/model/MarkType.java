@@ -9,8 +9,6 @@ public class MarkType {
 	private boolean hasText;
 
 	private boolean hasInt;
-	
-	private MarkTypeScope scope;
 
 	public MarkType() {
 	}
@@ -52,14 +50,6 @@ public class MarkType {
 	public void setHasInt(boolean hasInt) {
 		this.hasInt = hasInt;
 	}
-	
-	public MarkTypeScope getScope() {
-		return scope;
-	}
-
-	public void setScope(MarkTypeScope scope) {
-		this.scope = scope;
-	}
 
 	@Override
 	public int hashCode() {
@@ -91,7 +81,6 @@ public class MarkType {
 			.append(", title=").append(title)
 			.append(", hasText=").append(hasText)
 			.append(", hasInt=").append(hasInt)
-			.append(", scope=").append(scope)
 			.append("]").toString();
 	}
 }
