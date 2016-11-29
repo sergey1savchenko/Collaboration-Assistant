@@ -36,7 +36,7 @@ public class AdminController extends BaseController {
 
 	@GetMapping("properties")
 	public String properties() {
-		return "admProperties";
+		return "admAddProperties";
 	}
 
 	@GetMapping("create-project")
