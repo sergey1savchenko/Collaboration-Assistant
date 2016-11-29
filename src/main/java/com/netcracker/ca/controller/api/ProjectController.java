@@ -2,6 +2,8 @@ package com.netcracker.ca.controller.api;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netcracker.ca.model.Project;
@@ -41,6 +41,12 @@ public class ProjectController extends BaseApiController {
         for(Team team: project.getTeams())
         	team.setProject(null);
         return project;
+    }
+    
+    @GetMapping({"curator/api/project", "student/api/project"})
+    public Project get(HttpSession session) {
+    	Team team = (Team) session.getAttribute("team");
+        return team.getProject();
     }
 
     @PutMapping("admin/api/project")

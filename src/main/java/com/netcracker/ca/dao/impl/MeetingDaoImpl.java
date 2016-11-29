@@ -27,7 +27,7 @@ public class MeetingDaoImpl implements MeetingDao {
 
 	private static String SQL_INSERT_PROJECT_MEETING = "INSERT INTO meetings (address, title, datetime, project_id) VALUES (?, ?, ?, ?)";
 	private static String SQL_INSERT_TEAM_MEETING = "INSERT INTO meetings (address, title, datetime, project_id, team_id) VALUES (?, ?, ?, ?, ?)";
-	private static String SQL_UPDATE_MEETING = "UPDATE meetings SET address=?, title=?, datetime=?, project_id=?, team_id=? WHERE id=?";
+	private static String SQL_UPDATE_MEETING = "UPDATE meetings SET address=?, title=?, datetime=? WHERE id=?";
 	private static String SQL_DELETE_MEETING = "DELETE FROM meetings WHERE id=?";
 	private static String SQL_SELECT_MEETING = "SELECT id, title, address, datetime FROM meetings";
 	private static String SQL_SELECT_MEETING_BY_ID = SQL_SELECT_MEETING + " WHERE id=?";
@@ -37,19 +37,19 @@ public class MeetingDaoImpl implements MeetingDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
 
 	@Override
 	public Meeting getById(Integer id) {
 		List<Meeting> meetings = jdbcTemplate.query(SQL_SELECT_MEETING_BY_ID, new MeetingMapper(), id);
-		return meetings.isEmpty() ? null: meetings.get(0);
+		return meetings.isEmpty() ? null : meetings.get(0);
 	}
 
 	@Override
 	public void add(final Meeting meeting) {
 		final boolean isTeamMeeting = meeting.getTeam() == null;
-		if(isTeamMeeting && meeting.getProject() == null) {
-			int projectId = jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TEAM, new Object[] { meeting.getTeam().getId() }, int.class);
+		if (isTeamMeeting && meeting.getProject() == null) {
+			int projectId = jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TEAM,
+					new Object[] { meeting.getTeam().getId() }, int.class);
 			meeting.setProject(new Project(projectId));
 		}
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -63,7 +63,7 @@ public class MeetingDaoImpl implements MeetingDao {
 				ps.setString(2, meeting.getTitle());
 				ps.setTimestamp(3, meeting.getDatetime());
 				ps.setInt(4, meeting.getProject().getId());
-				if(isTeamMeeting)
+				if (isTeamMeeting)
 					ps.setInt(5, meeting.getTeam().getId());
 				return ps;
 			}
@@ -74,7 +74,7 @@ public class MeetingDaoImpl implements MeetingDao {
 	@Override
 	public void update(Meeting meeting) {
 		jdbcTemplate.update(SQL_UPDATE_MEETING, meeting.getAddress(), meeting.getTitle(), meeting.getDatetime(),
-				meeting.getProject().getId(), meeting.getTeam().getId(), meeting.getId());
+				meeting.getId());
 	}
 
 	@Override

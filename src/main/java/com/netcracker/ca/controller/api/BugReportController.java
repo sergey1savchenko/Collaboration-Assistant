@@ -19,6 +19,7 @@ public class BugReportController extends BaseApiController {
 	@PostMapping({"admin/api/report-bug", "hr/api/report-bug", "curator/api/report-bug", "student/api/report-bug"})
 	public void reportBug(@RequestBody BugReport bugReport, @AuthenticationPrincipal UserAuth userAuth) {
 		bugReportService.report(bugReport, userAuth.getUsername());
+		
 	}
 	
 }

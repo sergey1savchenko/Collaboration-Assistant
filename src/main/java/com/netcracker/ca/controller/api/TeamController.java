@@ -1,13 +1,18 @@
 package com.netcracker.ca.controller.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.netcracker.ca.model.Team;
-import com.netcracker.ca.model.User;
-import com.netcracker.ca.service.TeamService;
-import com.netcracker.ca.service.UserService;
-
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.Team;
+import com.netcracker.ca.service.TeamService;
 
 @RestController
 public class TeamController extends BaseApiController {
@@ -20,13 +25,14 @@ public class TeamController extends BaseApiController {
         return teamService.getAll();
     }
     
-    @RequestMapping(value = "/team", method = RequestMethod.POST, produces = "application/json")
-    public Team create(@RequestBody Team team) {
+    @PostMapping("admin/project/{projectId}/team")
+    public Team create(@RequestBody Team team, @PathVariable int projectId) {
+    	team.setProject(new Project(projectId));
     	teamService.add(team);
         return team;
     }
     
-    @RequestMapping(value = "/team", method = RequestMethod.PUT)
+    @RequestMapping(value = "", method = RequestMethod.PUT)
     public void update(@RequestBody Team team) {
     	teamService.update(team);
     }

@@ -73,17 +73,6 @@ public class ProjectServiceImpl implements ProjectService {
 		markTypeService.allow(projectMarkTypeIds, project.getId(), MarkTypeScope.PROJECTS);	
 	}
 
-/*	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	@Override
-	public void addByTemplate(Project projectNew, Project projectTemplate) {
-		projectDao.add(projectNew);
-		for (MarkType mtype: markTypeService.getAllowed(projectTemplate.getId(), MarkTypeScope.MEETINGS))
-			markTypeService.allow(mtype.getId(), projectNew.getId(), MarkTypeScope.MEETINGS);
-		for (MarkType mtype : markTypeService.getAllowed(projectTemplate.getId(), MarkTypeScope.PROJECTS))
-			markTypeService.allow(mtype.getId(), projectNew.getId(), MarkTypeScope.PROJECTS);
-		
-	}
-*/
 	@Override
 	public void update(Project project) {
 		projectDao.update(project);
