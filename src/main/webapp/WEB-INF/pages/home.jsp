@@ -19,7 +19,7 @@
                 <security:authorize access="hasRole('ADMIN')">
                 	<div class="text-center">
                     	<a class="btn btn-large btn-primary btn-log-in"
-                       href="<c:url value="/projects"/>">View all projects</a>
+                       href="<c:url value="/admin"/>">View all projects</a>
                     </div>
                 </security:authorize>
             </div>
