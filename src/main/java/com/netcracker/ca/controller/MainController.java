@@ -26,9 +26,9 @@ public class MainController extends BaseController {
 		return "home";
 	}
 	
-	@GetMapping("about")
+	@GetMapping("help")
 	public String aboutPage(Model model) {
-		return "about";
+		return "help";
 	}
 	
 	@RequestMapping("404")
