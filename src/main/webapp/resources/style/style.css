@@ -72,5 +72,9 @@ input[type="password"] {
 }
 
 .noDiv {
-display:none;
+	display:none;
+}
+
+input.jsgrid-date-filter-from, input.jsgrid-date-filter-to {
+	width: 98px!important;
 }
