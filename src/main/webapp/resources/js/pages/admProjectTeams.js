@@ -1,19 +1,18 @@
-function showTable(id){
+function showTables(id){
 	var teamID = id;
-	var teamCurators = "teamCurators"+teamID;
-	var teamStudents = "teamStudents"+teamID;
+	var teamCurators = "teamCurators"+teamID;					// identifying div for the table
+	var teamStudents = "teamStudents"+teamID;					// identifying div for the table
 	//alert(teamID);
 ////////////////////////// TABLE WITH CURATORS ///////////////////////////////////
-$(function () {
-	// $("#projectGrid").jsGrid({	
-	$('#'+teamCurators).jsGrid({								//!
+$(function () {	
+	$('#'+teamCurators).jsGrid({											//!
     	
-        height: "220px",
-        width: "90%",
+        height: "200px",
+        width: "100%",
         
     	
-        filtering: false,
-        editing: true,
+        filtering: true,
+        editing: false,
         sorting: true,
         paging: false,
         autoload: true,
@@ -21,8 +20,8 @@ $(function () {
         controller: {
             loadData: function () {
                 var deferred = $.Deferred();
-                $.ajax({									//GET
-                    url: "/CA-Project/teamCurators" + teamID,				// !
+                $.ajax({													//GET
+                    url: "/CA-Project/admin/api/teamCurators/" + teamID,				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -33,45 +32,108 @@ $(function () {
                 return deferred.promise();
             },
 
-            updateItem: function (item) {
-                var deferred = $.Deferred();
-                return $.ajax({
-                    method: "PUT",
-                    url: "/CA-Project/team",				//!
-                    data: JSON.stringify(item),
-                    contentType: "application/json; charset=utf-8"
-                }).done(function(){
-                    deferred.resolve(item);
-                }).fail(function () {
-                    WebUtils.show('Failed to update');
-                    deferred.reject("loading error");
-                });
-                return deferred.promise();
-            },
-
-            deleteItem: function (item) {
-                return $.ajax({
-                    method: "DELETE",
-                    url: "/CA-Project/team/" + item.id	//!
-                }).fail(function () {
-                    WebUtils.show('Failed to delete');
-                });
-            }
 
         },
-        deleteConfirm: "Do you really want to delete the team?",		//!
-        fields: [														//!!
+        
+        fields: [															//!!
         			// from DB
-            {name: "u_id", type: "text", title: "user id", validate: "required"},
+            //{name: "u_id", type: "text", title: "user id", validate: "required"},
             {name: "email", type: "text", title: "email", validate: "required"},
-            {name: "first_name", type: "text", title: "first_name", validate: "required"},
-            {name: "second_name", type: "text", title: "second_name", validate: "required"},
-            {name: "last_name", type: "text", title: "last_name", validate: "required"},
-            {type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
+            {name: "first_name", type: "text", title: "First name", validate: "required"},
+            {name: "second_name", type: "text", title: "Second name", validate: "required"},
+            {name: "last_name", type: "text", title: "Last name", validate: "required"},
+            //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]
 
     });
     
 });
+////////////////////////// TABLE WITH STUDENTS ///////////////////////////////////
+$(function () {	
+	$('#'+teamStudents).jsGrid({											//!
+    	
+        height: "280px",
+        width: "100%",
+        
+    	
+        filtering: true,
+        editing: false,
+        sorting: true,
+        paging: false,
+        autoload: true,
+
+        controller: {
+            loadData: function () {
+                var deferred = $.Deferred();
+                $.ajax({													//GET
+                    url: "/CA-Project/admin/api/teamStudents/" + teamID,				// !
+                    dataType: 'json'
+                }).done(function (data) {
+                    deferred.resolve(data);
+                }).fail(function () {
+                    WebUtils.show('Error to load data');
+                    deferred.reject("loading error");
+                });
+                return deferred.promise();
+            },
+            
+        },
+        
+        fields: [															//!!
+        			// from DB
+            // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
+        	//{name: "u_id", type: "text", title: "user id", validate: "required"},
+        	{name: "u_id", type: 'link', url: 'CA-Project/admin/student/{u_id}', width: 50, title: 'Student page'},
+            {name: "email", type: "text", title: "email", validate: "required"},
+            {name: "is_active", type: "boolean", title: " Is active", validate: "required"},
+            {name: "un_title", type: "text", title: "University", validate: "required"},
+            {name: "first_name", type: "text", title: "First name", validate: "required"},
+            {name: "second_name", type: "text", title: "Second name", validate: "required"},
+            {name: "last_name", type: "text", title: "Last name", validate: "required"},
+            //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
+
+        ]
+
+    });
+    
+});
+
+}
+
+///
+
+function deleteTeam(id){
+	if (confirm("Are you shure to delete this team?")) {
+		//alert(id);
+		$.ajax({
+			method: "DELETE",
+			url: "/CA-Project/admin/api/team/" + id									//!
+			}).fail(function () {
+				WebUtils.show('Failed to delete Team');
+			});
+		location.reload();
+	} else {
+		
+	}
+}
+
+///
+
+function addTeam(projectId){
+    	var item = {
+        	title: $("#team-title").val()
+        }
+	    $.ajax({
+	        // admin/api/project/{projectId}/team
+	    	url: "/CA-Project/admin/api/project/" + projectId + "/team",
+	        method: 'POST',
+            data: JSON.stringify(item),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json'	
+	    }).done(function (data) {
+	    	location.reload();
+	    }).fail(function () {
+	        WebUtils.show("Failed to create data");
+	    });
 }

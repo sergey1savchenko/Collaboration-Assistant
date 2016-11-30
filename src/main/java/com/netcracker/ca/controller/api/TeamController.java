@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
+import com.netcracker.ca.model.User;
+import com.netcracker.ca.service.CuratorService;
+import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.TeamService;
 
 @RestController
@@ -20,6 +24,11 @@ public class TeamController extends BaseApiController {
 
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private CuratorService curatorService;
+    @Autowired
+    private StudentService studentService;
+    
     
     @RequestMapping(value = "/team", method = RequestMethod.GET, produces = "application/json")
     public List<Team> getAll() {
@@ -38,12 +47,24 @@ public class TeamController extends BaseApiController {
     	return teamService.getByProject(projectId);
     }
     
+    //
+    @GetMapping("admin/api/teamCurators/{teamId}")
+    public List<User> teamCurators(@PathVariable int teamId) {
+        return curatorService.getByTeam(teamId);
+    }
+    
+    @GetMapping("admin/api/teamStudents/{teamId}")
+    public List<Student> teamStudents(@PathVariable int teamId) {
+        return studentService.getByTeam(teamId);
+    }
+    //
+    
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public void update(@RequestBody Team team) {
     	teamService.update(team);
     }
     
-    @RequestMapping(value = "/team/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "admin/api/team/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") int id) {
     	teamService.delete(id);
     }

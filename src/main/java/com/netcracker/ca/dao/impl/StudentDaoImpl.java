@@ -42,9 +42,7 @@ public class StudentDaoImpl implements StudentDao {
 
 	private static String SQL_INSERT_USER_ROLE = "INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)";
 
-	private static String SQL_SELECT_STUDENTS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, af.id AS af_id, "
-			+ "af.photo_scope AS af_photo AS t_id FROM users AS u INNER JOIN application_forms AS af ON u.id=af.user_id "
-			+ "INNER JOIN students_in_project AS p ON af.id=p.app_form_id";
+	private static String SQL_SELECT_STUDENTS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, af.id AS af_id, af.photo_scope AS af_photo, team_id AS t_id FROM users AS u INNER JOIN application_forms AS af ON u.id=af.user_id INNER JOIN students_in_project AS p ON af.id=p.app_form_id";
 	private static String SQL_SELECT_STUDENTS_BY_PROJECT = SQL_SELECT_STUDENTS + " WHERE p.project_id=?";
 	private static String SQL_SELECT_STUDENTS_BY_TEAM = SQL_SELECT_STUDENTS + " WHERE p.team_id=?";
 	private static String SQL_SELECT_STUDENTS_BY_PROJECT_IN_TEAMS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, u.is_active, af.id AS af_id, "
