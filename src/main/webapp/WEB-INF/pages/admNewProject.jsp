@@ -77,7 +77,7 @@
 				</div>
 				<div style="text-align: center;">
 					<br/>
-					<button type="button" class="btn btn-default" onclick="addEvaluations();">Add Evaluations</button>
+				<!--  	<button type="button" class="btn btn-default" onclick="addEvaluations();">Add Evaluations</button> -->
 				</div>
 			</div>
 			<br/>
@@ -93,6 +93,7 @@
 	</div>
 </div>
 <%@include file="footer.jsp" %>
-<script type="text/javascript" src="resources/js/pages/admNewProject.js"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/pages/admNewProject.js"/>">
+</script>
 </body>
 </html>

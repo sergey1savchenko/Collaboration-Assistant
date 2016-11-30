@@ -3,7 +3,7 @@ $(function () {
         height: "90%",
         width: "100%",
 
-        filtering: false,
+        filtering: true,
         editing: true,
         sorting: true,
         paging: false,

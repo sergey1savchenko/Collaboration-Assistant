@@ -31,17 +31,17 @@ function copyAndCreateInsert() {
         startDate: $("#project-start").val(),
         endDate: $("#project-end").val(),
         university: WebUtils.getItemByDomainAndId('project-university', $("#project-university").val()),
-        //evaluations: $("#project-evals").val(),																		// !!! projectID
+        //evaluations: $("#project-evals").val(),															// !!! projectID
     };
     $.ajax({
-        url: "/CA-Project/project",																						// !!!
+        url: "/CA-Project/admin/api/project",																// !!!
         method: 'POST',
         data: JSON.stringify(item),
         contentType: "application/json; charset=utf-8",
         dataType: 'json'
     }).done(function (data) {
     	if (confirm("New project is created. Go to projects page?")) {
-    		 window.location.href = "/CA-Project/admProjects";
+    		 window.location.href = "/CA-Project/admin";
     	} else {
     		location.reload();
     	}
@@ -51,31 +51,45 @@ function copyAndCreateInsert() {
     });
 }
 //////////////////////////////////////// chooseAndCreate ///////////////////////////////////////////////////////
-var evaluations = "";
+var pe = [];
+var me = [];
+var peChek = false;
+var meChek = false;
 function addEvaluations(){
 	
+	pe = [];
+	peChek = false;
 	var elements = $('[id^="pem"]');
 	$('[id^="pem"]').each(function(item){
 		 if(elements[item].checked){
 			 //alert(elements[item]);
-			 evaluations = evaluations + elements[item].id;
+			 pe.push( parseInt(elements[item].id.slice(3), 10) );
+			 peChek = true;
 		 }
 	})
 	
+	me = [];
+	meChek = false;
 	elements = $('[id^="mem"]');
 	$('[id^="mem"]').each(function(item){
 		 if(elements[item].checked){
 			 //alert(elements[item]);
-			 evaluations = evaluations + elements[item].id;
+			 me.push( parseInt(elements[item].id.slice(3), 10) );
+			 meChek = true;
 		 }
 	})
 	
-	alert("Cheked Evaluations added");
+	//alert("Cheked Evaluations added");
+	//alert(pe);
+	//alert(me);
 }
 
 function chooseAndCreate() {
-	if (evaluations==""){
-		WebUtils.show("First choose at least one marktype");
+	///
+	addEvaluations();
+	///
+	if (!peChek||!meChek){
+		WebUtils.show("First choose marktypes");
 	} else{
 	    $('#new-project').validate({
 	        rules: {
@@ -102,24 +116,31 @@ function chooseAndCreate() {
 	}
 }
 function chooseAndCreateInsert() {
-    var item = {
+    var project = {
         id: 0,
         title: $("#project-title").val(),
         description: $("#project-description").val(),
         startDate: $("#project-start").val(),
         endDate: $("#project-end").val(),
-        university: WebUtils.getItemByDomainAndId('project-university', $("#project-university").val()),
-        //evaluations: evaluations,																			// !!! pem1pem3mem3 MEANS
-    };																										// Project Evals are Evaluations with id=1 and id=3,
-    $.ajax({																								// Meeting Evaluation is Evaluation id = 3
-        url: "/CA-Project/project",																			// !!!
+        university: WebUtils.getItemByDomainAndId('project-university', $("#project-university").val())
+    };
+    
+    var item = {
+    	//	"projectMarkTypeIds", "project", "meetingMarkTypeIds"
+    	project: project,
+    	meetingMarkTypeIds: me,
+    	projectMarkTypeIds: pe
+    }
+    
+    $.ajax({
+        url: "/CA-Project/admin/api/project",											// !!!
         method: 'POST',
         data: JSON.stringify(item),
         contentType: "application/json; charset=utf-8",
         dataType: 'json'
     }).done(function (data) {
     	if (confirm("New project is created. Go to projects page?")) {
-    		 window.location.href = "/CA-Project/admProjects";
+    		 window.location.href = "/CA-Project/admin";
     	} else {
     		location.reload();
     	}
@@ -128,7 +149,7 @@ function chooseAndCreateInsert() {
         WebUtils.show("Failed to create data");
     });
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// never mind this //////////////////////////////////////////////////
 $(function () {
     $("#projectGrid").jsGrid({															//!
     	
@@ -146,7 +167,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({																//GET
-                    url: '/CA-Project/project',											// !
+                    url: '/CA-Project/admin/api/projects',											// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -161,7 +182,7 @@ $(function () {
                 var deferred = $.Deferred();
                 return $.ajax({
                     method: "PUT",
-                    url: "/CA-Project/project",											//!
+                    url: "/CA-Project/admin/api/projects",											//!
                     data: JSON.stringify(item),
                     contentType: "application/json; charset=utf-8"
                 }).done(function(){
@@ -176,7 +197,7 @@ $(function () {
             deleteItem: function (item) {
                 return $.ajax({
                     method: "DELETE",
-                    url: "/CA-Project/project/" + item.id								//!
+                    url: "/CA-Project/admin/api/projects/" + item.id								//!
                 }).fail(function () {
                     WebUtils.show('Failed to delete');
                 });
