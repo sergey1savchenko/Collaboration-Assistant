@@ -9,7 +9,9 @@ import com.netcracker.ca.model.Attachment;
 
 public interface AttachmentService {
 
-	Attachment add(Attachment att, InputStream is);
+	Attachment addToProject(Attachment att, InputStream is, int projectId);
+	
+	Attachment addToTeam(Attachment att, InputStream is, int teamId);
 	
 	Resource getAsResource(int id);
 

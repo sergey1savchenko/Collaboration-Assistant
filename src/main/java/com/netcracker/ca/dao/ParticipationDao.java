@@ -4,15 +4,17 @@ import java.util.List;
 
 import com.netcracker.ca.model.Participation;
 
-public interface ParticipationDao extends Dao<Participation, Integer> {
+public interface ParticipationDao {
+	
+	void add(Participation participation, int studentId, int projectId);
+	
+	void update(Participation participation);
+	
+	void delete(int id);
+	
+	Participation getById(int id);
 
 	Participation getByStudentAndProject(int studentId, int projectId);
 	
-	List<Participation> getByStudent(int studentId);
-	
 	List<Participation> getByProject(int projectId);
-	
-	List<Participation> getByTeam(int teamId);
-	
-	void deleteByStudentAndProject(int studentId, int projectId);
 }

@@ -17,6 +17,7 @@ import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.MailService;
 import com.netcracker.ca.service.NotificationService;
+import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.TemplateBuilder;
 import com.netcracker.ca.service.UserService;
 
@@ -30,7 +31,6 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
 	private UserService userService;
-	
 
 	@Override
 	public void onProjectCreation(Project project) {
@@ -75,11 +75,11 @@ public class NotificationServiceImpl implements NotificationService {
 		model.put("meeting", meeting);
 		Mail mail = build("Collaboration Assistant - Meeting created", "meeting-created.ftl", model);
 		
-		List<String> emails = new ArrayList<>();
-		for(User user: userService.getAssociatedWithTeam(meeting.getTeam().getId()))
+		/*List<String> emails = new ArrayList<>();
+		for(User user: userService.getAssociatedWithTeam(teamService.getByMeeting(meeting.getId()).getId()))
 			emails.add(user.getEmail());
 		
-		mailService.send(mail, emails);
+		mailService.send(mail, emails);*/
 	}
 
 	@Override
@@ -89,10 +89,10 @@ public class NotificationServiceImpl implements NotificationService {
 		Mail mail = build("Collaboration Assistant - Meetind rescheduled", "meeting-edited.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		for(User user: userService.getAssociatedWithTeam(meeting.getTeam().getId()))
+		/*for(User user: userService.getAssociatedWithTeam(teamService.getByMeeting(meeting.getId()).getId()))
 			emails.add(user.getEmail());
 		
-		mailService.send(mail, emails);
+		mailService.send(mail, emails);*/
 	}
 
 	@Override
@@ -102,10 +102,10 @@ public class NotificationServiceImpl implements NotificationService {
 		Mail mail = build("Collaboration Assistant - Meeting canceled", "meeting-deleted.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		for(User user: userService.getAssociatedWithTeam(meeting.getTeam().getId()))
+		/*for(User user: userService.getAssociatedWithTeam(teamService.getByMeeting(meeting.getId()).getId()))
 			emails.add(user.getEmail());
 		
-		mailService.send(mail, emails);
+		mailService.send(mail, emails);*/
 	}
 	
 	@Override
@@ -115,14 +115,14 @@ public class NotificationServiceImpl implements NotificationService {
 		Mail mail = build("Collaboration Assistant - File attachment added", "attachment-added.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		if(attachment.getTeam() == null) {
+		/*if(attachment.getTeam() == null) {
 			for(User user: userService.getAssociatedWithProject(attachment.getProject().getId()))
 				emails.add(user.getEmail());
 		}
 		else {
 			for(User user: userService.getAssociatedWithTeam(attachment.getTeam().getId()))
 				emails.add(user.getEmail());
-		}
+		}*/
 		
 		mailService.send(mail, emails);
 	}
@@ -133,7 +133,7 @@ public class NotificationServiceImpl implements NotificationService {
 		model.put("participation", part);
 		Mail mail = build("Collaboration Assistant - Project status changed", "project-status-changed.ftl", model);
 		
-		mailService.send(mail, part.getStudent().getEmail());
+		//mailService.send(mail, part.getStudent().getEmail());
 	}
 	
 	private Mail build(String subject, String template, Map<String, Object> model) {

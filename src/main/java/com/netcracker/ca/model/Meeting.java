@@ -10,19 +10,15 @@ public class Meeting {
     private String title;
     private String address;
     private Timestamp datetime;
-    private Project project;
-    private Team team;
 
     public Meeting() {
     }
 
-    public Meeting(int id, String title, String address, Timestamp datetime, Project project, Team team) {
+    public Meeting(int id, String title, String address, Timestamp datetime) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.datetime = datetime;
-        this.project = project;
-        this.team = team;
     }
 
     public int getId() {
@@ -57,22 +53,6 @@ public class Meeting {
         this.datetime = datetime;
     }
 
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
     @Override
     public String toString() {
     	StringBuilder builder = new StringBuilder("Meeting");
@@ -81,8 +61,6 @@ public class Meeting {
 			.append(", title=").append(title)
 			.append(", address=").append(address)
 			.append(", datetime=").append(datetime)
-			.append(", project.id=").append(project != null ? project.getId(): 0)
-			.append(", team.id=").append(team != null ? team.getId(): 0)
 			.append("]").toString();
     }
 }

@@ -4,11 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.TeamDao;
-import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.TeamService;
 
@@ -53,6 +51,11 @@ public class TeamServiceImpl implements TeamService {
 	public Team getByTitle(String title) {
 		return teamDao.getByTitle(title);
 	}
+	
+	@Override
+	public Team getByMeeting(int meetingId) {
+		return teamDao.getByMeeting(meetingId);
+	}
 
 	@Override
 	public Team getCurrentForStudent(int studentId) {
@@ -63,4 +66,5 @@ public class TeamServiceImpl implements TeamService {
 	public Team getCurrentForCurator(int curatorId) {
 		return teamDao.getCurrentForCurator(curatorId);
 	}
+
 }

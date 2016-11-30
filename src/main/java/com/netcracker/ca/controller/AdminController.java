@@ -53,10 +53,10 @@ public class AdminController extends BaseController {
 		return "admProjectTeams";
 	}
 
-	@RequestMapping("project/{projectId}/participations")
+	/*@RequestMapping("project/{projectId}/participations")
 	public String getParticipations(@PathVariable int projectId, Model model) {
 		model.addAttribute("participations", participationService.getByProject(projectId));
 		return "your-page";
-	}
+	}*/
 
 }

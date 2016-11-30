@@ -18,10 +18,6 @@ public class AttachmentFactoryImpl implements AttachmentFactory {
 		StringBuilder link = new StringBuilder();
 		link.append(isTeamAttachment ? "/team/": "/project/").append(id).append('/').append(name);
 		att.setLink(link.toString());
-		if(isTeamAttachment)
-			att.setTeam(new Team(id));
-		else
-			att.setProject(new Project(id));
 		return att;
 	}
 

@@ -23,11 +23,17 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Autowired
 	private StorageService storageService;
 	
-
 	@Override
-	public Attachment add(Attachment att, InputStream is) {
+	public Attachment addToProject(Attachment att, InputStream is, int projectId) {
 		storageService.store(is, att.getLink());
-		attachmentDao.add(att);
+		attachmentDao.addToProject(att, projectId);
+		return att;
+	}
+	
+	@Override
+	public Attachment addToTeam(Attachment att, InputStream is, int teamId) {
+		storageService.store(is, att.getLink());
+		attachmentDao.addToTeam(att, teamId);
 		return att;
 	}
 	

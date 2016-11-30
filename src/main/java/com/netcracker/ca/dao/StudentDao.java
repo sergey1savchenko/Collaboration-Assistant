@@ -13,6 +13,8 @@ public interface StudentDao extends Dao<Student, Integer> {
 	
 	List<Student> getByProject(int projectId);
 	
+	List<Student> getFree();
+	
 	Map<Integer, List<Student>> getByProjectInTeams(int projectId);
 	
 }

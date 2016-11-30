@@ -185,4 +185,10 @@ public class StudentDaoImpl implements StudentDao {
 		}
 	}
 
+	@Override
+	public List<Student> getFree() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

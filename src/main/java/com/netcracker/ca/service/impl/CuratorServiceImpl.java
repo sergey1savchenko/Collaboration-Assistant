@@ -41,4 +41,9 @@ public class CuratorServiceImpl implements CuratorService {
 		return curatorDao.getByProjectInTeams(projectId);
 	}
 
+	@Override
+	public List<User> getByMeeting(int meetingId) {
+		return curatorDao.getByMeeting(meetingId);
+	}
+
 }

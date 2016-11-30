@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.netcracker.ca.dao.MarkTypeDao;
 import com.netcracker.ca.model.MarkType;
-import com.netcracker.ca.model.MarkTypeScope;
+import com.netcracker.ca.model.EvaluationScope;
 import com.netcracker.ca.utils.ExistsResultExtractor;
 
 @Repository
@@ -71,13 +71,13 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 	}
 
 	@Override
-	public void allow(int markTypeId, int projectId, MarkTypeScope scope) {
+	public void allow(int markTypeId, int projectId, EvaluationScope scope) {
 		jdbcTemplate.update(SQL_INSERT_ALLOW_MARKTYPE, projectId, markTypeId, scope.ordinal(), projectId, markTypeId,
 				scope.ordinal());
 	}
 
 	@Override
-	public void disallow(int markTypeId, int projectId, MarkTypeScope scope) {
+	public void disallow(int markTypeId, int projectId, EvaluationScope scope) {
 		jdbcTemplate.update(SQL_DELETE_ALLOW_MARKTYPE, projectId, markTypeId, scope.ordinal());
 	}
 
@@ -87,7 +87,7 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 	}
 
 	@Override
-	public List<MarkType> getAllowed(int projectId, MarkTypeScope scope) {
+	public List<MarkType> getAllowed(int projectId, EvaluationScope scope) {
 		return jdbcTemplate.query(SQL_SELECT_ALLOWED_FOR_PROJECT, new MarkTypeRowMapper(), scope.ordinal(), projectId);
 	}
 

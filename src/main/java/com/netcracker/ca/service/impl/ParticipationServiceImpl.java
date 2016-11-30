@@ -5,15 +5,15 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.netcracker.ca.dao.ParticipationDao;
 import com.netcracker.ca.dao.ProjectStatusDao;
 import com.netcracker.ca.model.Participation;
-import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.ProjectStatus;
-import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.dto.ParticipationDto;
 import com.netcracker.ca.service.ParticipationService;
@@ -21,15 +21,18 @@ import com.netcracker.ca.service.ParticipationService;
 @Service
 public class ParticipationServiceImpl implements ParticipationService {
 
+	private static String DEFAULT_COMMENT = "Invited to project";
+	private static ProjectStatus DEFAULT_STATUS;
+
 	@Autowired
 	private ParticipationDao participationDao;
-	
-	@Autowired 
+
+	@Autowired
 	private ProjectStatusDao projectStatusDao;
-	
-	@Override
-	public Participation getById(int id) {
-		return participationDao.getById(id);
+
+	@PostConstruct
+	private void init() {
+		DEFAULT_STATUS = projectStatusDao.getByDesc("Invloved");
 	}
 
 	@Override
@@ -38,23 +41,18 @@ public class ParticipationServiceImpl implements ParticipationService {
 	}
 
 	@Override
-	public List<Participation> getByStudent(int studentId) {
-		return participationDao.getByStudent(studentId);
+	public void add(Participation participation, int studentId, int projectId) {
+		participationDao.add(participation, studentId, projectId);
 	}
 
 	@Override
-	public List<Participation> getByProject(int projectId) {
-		return participationDao.getByProject(projectId);
-	}
-
-	@Override
-	public List<Participation> getByTeam(int teamId) {
-		return participationDao.getByTeam(teamId);
-	}
-
-	@Override
-	public void add(Participation participation) {
-		participationDao.add(participation);
+	public void add(int teamId, int studentId, int projectId) {
+		Participation part = new Participation();
+		part.setTeam(new Team(teamId));
+		part.setStatus(DEFAULT_STATUS);
+		part.setComment(DEFAULT_COMMENT);
+		part.setAssigned(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
+		participationDao.add(part, studentId, projectId);
 	}
 
 	@Override
@@ -68,34 +66,25 @@ public class ParticipationServiceImpl implements ParticipationService {
 	}
 
 	@Override
-	public void deleteByStudentAndProject(int studentId, int projectId) {
-		participationDao.deleteByStudentAndProject(studentId, projectId);
-	}
-
-	@Override
-	public void updateAll(List<ParticipationDto> partDtos, int projectId) {
-		ProjectStatus involved = projectStatusDao.getByDesc("Involved");
-		for(ParticipationDto partDto: partDtos) {
-			if(partDto.getId() == 0) {
-				Participation p = new Participation();
-				p.setStudent(new Student(partDto.getStudentId()));
-				p.setTeam(new Team(partDto.getTeamId()));
-				p.setProject(new Project(projectId));
-				p.setStatus(involved);
-				p.setComment("Invited to project");
-				p.setAssigned(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
-				participationDao.add(p);
-			}
-			else {
-				// only team update for now 
-				Participation p = participationDao.getById(partDto.getId());
-				p.setTeam(new Team(partDto.getTeamId()));
-				participationDao.update(p);
+	public void setAll(List<ParticipationDto> partDtos, int projectId) {
+		List<Participation> projectParts = participationDao.getByProject(projectId);
+		for (ParticipationDto partDto : partDtos) {
+			int index = projectParts.indexOf(new Participation(partDto.getId()));
+			// add new element
+			if (index == -1) {
+				add(partDto.getTeamId(), partDto.getStudentId(), projectId);
+			} else {
+				// update existing element
+				// only team update here
+				Participation part = projectParts.get(index);
+				part.setTeam(new Team(partDto.getTeamId()));
+				participationDao.update(part);
 			}
 		}
-		for(Participation p: participationDao.getByProject(projectId))
-			if(!partDtos.contains(new ParticipationDto(p.getId())))
-				participationDao.delete(p.getId());
+		for (Participation part : projectParts) {
+			if (!partDtos.contains(new ParticipationDto(part.getId())))
+				participationDao.delete(part.getId());
+		}
 	}
 
 }

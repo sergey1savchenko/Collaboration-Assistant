@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.ProjectDao;
-import com.netcracker.ca.model.MarkTypeScope;
+import com.netcracker.ca.model.EvaluationScope;
 import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
@@ -69,8 +69,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void add(Project project, List<Integer> meetingMarkTypeIds, List<Integer> projectMarkTypeIds) {
 		projectDao.add(project);
-		markTypeService.allow(meetingMarkTypeIds, project.getId(), MarkTypeScope.MEETINGS);
-		markTypeService.allow(projectMarkTypeIds, project.getId(), MarkTypeScope.PROJECTS);	
+		markTypeService.allow(meetingMarkTypeIds, project.getId(), EvaluationScope.MEETINGS);
+		markTypeService.allow(projectMarkTypeIds, project.getId(), EvaluationScope.PROJECTS);	
 	}
 
 	@Override

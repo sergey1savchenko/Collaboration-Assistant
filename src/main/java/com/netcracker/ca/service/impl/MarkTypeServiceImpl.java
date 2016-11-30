@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.MarkTypeDao;
 import com.netcracker.ca.model.MarkType;
-import com.netcracker.ca.model.MarkTypeScope;
+import com.netcracker.ca.model.EvaluationScope;
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.utils.ServiceException;
 
@@ -47,12 +47,12 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 	}
 
 	@Override
-	public List<MarkType> getAllowed(int projectId, MarkTypeScope scope) {
+	public List<MarkType> getAllowed(int projectId, EvaluationScope scope) {
 		return markTypeDao.getAllowed(projectId, scope);
 	}
 
 	@Override
-	public void allow(List<Integer> markTypeIds, int projectId, MarkTypeScope scope) {
+	public void allow(List<Integer> markTypeIds, int projectId, EvaluationScope scope) {
 		for (Integer markTypeId : markTypeIds) {
 			markTypeDao.allow(markTypeId, projectId, scope);
 		}

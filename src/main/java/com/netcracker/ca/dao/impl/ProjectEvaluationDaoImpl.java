@@ -4,8 +4,10 @@ import com.netcracker.ca.dao.ProjectEvaluationDao;
 import com.netcracker.ca.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -15,7 +17,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Oleksandr on 12.11.2016.
@@ -23,37 +28,50 @@ import java.util.List;
 @Repository
 public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 
-	private static String SQL_INSERT_PE = "INSERT INTO project_evaluations (student_in_project_id, marktype_id, curator_id, int_value, text_value) VALUES (?, ?, ?, ?, ?)";
-	private static String SQL_UPDATE_PE = "UPDATE project_evaluations SET student_in_project_id=?, marktype_id=?, curator_id=?, int_value=?, text_value=? WHERE id=?";
+	private static String SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT = "SELECT id FROM application_forms AS af "
+			+ "INNER JOIN students_in_project AS p ON p.id=p.app_form_id WHERE af_user_id=? AND p.project_id=?";
+	private static String SQL_SELECT_CURATORSHIP_BY_CURATOR_AND_PROJECT = "SELECT id FROM curators_in_project "
+			+ "WHERE user_id=? AND project_id=?";
+	private static String SQL_INSERT_PE = String.format("INSERT INTO project_evaluations (int_value, text_value, marktype_id, student_in_project_id, curator_id) "
+			+ "VALUES (?, ?, ? (%s), (%s))", SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT, SQL_SELECT_CURATORSHIP_BY_CURATOR_AND_PROJECT);
+	private static String SQL_INSERT_ALL_PE = "INSERT INTO project_evaluations (int_value, text_value, marktype_id, student_in_project_id, curator_id) "
+			+ "VALUES (?, ?, ? ?, ?)";
+	private static String SQL_UPDATE_PE = "UPDATE project_evaluations SET int_value=?, text_value=? WHERE id=?";
 	private static String SQL_DELETE_PE = "DELETE FROM project_evaluations WHERE id=?";
-	private static String SQL_SELECT_ALL_PE = "SELECT project_evaluations.id AS peid, marktypes.id AS mtid, marktypes.title mttitle, int_value, text_value, st.id AS sid, st.first_name AS sfn, st.last_name AS sln,\n"
-			+ "cur.id AS cid, cur.first_name AS cfn, cur.last_name AS cln, projects.id AS pid, projects.title AS ptitle\n"
-			+ "FROM project_evaluations INNER JOIN teams ON project_evaluations.id = teams.project_id\n"
-			+ "INNER JOIN students_in_project ON project_evaluations.student_in_project_id = students_in_project.id\n"
-			+ "INNER JOIN application_forms ON students_in_project.app_form_id = application_forms.id\n"
-			+ "INNER JOIN users AS st ON application_forms.user_id = st.id\n"
-			+ "INNER JOIN curators_in_project ON project_evaluations.curator_id = curators_in_project.id\n"
-			+ "INNER JOIN users AS cur ON curators_in_project.user_id = cur.id\n"
-			+ "INNER JOIN marktypes ON project_evaluations.marktype_id = marktypes.id\n"
-			+ "INNER JOIN projects ON students_in_project.project_id = projects.id";
-	private static String SQL_SELECT_PE_OF_TEAM = SQL_SELECT_ALL_PE + " WHERE team.id=?";
-	private static String SQL_SELECT_PE_OF_PROJECT = SQL_SELECT_ALL_PE + " WHERE project.id=?";
+	private static String SQL_SELECT_ALL_PE = "SELECT pe.id AS pe_id, mt.id AS mt_id, mt.title, mt.has_int, mt.has_text, pe.int_value, pe.text_value "
+			+ "FROM project_evaluations AS pe INNER JOIN marktypes AS mt ON pe.marktype_id=mt.id";
+	private static String SQL_SELECT_ALL_PE_BY_ID = SQL_SELECT_ALL_PE + " WHERE pe.id=?";
+	private static String SQL_SELECT_ALL_PE_BY_STUDENT_AND_PROJECT_AND_CURATOR = SQL_SELECT_ALL_PE 
+			+ " INNER JOIN students_in_project AS p ON pe.student_in_project_id=p.id INNER JOIN application_forms AS af ON p.app_form_id=af.id "
+			+ "INNER JOIN curators_in_project AS cp ON pe.curator_id=cp.id WHERE af.user_id=? AND p.project_id=? AND cp.user_id=?";
+	private static String SQL_SELECT_ALL_PE_BY_STUDENT_AND_PROJECT_PER_CURATOR = "SELECT pe.id AS peid, mt.id AS mtid, mt.title AS mttitle, mt.has_int, mt.has_text, "
+			+ "pe.int_value, pe.text_value, cp.user_id AS c_id FROM project_evaluations AS pe INNER JOIN marktypes AS mt ON pe.marktype_id=mt.id "
+			+ "INNER JOIN students_in_project AS p ON pe.student_in_project_id=p.id INNER JOIN application_forms AS af ON p.app_form_id=af.id "
+			+ "INNER JOIN curators_in_project AS cp ON pe.curator_id=cp.id WHERE af.user_id=? AND p.project_id=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public void add(final ProjectEvaluation pe) {
+	public ProjectEvaluation getById(int id) {
+		List<ProjectEvaluation> list = jdbcTemplate.query(SQL_SELECT_ALL_PE_BY_ID, new ProjectEvaluationMapper(), id);
+		return list.isEmpty() ? null : list.get(0);
+	}
+
+	@Override
+	public void add(final ProjectEvaluation pe, final int studentId, final int projectId, final int curatorId) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(SQL_INSERT_PE, new String[] { "id" });
-				ps.setInt(1, pe.getStudentInProjectId());
-				ps.setInt(2, pe.getMarktype().getId());
-				ps.setInt(3, pe.getCurator().getId());
-				ps.setInt(4, pe.getIntValue());
-				ps.setString(5, pe.getTextValue());
+				ps.setInt(1, pe.getIntValue());
+				ps.setString(2, pe.getTextValue());
+				ps.setInt(3, pe.getMarktype().getId());
+				ps.setInt(4, studentId);
+				ps.setInt(5, projectId);
+				ps.setInt(6, curatorId);
+				ps.setInt(7, projectId);
 				return ps;
 			}
 		}, keyHolder);
@@ -61,59 +79,99 @@ public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 	}
 
 	@Override
-	public void update(ProjectEvaluation pe) {
-		jdbcTemplate.update(SQL_UPDATE_PE, pe.getStudentInProjectId(), pe.getMarktype().getId(), pe.getCurator().getId(),
-				pe.getIntValue(), pe.getTextValue(), pe.getId());
+	public void addAll(List<ProjectEvaluation> pes, int studentId, int projectId, int curatorId) {
+		final int participationId = jdbcTemplate.queryForObject(SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT, 
+				new Object[]{ studentId, projectId}, Integer.class);
+		final int curatorshipId = jdbcTemplate.queryForObject(SQL_SELECT_CURATORSHIP_BY_CURATOR_AND_PROJECT, 
+				new Object[]{ curatorId, projectId}, Integer.class);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		for(final ProjectEvaluation pe: pes) {
+			jdbcTemplate.update(new PreparedStatementCreator() {
+	
+				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+					PreparedStatement ps = con.prepareStatement(SQL_INSERT_ALL_PE, new String[] { "id" });
+					ps.setInt(1, pe.getIntValue());
+					ps.setString(2, pe.getTextValue());
+					ps.setInt(3, pe.getMarktype().getId());
+					ps.setInt(4, participationId);
+					ps.setInt(5, curatorshipId);
+					return ps;
+				}
+			}, keyHolder);
+			pe.setId(keyHolder.getKey().intValue());
+		}
+
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void update(ProjectEvaluation pe) {
+		jdbcTemplate.update(SQL_UPDATE_PE, pe.getIntValue(), pe.getTextValue(), pe.getId());
+	}
+
+	@Override
+	public void delete(int id) {
 		jdbcTemplate.update(SQL_DELETE_PE, id);
 	}
-
+	
 	@Override
-	public List<ProjectEvaluation> getEvaluationsOfTeam(int id) {
-		return jdbcTemplate.query(SQL_SELECT_PE_OF_TEAM, new ProjectEvaluationMapper(), id);
+	public List<ProjectEvaluation> getByStudentAndProjectAndCurator(int studentId, int projectId, int curatorId) {
+		return jdbcTemplate.query(SQL_SELECT_ALL_PE_BY_STUDENT_AND_PROJECT_AND_CURATOR, new ProjectEvaluationMapper(), studentId, projectId, curatorId);
 	}
 
 	@Override
-	public List<ProjectEvaluation> getEvaluationsOfProject(int id) {
-		return jdbcTemplate.query(SQL_SELECT_PE_OF_PROJECT, new ProjectEvaluationMapper(), id);
+	public Map<Integer, List<ProjectEvaluation>> getByStudentAndProjectPerCurator(int studentId, int projectId) {
+		return jdbcTemplate.query(SQL_SELECT_ALL_PE_BY_STUDENT_AND_PROJECT_PER_CURATOR, new ResultSetExtractor<Map<Integer, List<ProjectEvaluation>>>() {
+
+			@Override
+			public Map<Integer, List<ProjectEvaluation>> extractData(ResultSet rs)
+					throws SQLException, DataAccessException {
+				Map<Integer, List<ProjectEvaluation>> result = new HashMap<>();
+				Map<Integer, MarkType> markTypes = new HashMap<>();
+				while(rs.next()) {
+					ProjectEvaluation pe = new ProjectEvaluation();
+					pe.setId(rs.getInt("me_id"));
+					pe.setIntValue(rs.getInt("int_value"));
+					pe.setTextValue(rs.getString("text_value"));
+					int markTypeId = rs.getInt("mt_id");
+					MarkType markType = markTypes.get(markTypeId);
+					if(markType == null) {
+						markType = new MarkType();
+						markType.setId(markTypeId);
+						markType.setTitle(rs.getString("title"));
+						markType.setHasInt(rs.getBoolean("has_int"));
+						markType.setHasText(rs.getBoolean("has_text"));
+						markTypes.put(markTypeId, markType);
+					}
+					pe.setMarktype(markType);
+					int curatorId = rs.getInt("c_id");
+					List<ProjectEvaluation> evals = result.get(curatorId);
+					if(evals == null) {
+						evals = new ArrayList<ProjectEvaluation>();
+						result.put(curatorId, evals);
+					}
+					evals.add(pe);
+				}
+				return result;
+			}
+			
+			
+		}, studentId, projectId);
 	}
 
 	private static class ProjectEvaluationMapper implements RowMapper<ProjectEvaluation> {
 		public ProjectEvaluation mapRow(ResultSet rs, int rowNum) throws SQLException {
 			ProjectEvaluation pe = new ProjectEvaluation();
-			pe.setId(rs.getInt("id"));
+			pe.setId(rs.getInt("peid"));
 			pe.setIntValue(rs.getInt("int_value"));
 			pe.setTextValue(rs.getString("text_value"));
-			Student student = new Student();
-			student.setId(rs.getInt("sid"));
-			student.setFirstName(rs.getString("sfn"));
-			student.setLastName(rs.getString("sln"));
-			pe.setStudent(student);
-			User curator = new User();
-			curator.setId(rs.getInt("cid"));
-			curator.setFirstName(rs.getString("cfn"));
-			curator.setLastName(rs.getString("cln"));
-			pe.setCurator(curator);
 			MarkType markType = new MarkType();
 			markType.setId(rs.getInt("mtid"));
 			markType.setTitle(rs.getString("mttitle"));
 			markType.setHasInt(rs.getBoolean("has_int"));
 			markType.setHasText(rs.getBoolean("has_text"));
 			pe.setMarktype(markType);
-			Project project = new Project();
-			project.setId(rs.getInt("pid"));
-			project.setTitle(rs.getString("ptitle"));
-			pe.setProject(project);
 			return pe;
 		}
 	}
 
-	@Override
-	public ProjectEvaluation getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

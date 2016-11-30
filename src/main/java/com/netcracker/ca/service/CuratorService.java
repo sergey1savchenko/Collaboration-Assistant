@@ -17,4 +17,6 @@ public interface CuratorService {
 	
 	Map<Integer, List<User>> getByProjectInTeams(int projectId);
 	
+	List<User> getByMeeting(int meetingId);
+	
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netcracker.ca.model.MarkType;
-import com.netcracker.ca.model.MarkTypeScope;
+import com.netcracker.ca.model.EvaluationScope;
 import com.netcracker.ca.service.MarkTypeService;
 
 @RestController
@@ -28,12 +28,12 @@ public class MarkTypeController extends BaseApiController {
     
     @GetMapping(value = "admin/api/project/{projectId}/properties/projects")
     public List<MarkType> getByProjectProjects(@PathVariable int projectId) {
-        return markTypeService.getAllowed(projectId, MarkTypeScope.PROJECTS);
+        return markTypeService.getAllowed(projectId, EvaluationScope.PROJECTS);
     }
     
     @GetMapping(value = "admin/api/project/{projectId}/properties/meetings")
     public List<MarkType> getByProjectMeetings(@PathVariable int projectId) {
-        return markTypeService.getAllowed(projectId, MarkTypeScope.MEETINGS);
+        return markTypeService.getAllowed(projectId, EvaluationScope.MEETINGS);
     }
 
     @PostMapping("admin/api/property")

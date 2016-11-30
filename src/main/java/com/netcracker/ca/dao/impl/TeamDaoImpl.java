@@ -30,6 +30,7 @@ public class TeamDaoImpl implements TeamDao {
 	private static final String SQL_DELETE_TEAM = "DELETE FROM teams WHERE id = ?";
 	private static final String SQL_SELECT_ALL_TEAMS_OF_PROJECT = SQL_SELECT_TEAMS + " WHERE project_id = ?";
 	private static final String SQL_SELECT_TEAM_BY_TITLE = SQL_SELECT_TEAMS + " WHERE title = ?";
+	private static final String SQL_SELECT_TEAM_BY_MEETING = SQL_SELECT_TEAMS + " WHERE id=(SELECT team_id FROM meetings WHERE id=?)";
 	private static final String SQL_SELECT_TEAM_AND_PROJECT = "SELECT t.id AS t_id, t.title AS t_title, p.id AS p_id, p.title as p_title, p.description, p.start_date, "
 			+ "p.end_date, un.id AS un_id, un.title as un_title FROM teams AS t INNER JOIN projects AS p ON t.project_id=p.id "
 			+ "INNER JOIN universities AS un ON p.university_id=un.id";
@@ -86,6 +87,12 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public Team getByTitle(String title) {
 		return jdbcTemplate.queryForObject(SQL_SELECT_TEAM_BY_TITLE, new TeamMapper(), title);
+	}
+	
+	@Override
+	public Team getByMeeting(int meetingId) {
+		List<Team> teams = jdbcTemplate.query(SQL_SELECT_TEAM_BY_MEETING, new TeamMapper(), meetingId);
+		return teams.isEmpty() ? null : teams.get(0);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public class CuratorDaoImpl implements CuratorDao {
 	private static final String SQL_SELECT_CURATORS_BY_TEAM = SQL_SELECT_CURATORS + " WHERE cp.team_id=?";
 	private static final String SQL_SELECT_CURATORS_BY_PROJECT_IN_TEAMS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, cp.team_id AS t_id "
 			+ "FROM users AS u INNER JOIN curators_in_project AS cp ON u.id=cp.user_id WHERE cp.project_id=?";
+	private static final String SQL_SELECT_CURATORS_BY_MEETING = SQL_SELECT_CURATORS + " INNER JOIN meetings AS m ON cp.team_id=m.team_id";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -51,6 +52,11 @@ public class CuratorDaoImpl implements CuratorDao {
 	@Override
 	public List<User> getByProject(int projectId) {
 		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_PROJECT, new CuratorRowMapper(), projectId);
+	}
+	
+	@Override
+	public List<User> getByMeeting(int meetingId) {
+		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_MEETING, new CuratorRowMapper(), meetingId);
 	}
 
 	@Override

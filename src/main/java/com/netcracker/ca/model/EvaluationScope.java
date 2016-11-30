@@ -1,6 +1,6 @@
 package com.netcracker.ca.model;
 
-public enum MarkTypeScope {
+public enum EvaluationScope {
 
 	MEETINGS, PROJECTS;
 

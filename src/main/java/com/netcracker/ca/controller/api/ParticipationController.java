@@ -17,7 +17,7 @@ public class ParticipationController extends BaseApiController {
 	
 	@PutMapping("admin/project/{projectId}/participations")
 	public void updateAll(@RequestBody ParticipationDtos partDtos, @PathVariable int projectId) {
-		participationService.updateAll(partDtos.getParticipationDtos(), projectId);
+		participationService.setAll(partDtos.getParticipationDtos(), projectId);
 	}
 	
 }

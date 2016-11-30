@@ -9,7 +9,9 @@ import com.netcracker.ca.model.Meeting;
  */
 public interface MeetingService {
 	
-    void add(Meeting meeting);
+    void addToProject(Meeting meeting, int projectId);
+    
+    void addToTeam(Meeting meeting, int teamId);
 
     void update(Meeting meeting);
 
@@ -18,4 +20,6 @@ public interface MeetingService {
     List<Meeting> getAllTeamMeetings(int id);
 
     List<Meeting> getAllProjectMeetings(int id);
+    
+    void setAttendance(int meetingId, int studentId, boolean isPresent);
 }

@@ -3,6 +3,7 @@ package com.netcracker.ca.controller.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,11 +26,16 @@ public class TeamController extends BaseApiController {
         return teamService.getAll();
     }
     
-    @PostMapping("admin/project/{projectId}/team")
+    @PostMapping("admin/api/project/{projectId}/team")
     public Team create(@RequestBody Team team, @PathVariable int projectId) {
     	team.setProject(new Project(projectId));
     	teamService.add(team);
         return team;
+    }
+    
+    @GetMapping("admin/api/project/{projectId}/teams")
+    public List<Team> getByProject(@PathVariable int projectId) {
+    	return teamService.getByProject(projectId);
     }
     
     @RequestMapping(value = "", method = RequestMethod.PUT)

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<context:component-scan base-package="com.netcracker.ca.security"/>
+	<context:component-scan base-package="com.netcracker.ca.security" />
 	<http use-expressions="true">
- 
+
 		<intercept-url pattern="/login" access="isAnonymous()" />
-<!-- 	<intercept-url pattern="/main" access="isAuthenticated()" />	 -->
-		<intercept-url pattern="/projects" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/user/**" access="isAuthenticated()" />
+		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/curator/**" access="hasRole('CURATOR')" />
 		<intercept-url pattern="/hr/**" access="hasRole('HR')" />
 		<intercept-url pattern="/student/**" access="hasRole('STUDENT')" />
@@ -28,7 +27,7 @@
 	</http>
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userDetailsServiceImpl" >
+		<authentication-provider user-service-ref="userDetailsServiceImpl">
 			<password-encoder hash="bcrypt" />
 		</authentication-provider>
 	</authentication-manager>

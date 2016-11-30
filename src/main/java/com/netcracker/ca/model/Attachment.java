@@ -10,23 +10,13 @@ public class Attachment {
 
 	private String mimeType;
 
-	private Project project;
-
-	private Team team;
-
 	public Attachment() {
 	}
 
-	public Attachment(String text, String link, String mimeType, Project project, Team team) {
+	public Attachment(String text, String link, String mimeType) {
 		this.text = text;
 		this.link = link;
 		this.mimeType = mimeType;
-		this.project = project;
-		this.team = team;
-	}
-
-	public Attachment(String text, String link, String mimeType, Project project) {
-		this(text, link, mimeType, project, null);
 	}
 
 	public int getId() {
@@ -59,22 +49,6 @@ public class Attachment {
 
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
 	}
 
 	@Override

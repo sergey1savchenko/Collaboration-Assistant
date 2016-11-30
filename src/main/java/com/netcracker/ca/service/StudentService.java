@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.netcracker.ca.model.Student;
-import com.netcracker.ca.model.Team;
 
 public interface StudentService {
 

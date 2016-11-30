@@ -20,6 +20,8 @@ public interface TeamService {
 
 	Team getByTitle(String title);
 	
+	Team getByMeeting(int meetingId);
+	
 	Team getCurrentForStudent(int studentId);
 	
 	Team getCurrentForCurator(int curatorId);

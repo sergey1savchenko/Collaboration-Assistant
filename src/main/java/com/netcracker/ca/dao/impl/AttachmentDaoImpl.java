@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import com.netcracker.ca.dao.AttachmentDao;
 import com.netcracker.ca.model.Attachment;
-import com.netcracker.ca.model.Project;
 
 @Repository
 public class AttachmentDaoImpl implements AttachmentDao {
@@ -24,58 +23,68 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	private static String SQL_SELECT_ATTACHMENT = "SELECT id, text, attachment_link, mime_type FROM attachments";
 	private static String SQL_SELECT_ATTACHMENT_BY_ID = SQL_SELECT_ATTACHMENT + " WHERE id=?";
 	private static String SQL_ADD_ATTACHMENT_TO_PROJECT = "INSERT INTO attachments (text, attachment_link, mime_type, project_id) VALUES (?, ?, ?, ?)";
-	private static String SQL_ADD_ATTACHMENT_TO_TEAM = "INSERT INTO attachments (text, attachment_link, mime_type, project_id, team_id) VALUES (?, ?, ?, ?, ?)";
-	private static String SQL_UPDATE_ATTACHMENT = "UPDATE attachments SET text=?, attachment_link=?, mime_type=? WHERE id=?";
+	private static String SQL_ADD_ATTACHMENT_TO_TEAM = "INSERT INTO attachments (text, attachment_link, mime_type, project_id, team_id) VALUES (?, ?, ?, (SELECT project_id FROM teams WHERE id=?), ?)";
 	private static String SQL_DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 	private static String SQL_SELECT_TEAM_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
 	private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
-	private static String SQL_SELECT_PROJECT_BY_TEAM = "SELECT project_id FROM teams WHERE id=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public Attachment getById(Integer id) {
+	@Override
+	public Attachment getById(int id) {
 		List<Attachment> att = jdbcTemplate.query(SQL_SELECT_ATTACHMENT_BY_ID, new AttachmentRowMapper(), id);
 		return att.isEmpty() ? null : att.get(0);
 	}
 
-	public void add(final Attachment attachment) {
-		final boolean isTeamAttm = attachment.getTeam() != null;
-		if(isTeamAttm && attachment.getProject() == null) {
-			int projectId = jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TEAM, new Object[] { attachment.getTeam().getId() }, int.class);
-			attachment.setProject(new Project(projectId));
-		}
+	@Override
+	public void addToProject(final Attachment attachment, final int projectId) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				String sql = isTeamAttm ? SQL_ADD_ATTACHMENT_TO_TEAM : SQL_ADD_ATTACHMENT_TO_PROJECT;
-				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
+				PreparedStatement ps = con.prepareStatement(SQL_ADD_ATTACHMENT_TO_PROJECT, new String[] { "id" });
 				ps.setString(1, attachment.getText());
 				ps.setString(2, attachment.getLink());
 				ps.setString(3, attachment.getMimeType());
-				ps.setInt(4, attachment.getProject().getId());
-				if (isTeamAttm)
-					ps.setInt(5,  attachment.getTeam().getId());
+				ps.setInt(4, projectId);
+
+				return ps;
+			}
+		}, keyHolder);
+		attachment.setId(keyHolder.getKey().intValue());
+	}
+	
+	@Override
+	public void addToTeam(final Attachment attachment, final int teamId) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(SQL_ADD_ATTACHMENT_TO_TEAM, new String[] { "id" });
+				ps.setString(1, attachment.getText());
+				ps.setString(2, attachment.getLink());
+				ps.setString(3, attachment.getMimeType());
+				ps.setInt(4, teamId);
+				ps.setInt(5, teamId);
+
 				return ps;
 			}
 		}, keyHolder);
 		attachment.setId(keyHolder.getKey().intValue());
 	}
 
-	public void update(Attachment attachment) {
-		jdbcTemplate.update(SQL_UPDATE_ATTACHMENT, attachment.getText(), attachment.getLink(), attachment.getMimeType(),
-				attachment.getId());
-	}
-
-	public void delete(Integer id) {
+	@Override
+	public void delete(int id) {
 		jdbcTemplate.update(SQL_DELETE_ATTACHMENT, id);
 	}
 
+	@Override
 	public List<Attachment> getTeamAttachments(int teamId) {
 		return jdbcTemplate.query(SQL_SELECT_TEAM_ATTACHMENTS, new AttachmentRowMapper(), teamId);
 	}
 
+	@Override
 	public List<Attachment> getProjectAttachments(int projectId) {
 		return jdbcTemplate.query(SQL_SELECT_PROJECT_ATTACHMENTS, new AttachmentRowMapper(), projectId);
 	}
