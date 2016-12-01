@@ -3,8 +3,6 @@ package com.netcracker.ca.service.impl;
 import org.springframework.stereotype.Component;
 
 import com.netcracker.ca.model.Attachment;
-import com.netcracker.ca.model.Project;
-import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.AttachmentFactory;
 
 @Component

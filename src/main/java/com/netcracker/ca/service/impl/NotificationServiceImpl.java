@@ -17,7 +17,6 @@ import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.MailService;
 import com.netcracker.ca.service.NotificationService;
-import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.TemplateBuilder;
 import com.netcracker.ca.service.UserService;
 
