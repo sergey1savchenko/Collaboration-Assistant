@@ -23,6 +23,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div align="right">
+							<button type="button" class="btn btn-warning btn-primary btn-xs">Manage Curators</button>
 							<button type="button" onClick="deleteTeam(${projectTeam.id}); return false;" class="btn btn-danger btn-primary btn-xs">Delete Team</button>
 							</div>
 						</div>
@@ -43,7 +44,10 @@
 		</div>
 		
 		<div class="bottomButton">
-			<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#addDialog">Add Team</button>
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addDialog">Add Team</button>
+			<button type="button" class="btn btn-success">Manage Students</button><br/><br/>
+			<button type="button" class="btn btn-success">Project Meetings</button>
+			<button type="button" class="btn btn-success">Project Files</button>
 		</div>
 		
 	</div>

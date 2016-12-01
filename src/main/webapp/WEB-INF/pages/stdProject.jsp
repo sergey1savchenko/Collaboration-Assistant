@@ -40,9 +40,7 @@
 	</div>
 	
 		<div class="bottomButton">
-			<button type="button" class="btn btn-primary">Meetings Schedule</button>
 		</div>
-	
 	
 	</div>
 </div>
