@@ -23,7 +23,7 @@ public class hrFeedbackController extends BaseApiController{
     private FeedbackService feedbackService;
        
     
-    @RequestMapping(value = "/hr/feedback/hrFeedbackStudent{app_form_id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/hr/feedback/hrFeedbackStudent/{app_form_id}", method = RequestMethod.GET, produces = "application/json")
     public List<Feedback> get(@PathVariable(value = "app_form_id") int app_form_id) {	
 	System.out.println(feedbackService.getById(app_form_id));
 	
