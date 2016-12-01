@@ -53,7 +53,7 @@ $(function () {
         deleteConfirm: "Do you really want to delete the project?",
         fields: [
             {name: "title", type: "text", title: "Title", validate: "required"},
-            {name: "id", type: 'link', url: 'CA-Project/admin/api/project/{id}', width: 70, title: 'Settings'},
+            {name: "id", type: 'link', url: '/CA-Project/admin/project/{id}', width: 70, title: 'Settings'},
             {name: "description", type: "text",  title: "Description"},
             {name: "startDate", type: "jsDate", width: 150, title: "Start date", validate: "required"},
             {name: "endDate", type: "jsDate", width: 150, title: "End date", validate: "required"},
