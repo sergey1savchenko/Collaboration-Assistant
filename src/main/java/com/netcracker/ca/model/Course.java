@@ -3,12 +3,12 @@ package com.netcracker.ca.model;
 public class Course {
 
 	private int id;
-	private String title;
+	private int title;
 
 	public Course() {
 	}
 
-	public Course(int id, String title) {
+	public Course(int id, int title) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -26,11 +26,11 @@ public class Course {
 		this.id = id;
 	}
 
-	public String getTitle() {
+	public int getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(int title) {
 		this.title = title;
 	}
 
