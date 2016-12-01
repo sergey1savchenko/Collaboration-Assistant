@@ -155,7 +155,7 @@ public class StudentDaoImpl implements StudentDao {
 			student.setAppFormId(rs.getInt("af_id"));
 			Course course = new Course();
 			course.setId(rs.getInt("c_id"));
-			course.setTitle(rs.getString("c_title"));
+			course.setTitle(rs.getInt("c_title"));
 			student.setCourse(course);
 			University university = new University();
 			university.setId(rs.getInt("un_id"));
