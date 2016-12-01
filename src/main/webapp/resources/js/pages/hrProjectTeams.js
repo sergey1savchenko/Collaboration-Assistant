@@ -21,7 +21,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/admin/api/teamCurators/" + teamID,				// !
+                    url: "/CA-Project/hr/api/teamCurators/" + teamID,				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -67,7 +67,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/admin/api/teamStudents/" + teamID,				// !
+                    url: "/CA-Project/hr/api/teamStudents/" + teamID,				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -84,9 +84,9 @@ $(function () {
         			// from DB
             // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
         	//{name: "u_id", type: "text", title: "user id", validate: "required"},
-        	{name: "u_id", type: 'link', url: 'CA-Project/admin/student/{u_id}', width: 50, title: 'Student page'},
+        	{name: "u_id", type: 'link', url: 'CA-Project/hr/student/{u_id}', width: 60, title: 'Evaluation'},
             {name: "email", type: "text", title: "email", validate: "required"},
-            {name: "is_active", type: "boolean", title: " Is active", validate: "required"},
+            {name: "is_active", type: "boolean", width: 40, title: " Is active", validate: "required"},
             {name: "un_title", type: "text", title: "University", validate: "required"},
             {name: "first_name", type: "text", title: "First name", validate: "required"},
             {name: "second_name", type: "text", title: "Second name", validate: "required"},
@@ -99,41 +99,4 @@ $(function () {
     
 });
 
-}
-
-///
-
-function deleteTeam(id){
-	if (confirm("Are you shure to delete this team?")) {
-		//alert(id);
-		$.ajax({
-			method: "DELETE",
-			url: "/CA-Project/admin/api/team/" + id									//!
-			}).fail(function () {
-				WebUtils.show('Failed to delete Team');
-			});
-		location.reload();
-	} else {
-		
-	}
-}
-
-///
-
-function addTeam(projectId){
-    	var item = {
-        	title: $("#team-title").val()
-        }
-	    $.ajax({
-	        // admin/api/project/{projectId}/team
-	    	url: "/CA-Project/admin/api/project/" + projectId + "/team",
-	        method: 'POST',
-            data: JSON.stringify(item),
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json'	
-	    }).done(function (data) {
-	    	location.reload();
-	    }).fail(function () {
-	        WebUtils.show("Failed to create data");
-	    });
 }

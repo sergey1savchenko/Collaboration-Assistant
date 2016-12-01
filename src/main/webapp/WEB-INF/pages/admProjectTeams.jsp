@@ -41,6 +41,7 @@
 				</div>
 			</c:forEach>
 		</div>
+		
 		<div class="bottomButton">
 			<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#addDialog">Add Team</button>
 		</div>

@@ -48,12 +48,12 @@ public class TeamController extends BaseApiController {
     }
     
     //
-    @GetMapping("admin/api/teamCurators/{teamId}")
+    @GetMapping({"admin/api/teamCurators/{teamId}", "curator/api/teamCurators/{teamId}", "student/api/teamCurators/{teamId}", "hr/api/teamCurators/{teamId}"})
     public List<User> teamCurators(@PathVariable int teamId) {
         return curatorService.getByTeam(teamId);
     }
     
-    @GetMapping("admin/api/teamStudents/{teamId}")
+    @GetMapping({"admin/api/teamStudents/{teamId}", "curator/api/teamStudents/{teamId}", "student/api/teamStudents/{teamId}", "hr/api/teamStudents/{teamId}"})
     public List<Student> teamStudents(@PathVariable int teamId) {
         return studentService.getByTeam(teamId);
     }
