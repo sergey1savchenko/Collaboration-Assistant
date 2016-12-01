@@ -40,6 +40,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/jsgrid.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery.validate.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/webutils.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/input.js"/>"></script>
 <title>Collaboration assistant</title>
 </head>
 <body>
