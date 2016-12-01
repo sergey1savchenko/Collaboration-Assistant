@@ -53,13 +53,6 @@ input[type="password"] {
   background: url(../img/setting.png)
 }
 
-.js-download-field {
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-  background: url(../img/download.png)
-}
-
 .above-grid {
   background-color: #059fde;
   height: 50px;
@@ -80,4 +73,8 @@ input[type="password"] {
 
 .noDiv {
 display:none;
+}
+input.jsgrid-date-filter-from,
+input.jsgrid-date-filter-to {
+	width:98px!important;
 }
