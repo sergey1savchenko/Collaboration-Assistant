@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ParticipationService;
@@ -36,7 +38,7 @@ public class AdminController extends BaseController {
 
 	@GetMapping("properties")
 	public String properties() {
-		return "admAddProperties";
+		return "admProperties";
 	}
 
 	@GetMapping("create-project")
@@ -53,10 +55,12 @@ public class AdminController extends BaseController {
 		return "admProjectTeams";
 	}
 
-	/*@RequestMapping("project/{projectId}/participations")
-	public String getParticipations(@PathVariable int projectId, Model model) {
-		model.addAttribute("participations", participationService.getByProject(projectId));
-		return "your-page";
-	}*/
+	
+	@RequestMapping(value = "/project/{projectId}/files", params="project_id", method = RequestMethod.GET)
+	public String admFilesPage(@RequestParam("project_id") int project_id, Model model) {
+		model.addAttribute("project_id", project_id);
+		model.addAttribute("project_name", projectService.getById(project_id).getTitle());
+		return "admFiles";
+	}
 
 }
