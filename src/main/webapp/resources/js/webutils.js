@@ -80,7 +80,8 @@
 
         editTemplate: function (value) {
             var res = this._editPicker = $("<input>").datepicker();
-            if (typeof value == 'string' && value != '') res.datepicker("setDate", new Date(value));
+            if ((typeof value == 'string' && value != '')||
+            		(typeof value == 'number' && value != 0)) res.datepicker("setDate", new Date(value));
             return res;
         },
 
