@@ -69,7 +69,7 @@
 					<li class="menu-button"><a href="<c:url value="/curator"/>">Project</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('STUDENT')">
-					<li class="menu-button"><a href="<c:url value="/stProject"/>">Project</a></li>
+					<li class="menu-button"><a href="<c:url value="/student"/>">Project</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('ADMIN')">
 					<li class="menu-button"><a href="<c:url value="/reports"/>">Reports</a></li>
@@ -81,16 +81,16 @@
 					<li class="menu-button"><a href="<c:url value="/admin/properties"/>">Evaluation properties</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('CURATOR')">
-					<li class="menu-button"><a href="<c:url value="/curFiles"/>">Files</a></li>
+					<li class="menu-button"><a href="<c:url value="/curator/team/files"/>">Files</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('STUDENT')">
-					<li class="menu-button"><a href="<c:url value="/stFiles"/>">Files</a></li>
+					<li class="menu-button"><a href="<c:url value="/student/team/files"/>">Files</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('CURATOR')">
-					<li class="menu-button"><a href="<c:url value="/curMeetings"/>">Meetings</a></li>
+					<li class="menu-button"><a href="<c:url value="/curator/meeting"/>">Meetings</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('STUDENT')">
-					<li class="menu-button"><a href="<c:url value="/stMeetings"/>">Meetings</a></li>
+					<li class="menu-button"><a href="<c:url value="/student/meeting"/>">Meetings</a></li>
 				</security:authorize>
 				</ul>
 

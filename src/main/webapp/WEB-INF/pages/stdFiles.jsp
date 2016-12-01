@@ -7,7 +7,7 @@
         <div class="above-grid"><span>Files of "${sessionScope.team.title}" student.</span>
         <input type="hidden" name="team_id" id="team_id" value=${sessionScope.team.id}>  
         </div>
-        <div class="simple-grid" id="stdFilesGrid"></div>
+        <div class="simple-grid download-link" id="stdFilesGrid"></div>
     </div>
     </div>
     </div>

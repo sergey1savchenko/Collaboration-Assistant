@@ -7,7 +7,7 @@
         <div class="above-grid"><span>Files of "${sessionScope.team.title}" team.</span>
             <button type="button" class="btn btn-info btn-md pull-right" data-toggle="modal" data-target="#addDialog">Add File</button>
         </div>
-        <div class="simple-grid" id="curFilesGrid"></div>
+        <div class="simple-grid download-link" id="curFilesGrid"></div>
     </div>
     </div>
     </div>

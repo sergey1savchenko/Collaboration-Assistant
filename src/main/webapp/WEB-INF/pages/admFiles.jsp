@@ -1,4 +1,5 @@
 <%@include file="header.jsp" %>
+
 <div class="container">
     <div class="wrapper">
     <input type="hidden" name="project_id" id="project_id" value=${project_id}>    
@@ -7,7 +8,7 @@
         <div class="above-grid"><span>Files of "${project_name}" project.</span>
             <button type="button" class="btn btn-info btn-md pull-right" data-toggle="modal" data-target="#addDialog">Add File</button>
         </div>
-        <div class="simple-grid" id="admFilesGrid"></div>
+        <div class="simple-grid download-link" id="admFilesGrid"></div>
     </div>
     </div>
     </div>
