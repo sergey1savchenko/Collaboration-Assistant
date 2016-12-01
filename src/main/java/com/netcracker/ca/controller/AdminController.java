@@ -62,5 +62,4 @@ public class AdminController extends BaseController {
 		model.addAttribute("project_name", projectService.getById(project_id).getTitle());
 		return "admFiles";
 	}
-
 }
