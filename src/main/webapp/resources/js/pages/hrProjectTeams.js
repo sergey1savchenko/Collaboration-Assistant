@@ -39,9 +39,9 @@ $(function () {
         			// from DB
             //{name: "u_id", type: "text", title: "user id", validate: "required"},
             {name: "email", type: "text", title: "email", validate: "required"},
-            {name: "first_name", type: "text", title: "First name", validate: "required"},
-            {name: "second_name", type: "text", title: "Second name", validate: "required"},
-            {name: "last_name", type: "text", title: "Last name", validate: "required"}
+            {name: "firstName", type: "text", title: "First name", validate: "required"},
+            {name: "secondName", type: "text", title: "Second name", validate: "required"},
+            {name: "lastName", type: "text", title: "Last name", validate: "required"}
             //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]
@@ -84,13 +84,13 @@ $(function () {
         			// from DB
             // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
         	//{name: "u_id", type: "text", title: "user id", validate: "required"},
-        	{name: "u_id", type: 'link', url: 'CA-Project/hr/student/{u_id}', width: 60, title: 'Evaluation'},
+        	{name: "id", type: 'link', url: 'CA-Project/hr/student/{id}', width: 60, title: 'Evaluation'},
             {name: "email", type: "text", title: "email", validate: "required"},
-            {name: "is_active", type: "boolean", width: 40, title: " Is active", validate: "required"},
-            {name: "un_title", type: "text", title: "University", validate: "required"},
-            {name: "first_name", type: "text", title: "First name", validate: "required"},
-            {name: "second_name", type: "text", title: "Second name", validate: "required"},
-            {name: "last_name", type: "text", title: "Last name", validate: "required"}
+            {name: "firstName", type: "text", title: "First name", validate: "required"},
+            {name: "secondName", type: "text", title: "Second name", validate: "required"},
+            {name: "lastName", type: "text", title: "Last name", validate: "required"},
+            {name: "isActive", type: "checkbox", width: 40, title: " Is active", validate: "required"},
+            {name: "university", type: "text", title: "University", validate: "required"}
             //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]
