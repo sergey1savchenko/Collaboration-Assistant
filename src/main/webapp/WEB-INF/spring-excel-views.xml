@@ -6,4 +6,12 @@
     <bean id="projectsListExcel"
           class="com.netcracker.ca.service.reportsExport.ProjectsListExcelView">
     </bean>
+
+    <bean id="studentsListExcel"
+          class="com.netcracker.ca.service.reportsExport.StudentsListExcelView">
+    </bean>
+
+    <bean id="studentInProjectListExcel"
+          class="com.netcracker.ca.service.reportsExport.StudentInProjectListExcelView">
+    </bean>
 </beans>

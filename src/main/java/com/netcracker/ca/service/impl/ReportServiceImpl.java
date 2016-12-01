@@ -2,6 +2,7 @@ package com.netcracker.ca.service.impl;
 
 import com.netcracker.ca.dao.ReportDao;
 import com.netcracker.ca.model.reports.ProjectReport;
+import com.netcracker.ca.model.reports.StudentInProjectReport;
 import com.netcracker.ca.model.reports.StudentReport;
 import com.netcracker.ca.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<StudentReport> getStudentsOfProjectReport(int id) {
         return reportDao.getStudentsOfProjectReport(id);
+    }
+
+    @Override
+    public List<StudentInProjectReport> getStudentInProjectReport(int id) {
+        return reportDao.getStudentInProjectReport(id);
     }
 }

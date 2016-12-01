@@ -1,6 +1,7 @@
 package com.netcracker.ca.dao;
 
 import com.netcracker.ca.model.reports.ProjectReport;
+import com.netcracker.ca.model.reports.StudentInProjectReport;
 import com.netcracker.ca.model.reports.StudentReport;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ReportDao {
     List<StudentReport> getStudentsOfTeamReport(int id);
 
     List<StudentReport> getStudentsOfProjectReport(int id);
+
+    List<StudentInProjectReport> getStudentInProjectReport(int id);
 }

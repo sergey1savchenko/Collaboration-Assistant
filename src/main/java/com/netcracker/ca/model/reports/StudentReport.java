@@ -6,7 +6,7 @@ package com.netcracker.ca.model.reports;
 public class StudentReport {
     private String firstName;
     private String lastName;
-    private String protection;
+    private String defense;
     private String generalInt;
     private String techInt;
     private String status;
@@ -14,10 +14,10 @@ public class StudentReport {
     public StudentReport() {
     }
 
-    public StudentReport(String firstName, String lastName, String protection, String generalInt, String techInt, String status) {
+    public StudentReport(String firstName, String lastName, String defense, String generalInt, String techInt, String status) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.protection = protection;
+        this.defense = defense;
         this.generalInt = generalInt;
         this.techInt = techInt;
         this.status = status;
@@ -39,9 +39,9 @@ public class StudentReport {
         this.lastName = lastName;
     }
 
-    public String getProtection() { return protection; }
+    public String getDefense() { return defense; }
 
-    public void setProtection(String protection) { this.protection = protection; }
+    public void setDefense(String defense) { this.defense = defense; }
 
     public String getGeneralInt() {
         return generalInt;
@@ -72,7 +72,7 @@ public class StudentReport {
         return "StudentReport{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", protection='" + protection + '\'' +
+                ", defense='" + defense + '\'' +
                 ", generalInt='" + generalInt + '\'' +
                 ", techInt='" + techInt + '\'' +
                 ", status='" + status + '\'' +

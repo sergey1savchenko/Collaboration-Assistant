@@ -1,6 +1,7 @@
 package com.netcracker.ca.service;
 
 import com.netcracker.ca.model.reports.ProjectReport;
+import com.netcracker.ca.model.reports.StudentInProjectReport;
 import com.netcracker.ca.model.reports.StudentReport;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ReportService {
     List<StudentReport> getStudentsOfTeamReport(int id);
 
     List<StudentReport> getStudentsOfProjectReport(int id);
+
+    List<StudentInProjectReport> getStudentInProjectReport(int id);
 }
