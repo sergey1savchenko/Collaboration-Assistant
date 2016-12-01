@@ -40,8 +40,8 @@ $(function () {
         fields: [														//!!
         			// from DB
         	{name: "text", type: "text", title: "File title", validate: "required", width: "75%"},
-        	{name: "id", type: "link", url: '/CA-Project/admin/api/file/{id}', title: "download", validate: "required", width: "15%"},
-            {type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
+        	{name: "id", type: "link", url: '/CA-Project/admin/api/file/{id}', title: "download", width: "15%"},
+        	{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]
 

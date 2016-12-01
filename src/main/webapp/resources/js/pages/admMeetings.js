@@ -93,7 +93,7 @@ function onCreateAction() {
         id: 0,
         title: $("#meeting-title").val(),
         address: $("#meeting-address").val(),
-        startDate: $("#meeting-date").val(),
+        datetime: $("#meeting-date").val(),
        
     };
     $.ajax({
