@@ -51,15 +51,7 @@ public class AttachmentController extends BaseApiController {
 		return attService.getProjectAttachments(projectId);
 	}
 
-	@PostMapping("admin/api/project/{projectId}/file")
-	public Attachment uploadForProject(@RequestParam MultipartFile file, @RequestParam("text") String text,
-			@PathVariable int projectId) throws IOException {
-		//add validation for file (not empty, <maxSize)
-		try (InputStream input = file.getInputStream()) {
-			Attachment att = attFactory.build(file.getName(), text, file.getContentType(), projectId, false);
-			return attService.addToProject(att,input,projectId);
-		}
-	}
+
 
 	@GetMapping("admin/api/file/{fileId}")
 	public ResponseEntity<Resource> download(@PathVariable int fileId) throws IOException {
@@ -87,15 +79,6 @@ public class AttachmentController extends BaseApiController {
 		return attService.getTeamAttachments(teamId);
 	}
 	
-	@PostMapping("curator/api/team/{teamId}/file")
-	public Attachment uploadForTeam(@RequestParam MultipartFile file,@RequestParam("project_id") int project_id, @RequestParam("text") String text,
-			@PathVariable int teamId) throws IOException {
-		//add validation for file (not empty, <maxSize)
-		try (InputStream input = file.getInputStream()) {
-			Attachment att = attFactory.build(file.getName(), text, file.getContentType(), project_id, true);
-			return attService.addToTeam(att,input,teamId);
-		}
-	}
 	
 	@GetMapping("curator/api/file/{fileId}")
 	public ResponseEntity<Resource> curDownload(@PathVariable int fileId) throws IOException {
