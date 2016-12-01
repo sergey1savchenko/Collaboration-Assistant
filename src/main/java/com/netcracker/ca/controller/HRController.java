@@ -22,7 +22,7 @@ public class HRController extends BaseController {
 	public String projects() {
 
 		// TODO "hrProjects"
-		return "home";
+		return "hrProjects";
 	}
 	
 	@GetMapping("project/{projectId}")
@@ -30,9 +30,14 @@ public class HRController extends BaseController {
 		model.addAttribute("project", projectService.getByIdWithUsers(projectId));
 		return "hrProjectTeams";
 	}
+	@GetMapping("project/{projectId}/meetings")
+	public String projectMeetings(@PathVariable int projectId, Model model) {
+		model.addAttribute("project", projectService.getByIdWithUsers(projectId));
+		return "hrMeetings";
+	}
 	
-	@RequestMapping(value = "/hrFeedback", params="app_form_id", method = RequestMethod.GET)
-	public String curFilesPage(@RequestParam("app_form_id") int app_form_id, Model model) {
+	@RequestMapping(value = "/hrFeedback/{app_form_id}",  method = RequestMethod.GET)
+	public String curFilesPage(@PathVariable("app_form_id") int app_form_id, Model model) {
 		model.addAttribute("app_form_id", 1);
 		return "hrFeedback";
 	}

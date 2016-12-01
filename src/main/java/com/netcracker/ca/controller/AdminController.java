@@ -38,7 +38,7 @@ public class AdminController extends BaseController {
 
 	@GetMapping("properties")
 	public String properties() {
-		return "admProperties";
+		return "admAddProperties";
 	}
 
 	@GetMapping("create-project")
@@ -55,11 +55,17 @@ public class AdminController extends BaseController {
 		return "admProjectTeams";
 	}
 
+	@RequestMapping(value = "/project/{projectId}/meetings")
+	public String admMeetings(@PathVariable("projectId") int projectId, Model model) {
+		model.addAttribute("projectId", projectId);
+		return "admMeetings";
+	}
 	
-	@RequestMapping(value = "/project/{projectId}/files", params="project_id", method = RequestMethod.GET)
-	public String admFilesPage(@RequestParam("project_id") int project_id, Model model) {
-		model.addAttribute("project_id", project_id);
-		model.addAttribute("project_name", projectService.getById(project_id).getTitle());
+	@RequestMapping(value = "/project/{projectId}/files",  method = RequestMethod.GET)
+	public String admFilesPage(@PathVariable("projectId") int projectId, Model model) {
+		model.addAttribute("project_id", projectId);
+		model.addAttribute("project_name", projectService.getById(projectId).getTitle());
 		return "admFiles";
 	}
+
 }

@@ -27,11 +27,19 @@ public class StudentController extends BaseController {
 		model.addAttribute("projects", projectService.getAll());
 		return "stdProject";
 	}
+	@RequestMapping(value="/meetings")
+	public String stdMeetings(HttpSession session, Model model) {
+		//System.out.println(session.getAttribute("team"));
+		model.addAttribute("team", session.getAttribute("team"));
+		model.addAttribute("projects", projectService.getAll());
+		return "stdMeetings";
+	}
 	
-	@RequestMapping(value = "/team/{teamId}/files", params="team_id", method = RequestMethod.GET)
-	public String curFilesPage(@RequestParam("team_id") int team_id, Model model) {
+	@RequestMapping(value = "/team/files", method = RequestMethod.GET)
+	public String curFilesPage(HttpSession session, Model model) {
 		//model.addAttribute("team_id", team_id);
 		//model.addAttribute("team_name", teamService.getById(team_id).getTitle());
+		model.addAttribute("team", session.getAttribute("team"));
 		return "stdFiles";
 	}
 	
