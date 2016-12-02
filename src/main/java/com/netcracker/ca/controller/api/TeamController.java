@@ -3,15 +3,15 @@ package com.netcracker.ca.controller.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
@@ -29,16 +29,9 @@ public class TeamController extends BaseApiController {
     @Autowired
     private StudentService studentService;
     
-    
-    @RequestMapping(value = "/team", method = RequestMethod.GET, produces = "application/json")
-    public List<Team> getAll() {
-        return teamService.getAll();
-    }
-    
     @PostMapping("admin/api/project/{projectId}/team")
     public Team create(@RequestBody Team team, @PathVariable int projectId) {
-    	team.setProject(new Project(projectId));
-    	teamService.add(team);
+    	teamService.add(team, projectId);
         return team;
     }
     
@@ -47,25 +40,33 @@ public class TeamController extends BaseApiController {
     	return teamService.getByProject(projectId);
     }
     
-    //
-    @GetMapping({"admin/api/teamCurators/{teamId}", "curator/api/teamCurators/{teamId}", "student/api/teamCurators/{teamId}", "hr/api/teamCurators/{teamId}"})
+    @GetMapping({"admin/api/team/{teamId}/curators", "hr/api/team/{teamId}/curators"})
     public List<User> teamCurators(@PathVariable int teamId) {
         return curatorService.getByTeam(teamId);
     }
     
-    @GetMapping({"admin/api/teamStudents/{teamId}", "curator/api/teamStudents/{teamId}", "student/api/teamStudents/{teamId}", "hr/api/teamStudents/{teamId}"})
+    @GetMapping({"curator/api/curators", "student/api/curators"})
+    public List<User> teamCurators(@SessionAttribute Team team) {
+        return curatorService.getByTeam(team.getId());
+    }
+    
+    @GetMapping({"admin/api/team/{teamId}/students", "hr/api/team/{teamId}/students"})
     public List<Student> teamStudents(@PathVariable int teamId) {
         return studentService.getByTeam(teamId);
     }
-    //
     
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @GetMapping({"curator/api/students", "student/api/students"})
+    public List<Student> teamStudents(@SessionAttribute Team team) {
+        return studentService.getByTeam(team.getId());
+    }
+    
+    @PutMapping("admin/api/team")
     public void update(@RequestBody Team team) {
     	teamService.update(team);
     }
     
-    @RequestMapping(value = "admin/api/team/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") int id) {
-    	teamService.delete(id);
+    @DeleteMapping("admin/api/team/{teamId}")
+    public void delete(@PathVariable int teamId) {
+    	teamService.delete(teamId);
     }
 }

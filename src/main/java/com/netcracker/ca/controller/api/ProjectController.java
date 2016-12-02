@@ -37,7 +37,7 @@ public class ProjectController extends BaseApiController {
     
     @GetMapping({"admin/api/project/{projectId}", "hr/api/project/{projectId}"})
     public Project get(@PathVariable int projectId) {
-        Project project = projectService.getByIdWithUsers(projectId);
+        Project project = projectService.getByIdWithTeams(projectId);
         for(Team team: project.getTeams())
         	team.setProject(null);
         return project;

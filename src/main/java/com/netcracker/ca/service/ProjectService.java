@@ -10,7 +10,7 @@ public interface ProjectService {
 
 	Project getById(int id);
 	
-	Project getByIdWithUsers(int id);
+	Project getByIdWithTeams(int id);
 	
 	void add(Project project, List<Integer> meetingMarkTypeIds, List<Integer> projectMarkTypeIds);
 

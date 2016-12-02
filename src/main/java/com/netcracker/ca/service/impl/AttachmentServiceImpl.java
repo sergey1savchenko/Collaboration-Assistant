@@ -1,5 +1,6 @@
 package com.netcracker.ca.service.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -24,14 +25,14 @@ public class AttachmentServiceImpl implements AttachmentService {
 	private StorageService storageService;
 	
 	@Override
-	public Attachment addToProject(Attachment att, InputStream is, int projectId) {
+	public Attachment addToProject(Attachment att, InputStream is, int projectId) throws IOException {
 		storageService.store(is, att.getLink());
 		attachmentDao.addToProject(att, projectId);
 		return att;
 	}
 	
 	@Override
-	public Attachment addToTeam(Attachment att, InputStream is, int teamId) {
+	public Attachment addToTeam(Attachment att, InputStream is, int teamId) throws IOException {
 		storageService.store(is, att.getLink());
 		attachmentDao.addToTeam(att, teamId);
 		return att;

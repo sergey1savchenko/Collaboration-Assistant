@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.netcracker.ca.model.Attachment;
 import com.netcracker.ca.service.AttachmentFactory;
 
+
 @Component
 public class AttachmentFactoryImpl implements AttachmentFactory {
 

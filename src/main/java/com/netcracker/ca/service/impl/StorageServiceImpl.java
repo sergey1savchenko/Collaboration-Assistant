@@ -30,21 +30,17 @@ public class StorageServiceImpl implements StorageService {
 	private ServletContext context;
 
 	@Override
-	public void store(InputStream is, String path) {
+	public void store(InputStream is, String path) throws IOException {
 		Path p = Paths.get(context.getRealPath(env.getRequiredProperty("rootDirectory") + path));
 		p.getParent().toFile().mkdirs();
-		try {
-			Files.copy(is, p);
-		} catch (IOException e) {
-			throw new StorageException("Failed to save file: " + path, e);
-		}
+		Files.copy(is, p);
 	}
 
 	@Override
 	public Resource retrieve(String path) {
 		Resource res = new ServletContextResource(context, env.getRequiredProperty("rootDirectory") + path);
 		if (!res.exists())
-			throw new StorageException("Failed to retrieve file: " + path);
+			throw new StorageException("No resource found by specified path: " + path);
 		return res;
 	}
 
@@ -52,7 +48,7 @@ public class StorageServiceImpl implements StorageService {
 	public void delete(String path) {
 		File f = new File(context.getRealPath(env.getRequiredProperty("rootDirectory") + path));
 		if (!f.delete())
-			throw new StorageException("Failed to delete file: " + path);
+			throw new StorageException("Could not delete file: " + path);
 	}
 
 }

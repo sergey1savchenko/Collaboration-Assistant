@@ -27,12 +27,12 @@ public class HRController extends BaseController {
 	
 	@GetMapping("project/{projectId}")
 	public String project(@PathVariable int projectId, Model model) {
-		model.addAttribute("project", projectService.getByIdWithUsers(projectId));
+		model.addAttribute("project", projectService.getByIdWithTeams(projectId));
 		return "hrProjectTeams";
 	}
 	@GetMapping("project/{projectId}/meetings")
 	public String projectMeetings(@PathVariable int projectId, Model model) {
-		model.addAttribute("project", projectService.getByIdWithUsers(projectId));
+		model.addAttribute("project", projectService.getByIdWithTeams(projectId));
 		return "hrMeetings";
 	}
 	

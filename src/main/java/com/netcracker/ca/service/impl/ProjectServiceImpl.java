@@ -51,17 +51,18 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public Project getByIdWithUsers(int id) {
+	public Project getByIdWithTeams(int id) {
 		Project project = projectDao.getById(id);
 		if(project != null) {
 			project.setTeams(teamService.getByProject(project.getId()));
+			/*
 			Map<Integer, Team> teams = new HashMap<>();
 			for(Team team: project.getTeams())
 				teams.put(team.getId(), team);
 			for(Entry<Integer, List<Student>> entry: studentService.getByProjectInTeams(project.getId()).entrySet())
 				teams.get(entry.getKey()).setStudents(entry.getValue());
 			for(Entry<Integer, List<User>> entry: curatorService.getByProjectInTeams(project.getId()).entrySet())
-				teams.get(entry.getKey()).setCurators(entry.getValue());
+				teams.get(entry.getKey()).setCurators(entry.getValue());*/
 		}
 		return project;
 	}

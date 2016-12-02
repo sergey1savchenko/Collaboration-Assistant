@@ -22,9 +22,9 @@
                 </div>
                 <div class="modal-body">
                    
-                <form method="POST" enctype="multipart/form-data" action="/CA-Project/admin/api/project/1/file">
+                <form id="new-file" method="POST" action="javascript:;" enctype="multipart/form-data" >
 						<div class="form-group">
-  						<label for="text">Title:</label>
+  						<label for="text">Description:</label>
   						
 						<input type="text" class="form-control" id="text" name="text" required>
 						</div>

@@ -1,5 +1,6 @@
 package com.netcracker.ca.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -9,9 +10,9 @@ import com.netcracker.ca.model.Attachment;
 
 public interface AttachmentService {
 
-	Attachment addToProject(Attachment att, InputStream is, int projectId);
+	Attachment addToProject(Attachment att, InputStream is, int projectId) throws IOException;
 	
-	Attachment addToTeam(Attachment att, InputStream is, int teamId);
+	Attachment addToTeam(Attachment att, InputStream is, int teamId) throws IOException;
 	
 	Resource getAsResource(int id);
 

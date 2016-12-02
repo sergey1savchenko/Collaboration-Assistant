@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ParticipationService;
@@ -51,17 +49,17 @@ public class AdminController extends BaseController {
 
 	@GetMapping("project/{projectId}")
 	public String project(@PathVariable int projectId, Model model) {
-		model.addAttribute("project", projectService.getByIdWithUsers(projectId));
+		model.addAttribute("project", projectService.getByIdWithTeams(projectId));
 		return "admProjectTeams";
 	}
 
-	@RequestMapping(value = "/project/{projectId}/meetings")
+	@GetMapping("/project/{projectId}/meetings")
 	public String admMeetings(@PathVariable("projectId") int projectId, Model model) {
 		model.addAttribute("projectId", projectId);
 		return "admMeetings";
 	}
 	
-	@RequestMapping(value = "/project/{projectId}/files",  method = RequestMethod.GET)
+	@GetMapping("/project/{projectId}/files")
 	public String admFilesPage(@PathVariable("projectId") int projectId, Model model) {
 		model.addAttribute("project_id", projectId);
 		model.addAttribute("project_name", projectService.getById(projectId).getTitle());

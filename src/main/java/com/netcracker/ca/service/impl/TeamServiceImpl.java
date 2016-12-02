@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.TeamDao;
+import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.TeamService;
@@ -31,7 +32,8 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public void add(Team team) {
+	public void add(Team team, int projectId) {
+		team.setProject(new Project(projectId));
 		teamDao.add(team);
 	}
 
@@ -58,6 +60,11 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public Team getByMeeting(int meetingId) {
 		return teamDao.getByMeeting(meetingId);
+	}
+	
+	@Override
+	public Team getForAttachment(int attachmentId) {
+		return teamDao.getForAttachment(attachmentId);
 	}
 
 	@Override
@@ -102,4 +109,5 @@ public class TeamServiceImpl implements TeamService {
 		}
 		return teams;
 	}
+
 }

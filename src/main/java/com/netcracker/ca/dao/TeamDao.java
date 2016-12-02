@@ -14,6 +14,8 @@ public interface TeamDao extends Dao<Team, Integer> {
 	
 	Team getByMeeting(int meetingId);
 	
+	Team getForAttachment(int attachmentId);
+	
 	Team getCurrentForStudent(int studentId);
 	
 	Team getCurrentForCurator(int curatorId);

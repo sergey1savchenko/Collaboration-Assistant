@@ -4,13 +4,13 @@ function showTables(id){
 	var teamStudents = "teamStudents"+teamID;					// identifying div for the table
 	//alert(teamID);
 ////////////////////////// TABLE WITH CURATORS ///////////////////////////////////
-$(function () {	
+$(function () {
 	$('#'+teamCurators).jsGrid({											//!
-    	
+
         height: "250px",
         width: "100%",
-        
-    	
+
+
         filtering: true,
         editing: false,
         sorting: true,
@@ -21,7 +21,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/admin/api/teamCurators/" + teamID,				// !
+                    url: "/CA-Project/admin/api/team/" + teamID + "/curators",				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -34,7 +34,7 @@ $(function () {
 
 
         },
-        
+
         fields: [															//!!
         			// from DB
             //{name: "id", type: "text", title: "User id", validate: "required"},
@@ -47,16 +47,16 @@ $(function () {
         ]
 
     });
-    
+
 });
 ////////////////////////// TABLE WITH STUDENTS ///////////////////////////////////
-$(function () {	
+$(function () {
 	$('#'+teamStudents).jsGrid({											//!
-    	
+
         height: "300px",
         width: "100%",
-        
-    	
+
+
         filtering: true,
         editing: false,
         sorting: true,
@@ -67,7 +67,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/admin/api/teamStudents/" + teamID,				// !
+                    url: "/CA-Project/admin/api/team/" + teamID + "/students",				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -77,9 +77,9 @@ $(function () {
                 });
                 return deferred.promise();
             },
-            
+
         },
-        
+
         fields: [															//!!
         			// from DB
             // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
@@ -96,7 +96,7 @@ $(function () {
         ]
 
     });
-    
+
 });
 
 }
@@ -114,7 +114,7 @@ function deleteTeam(id){
 			});
 		location.reload();
 	} else {
-		
+
 	}
 }
 
@@ -130,7 +130,7 @@ function addTeam(projectId){
 	        method: 'POST',
             data: JSON.stringify(item),
             contentType: "application/json; charset=utf-8",
-            dataType: 'json'	
+            dataType: 'json'
 	    }).done(function (data) {
 	    	location.reload();
 	    }).fail(function () {

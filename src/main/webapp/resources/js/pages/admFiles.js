@@ -60,9 +60,23 @@ function onCreateVerify() {
             
         }
     });
-    $('#new-file').submit();
+    var formData = new FormData( $('#new-file')[0]);
+    $.ajax({
+        url: '/CA-Project/admin/api/project/' + $('#project_id').val()
+		+ '/file',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false})
+    .done(function(data) {
+		$("#admFilesGrid").jsGrid("insertItem", data);
+		$("#addDialog").modal("hide");
+	}).fail(function() {
+		WebUtils.show("Failed to create data");
+	});
 }
-//this is called in case of creating a new item
+// this is called in case of creating a new item
 function onCreateAction() {
 	var $file = document.getElementById('file'),
     $formData = new FormData();
@@ -85,10 +99,5 @@ function onCreateAction() {
         data: JSON.stringify(item),
         contentType: "application/json/multypart; charset=utf-8",
         dataType: 'json'
-    }).done(function (data) {
-        $("#admFilesGrid").jsGrid("insertItem", data);
-        $("#addDialog").modal("hide");
-    }).fail(function () {
-        WebUtils.show("Failed to create data");
-    });
+    })
 }

@@ -9,7 +9,7 @@ public interface TeamService {
 
 	Team getById(int id);
 
-	void add(Team team);
+	void add(Team team, int projectId);
 
 	void update(Team team);
 
@@ -22,6 +22,8 @@ public interface TeamService {
 	Team getByTitle(String title);
 
 	Team getByMeeting(int meetingId);
+	
+	Team getForAttachment(int attachmentId);
 
 	Team getCurrentForStudent(int studentId);
 
