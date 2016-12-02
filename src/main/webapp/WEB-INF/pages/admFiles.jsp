@@ -22,7 +22,7 @@
                 </div>
                 <div class="modal-body">
                    
-                <form id="new-file" method="POST" action="javascript:;" enctype="multipart/form-data" >
+                <form id="new-file" method="POST" enctype="multipart/form-data" >
 						<div class="form-group">
   						<label for="text">Description:</label>
   						

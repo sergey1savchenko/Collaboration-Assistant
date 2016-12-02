@@ -27,6 +27,8 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	private static String SQL_DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 	private static String SQL_SELECT_TEAM_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
 	private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
+	//private static String SQL_SELECT_TEAM_ATTACHMENTS =_ SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
+	//private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -99,6 +101,18 @@ public class AttachmentDaoImpl implements AttachmentDao {
 			attachment.setMimeType(rs.getString("mime_type"));
 			return attachment;
 		}
+	}
+
+	@Override
+	public Attachment getByNameForTeam(String name, int teamId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Attachment getByNameForProject(String name, int projectId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

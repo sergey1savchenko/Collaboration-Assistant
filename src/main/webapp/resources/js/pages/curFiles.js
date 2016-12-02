@@ -1,10 +1,10 @@
 $(function () {
     $("#curFilesGrid").jsGrid({								//!
-    	
+
         height: "65%",
         width: "100%",
-        
-    	
+
+
         filtering: false,
         editing: false,
         sorting: true,
@@ -15,7 +15,7 @@ $(function () {
         	loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                	url: '/CA-Project/curator/api/team/'+$("#team_id").val()+'/files',				// !
+                	url: '/CA-Project/curator/api/files',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -57,12 +57,25 @@ function onCreateVerify() {
             'file': 'Please choose the file'
         },
         submitHandler: function(form) {
-            
+
         }
     });
-    $('#new-file').submit();
+    var formData = new FormData( $('#new-file')[0]);
+    $.ajax({
+        url: '/CA-Project/curator/api/file',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false})
+    .done(function(data) {
+		$("#admFilesGrid").jsGrid("insertItem", data);
+		$("#addDialog").modal("hide");
+	}).fail(function() {
+		WebUtils.show("Failed to create data");
+	});
 }
-//this is called in case of creating a new item
+/*this is called in case of creating a new item
 function onCreateAction() {
 	var $file = document.getElementById('file'),
     $formData = new FormData();
@@ -72,12 +85,12 @@ function onCreateAction() {
 			$formData.append('file-' + i, $file.files[i]);
 		}
 	}
-	
-    var item = {        
+
+    var item = {
         //text: $("#file-name").val(),
     	file: $formData,
     	text: "test",
-    	
+
     };
     $.ajax({
         url: '/CA-Project/admin/api/project/'+$("#project_id").val()+'/file',
@@ -91,4 +104,4 @@ function onCreateAction() {
     }).fail(function () {
         WebUtils.show("Failed to create data");
     });
-}
+}*/

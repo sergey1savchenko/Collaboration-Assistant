@@ -6,6 +6,8 @@ import com.netcracker.ca.model.Team;
 
 public interface TeamDao extends Dao<Team, Integer> {
 	
+	Team getByIdWithProject(int id);
+	
 	List<Team> getAll();
 
 	List<Team> getByProject(int projectId);

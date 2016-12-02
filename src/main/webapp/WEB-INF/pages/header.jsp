@@ -81,10 +81,10 @@
 					<li class="menu-button"><a href="<c:url value="/admin/properties"/>">Evaluation properties</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('CURATOR')">
-					<li class="menu-button"><a href="<c:url value="/curator/team/files"/>">Files</a></li>
+					<li class="menu-button"><a href="<c:url value="/curator/files"/>">Files</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('STUDENT')">
-					<li class="menu-button"><a href="<c:url value="/student/team/files"/>">Files</a></li>
+					<li class="menu-button"><a href="<c:url value="/student/files"/>">Files</a></li>
 				</security:authorize>
 				<security:authorize access="hasRole('CURATOR')">
 					<li class="menu-button"><a href="<c:url value="/curator/meeting"/>">Meetings</a></li>
@@ -99,7 +99,7 @@
                     <div class="btn-group">
 						  <button type="button" class="btn dropbtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <i class="fa fa-bars fa-lg icon-settings" aria-hidden="true"></i>
-						  </button> 
+						  </button>
 						  <div class="dropdown-menu dropdown-menu-right">
 						  <div class="dropdown-element"><a  href="<c:url value="/help"/>">Help</a></div>
 						  <security:authorize access="isAuthenticated()">
@@ -115,7 +115,7 @@
 			</div>
 		</div>
 	</nav>
-	
+
 	<div class="modal fade" id="reportBugDialog" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -134,7 +134,7 @@
                             <input type="text" class="form-control" id="report-description"
                                    name="report-description"/>
                         </div>
-                       
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -144,4 +144,3 @@
             </div>
         </div>
     </div>
-	

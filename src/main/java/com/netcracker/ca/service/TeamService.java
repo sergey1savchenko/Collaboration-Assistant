@@ -8,6 +8,8 @@ import com.netcracker.ca.model.Team;
 public interface TeamService {
 
 	Team getById(int id);
+	
+	Team getByIdWithProject(int id);
 
 	void add(Team team, int projectId);
 

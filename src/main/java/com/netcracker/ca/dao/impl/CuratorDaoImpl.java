@@ -21,7 +21,7 @@ import com.netcracker.ca.model.User;
 public class CuratorDaoImpl implements CuratorDao {
 
 	private static final String SQL_INSERT_CURATOR = "INSERT INTO curators_in_project (user_id, project_id, team_id) SELECT ?, ?, ? "
-			+ "WHERE NOT EXISTS (SELECT * FROM curators_in_project WHERE user_id=? AND project_id)";
+			+ "WHERE NOT EXISTS (SELECT * FROM curators_in_project WHERE user_id=? AND project_id=?)";
 	private static final String SQL_DELETE_CURATOR = "DELETE FROM curators_in_project WHERE user_id=? AND project_id=?";
 	private static final String SQL_SELECT_CURATORS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name "
 			+ "FROM users AS u INNER JOIN curators_in_project AS cp ON u.id=cp.user_id";

@@ -17,4 +17,9 @@ public interface AttachmentDao {
 	List<Attachment> getTeamAttachments(int teamId);
 	
 	List<Attachment> getProjectAttachments(int projectId);
+	
+	Attachment getByNameForTeam(String name, int teamId);
+	
+	Attachment getByNameForProject(String name, int projectId);
+	
 }

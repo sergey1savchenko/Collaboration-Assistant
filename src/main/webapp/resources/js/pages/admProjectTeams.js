@@ -104,7 +104,7 @@ $(function () {
 ///
 
 function deleteTeam(id){
-	if (confirm("Are you shure to delete this team?")) {
+	if (confirm("Are you sure to delete this team?")) {
 		//alert(id);
 		$.ajax({
 			method: "DELETE",

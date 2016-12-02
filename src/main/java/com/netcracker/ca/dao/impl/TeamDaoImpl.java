@@ -35,6 +35,7 @@ public class TeamDaoImpl implements TeamDao {
 	private static final String SQL_SELECT_TEAM_AND_PROJECT = "SELECT t.id AS t_id, t.title AS t_title, p.id AS p_id, p.title as p_title, p.description, p.start_date, "
 			+ "p.end_date, un.id AS un_id, un.title as un_title FROM teams AS t INNER JOIN projects AS p ON t.project_id=p.id "
 			+ "INNER JOIN universities AS un ON p.university_id=un.id";
+	private static final String SQL_SELECT_TEAM_AND_PROJECT_BY_ID = SQL_SELECT_TEAM_AND_PROJECT + " WHERE t.id=?";
 	private static final String SQL_SELECT_CURRENT_FOR_CURATOR = SQL_SELECT_TEAM_AND_PROJECT
 			+ " INNER JOIN curators_in_project cp ON p.id=cp.project_id WHERE cp.user_id=? AND p.end_date>?";
 	private static final String SQL_SELECT_CURRENT_FOR_STUDENT = SQL_SELECT_TEAM_AND_PROJECT
@@ -100,6 +101,12 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public Team getForAttachment(int attachmentId) {
 		List<Team> teams = jdbcTemplate.query(SQL_SELECT_TEAM_FOR_ATTACHMENT, new TeamMapper(), attachmentId);
+		return teams.isEmpty() ? null : teams.get(0);
+	}
+	
+	@Override
+	public Team getByIdWithProject(int id) {
+		List<Team> teams = jdbcTemplate.query(SQL_SELECT_TEAM_AND_PROJECT_BY_ID, new TeamProjectMapper(), id);
 		return teams.isEmpty() ? null : teams.get(0);
 	}
 

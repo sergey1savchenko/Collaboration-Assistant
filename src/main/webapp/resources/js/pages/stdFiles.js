@@ -1,10 +1,10 @@
 $(function () {
     $("#stdFilesGrid").jsGrid({								//!
-    	
+
         height: "65%",
         width: "100%",
-        
-    	
+
+
         filtering: false,
         editing: false,
         sorting: true,
@@ -15,7 +15,7 @@ $(function () {
         	loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                	url: '/CA-Project/student/api/team/'+$("#team_id").val()+'/files',				// !
+                	url: '/CA-Project/student/api/files',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -32,7 +32,7 @@ $(function () {
         			// from DB
         	{name: "text", type: "text", title: "File title", validate: "required", width: "85%"},
         	{name: "id", type: "link", url: '/CA-Project/student/api/file/{id}', title: "download", validate: "required", width: "15%"}
-            
+
         ]
 
     });
@@ -47,7 +47,7 @@ function onCreateVerify() {
             'file': 'Please choose the file'
         },
         submitHandler: function(form) {
-            
+
         }
     });
     $('#new-file').submit();
@@ -62,12 +62,12 @@ function onCreateAction() {
 			$formData.append('file-' + i, $file.files[i]);
 		}
 	}
-	
-    var item = {        
+
+    var item = {
         //text: $("#file-name").val(),
     	file: $formData,
     	text: "test",
-    	
+
     };
     $.ajax({
         url: '/CA-Project/admin/api/project/'+$("#project_id").val()+'/file',

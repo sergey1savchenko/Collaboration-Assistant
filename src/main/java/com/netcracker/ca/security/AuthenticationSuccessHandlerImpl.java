@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.UserAuth;
+import com.netcracker.ca.service.CuratorService;
+import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.TeamService;
 
 @Component
@@ -21,7 +23,13 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 	@Autowired
 	private TeamService teamService;
+	
+	@Autowired
+	private CuratorService curatorService;
 
+	@Autowired
+	private StudentService studentService;
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
@@ -37,11 +45,15 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         	break;
         case "CURATOR":
         	team = teamService.getCurrentForCurator(userAuth.getId());
+        	team.setCurators(curatorService.getByTeam(team.getId()));
+        	team.setStudents(studentService.getByTeam(team.getId()));
         	session.setAttribute("team", team);
         	response.sendRedirect("curator");
         	break;
         case "STUDENT":
         	team = teamService.getCurrentForStudent(userAuth.getId());
+        	team.setCurators(curatorService.getByTeam(team.getId()));
+        	team.setStudents(studentService.getByTeam(team.getId()));
         	session.setAttribute("team", team);
         	response.sendRedirect("student");
         	break;

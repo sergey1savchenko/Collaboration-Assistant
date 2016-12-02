@@ -21,9 +21,9 @@
                 </div>
                 <div class="modal-body">
                    
-                <form method="POST" enctype="multipart/form-data" action="/CA-Project/curator/api/team/${sessionScope.team.id}/file">
+                <form id="new-file" method="POST" enctype="multipart/form-data" action="/CA-Project/curator/api/file">
 						<div class="form-group">
-  						<label for="text">Title:</label>
+  						<label for="text">Description:</label>
   						
     					<input type="hidden" name="project_id" id="project_id" value=${sessionScope.team.project.id}> 
     					<input type="hidden" name="team_id" id="team_id" value=${sessionScope.team.id}>   

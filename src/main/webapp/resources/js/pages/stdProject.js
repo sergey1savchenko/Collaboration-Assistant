@@ -1,12 +1,12 @@
 ////////////////////////// TABLE WITH STUDENTS ///////////////////////////////////
 function showStudents(id){
-$(function () {	
+$(function () {
 	$("#teamStudents").jsGrid({											//!
-    	
+
         height: "350px",
         width: "100%",
-        
-    	
+
+
         filtering: true,
         editing: false,
         sorting: true,
@@ -17,7 +17,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/student/api/teamStudents/" + id,				// !
+                    url: "/CA-Project/student/api/students",				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -27,9 +27,9 @@ $(function () {
                 });
                 return deferred.promise();
             },
-            
+
         },
-        
+
         fields: [															//!!
         			// from DB
         	{name: "firstName", type: "text", title: "First name", validate: "required"},
@@ -41,20 +41,20 @@ $(function () {
         ]
 
     });
-    
+
 });
 
 }
 
 ////////////////////////// TABLE WITH CURATORS ///////////////////////////////////
 function showCurators(id){
-$(function () {	
+$(function () {
 	$("#teamCurators").jsGrid({											//!
-    	
+
         height: "250px",
         width: "100%",
-        
-    	
+
+
         filtering: true,
         editing: false,
         sorting: true,
@@ -65,7 +65,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/student/api/teamCurators/" + id,				// !
+                    url: "/CA-Project/student/api/curators",				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -78,7 +78,7 @@ $(function () {
 
 
         },
-        
+
         fields: [															//!!
         			// from DB
             {name: "firstName", type: "text", title: "First name", validate: "required"},
@@ -90,7 +90,7 @@ $(function () {
         ]
 
     });
-    
+
 });
 
 }

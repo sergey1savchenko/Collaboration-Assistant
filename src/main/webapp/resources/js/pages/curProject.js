@@ -1,12 +1,12 @@
 ////////////////////////// TABLE WITH STUDENTS ///////////////////////////////////
 function showStudents(id){
-$(function () {	
+$(function () {
 	$("#teamStudents").jsGrid({											//!
-    	
+
         height: "350px",
         width: "100%",
-        
-    	
+
+
         filtering: true,
         editing: false,
         sorting: true,
@@ -17,7 +17,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/curator/api/teamStudents/" + id,				// !
+                    url: "/CA-Project/curator/api/students",				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -27,9 +27,9 @@ $(function () {
                 });
                 return deferred.promise();
             },
-            
+
         },
-        
+
         fields: [															//!!
         			// from DB
             // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
@@ -47,20 +47,20 @@ $(function () {
         ]
 
     });
-    
+
 });
 
 }
 
 ////////////////////////// TABLE WITH CURATORS ///////////////////////////////////
 function showCurators(id){
-$(function () {	
+$(function () {
 	$("#teamCurators").jsGrid({											//!
-    	
+
         height: "250px",
         width: "100%",
-        
-    	
+
+
         filtering: true,
         editing: false,
         sorting: true,
@@ -71,7 +71,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({													//GET
-                    url: "/CA-Project/curator/api/teamCurators/" + id,				// !
+                    url: "/CA-Project/curator/api/curators/",				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -84,7 +84,7 @@ $(function () {
 
 
         },
-        
+
         fields: [															//!!
         			// from DB
             //{name: "u_id", type: "text", title: "user id", validate: "required"},
@@ -97,7 +97,7 @@ $(function () {
         ]
 
     });
-    
+
 });
 
 }

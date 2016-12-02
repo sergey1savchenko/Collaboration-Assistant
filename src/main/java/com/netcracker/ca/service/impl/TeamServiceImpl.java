@@ -30,6 +30,11 @@ public class TeamServiceImpl implements TeamService {
 	public Team getById(int id) {
 		return teamDao.getById(id);
 	}
+	
+	@Override
+	public Team getByIdWithProject(int id) {
+		return teamDao.getByIdWithProject(id);
+	}
 
 	@Override
 	public void add(Team team, int projectId) {
@@ -109,5 +114,6 @@ public class TeamServiceImpl implements TeamService {
 		}
 		return teams;
 	}
+
 
 }
