@@ -15,8 +15,12 @@ import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
+import com.netcracker.ca.service.CuratorService;
 import com.netcracker.ca.service.MailService;
 import com.netcracker.ca.service.NotificationService;
+import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.service.StudentService;
+import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.TemplateBuilder;
 import com.netcracker.ca.service.UserService;
 
@@ -30,6 +34,18 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CuratorService curatorService;
+	
+	@Autowired
+	private StudentService studentService;
+	
+	@Autowired
+	private TeamService teamService;
+	
+	@Autowired
+	private ProjectService projectService;
 
 	@Override
 	public void onProjectCreation(Project project) {
@@ -42,8 +58,10 @@ public class NotificationServiceImpl implements NotificationService {
 			emails.add(admin.getEmail());
 		for(User hr: userService.getByRole("HR"))
 			emails.add(hr.getEmail());
-		for(User user: userService.getAssociatedWithProject(project.getId()))
-			emails.add(user.getEmail());
+		for(User curator: curatorService.getByProject(project.getId()))
+			emails.add(curator.getEmail());
+		for(Student student: studentService.getByProject(project.getId()))
+			emails.add(student.getEmail());
 		
 		mailService.send(mail, emails);
 	}
@@ -74,11 +92,13 @@ public class NotificationServiceImpl implements NotificationService {
 		model.put("meeting", meeting);
 		Mail mail = build("Collaboration Assistant - Meeting created", "meeting-created.ftl", model);
 		
-		/*List<String> emails = new ArrayList<>();
-		for(User user: userService.getAssociatedWithTeam(teamService.getByMeeting(meeting.getId()).getId()))
-			emails.add(user.getEmail());
+		List<String> emails = new ArrayList<>();
+		for(User curator: curatorService.getByMeeting(meeting.getId()))
+			emails.add(curator.getEmail());
+		for(Student student: studentService.getByMeeting(meeting.getId()))
+			emails.add(student.getEmail());
 		
-		mailService.send(mail, emails);*/
+		mailService.send(mail, emails);
 	}
 
 	@Override
@@ -88,10 +108,12 @@ public class NotificationServiceImpl implements NotificationService {
 		Mail mail = build("Collaboration Assistant - Meetind rescheduled", "meeting-edited.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		/*for(User user: userService.getAssociatedWithTeam(teamService.getByMeeting(meeting.getId()).getId()))
-			emails.add(user.getEmail());
+		for(User curator: curatorService.getByMeeting(meeting.getId()))
+			emails.add(curator.getEmail());
+		for(Student student: studentService.getByMeeting(meeting.getId()))
+			emails.add(student.getEmail());
 		
-		mailService.send(mail, emails);*/
+		mailService.send(mail, emails);
 	}
 
 	@Override
@@ -101,10 +123,12 @@ public class NotificationServiceImpl implements NotificationService {
 		Mail mail = build("Collaboration Assistant - Meeting canceled", "meeting-deleted.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		/*for(User user: userService.getAssociatedWithTeam(teamService.getByMeeting(meeting.getId()).getId()))
-			emails.add(user.getEmail());
+		for(User curator: curatorService.getByMeeting(meeting.getId()))
+			emails.add(curator.getEmail());
+		for(Student student: studentService.getByMeeting(meeting.getId()))
+			emails.add(student.getEmail());
 		
-		mailService.send(mail, emails);*/
+		mailService.send(mail, emails);
 	}
 	
 	@Override
@@ -114,15 +138,21 @@ public class NotificationServiceImpl implements NotificationService {
 		Mail mail = build("Collaboration Assistant - File attachment added", "attachment-added.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		/*if(attachment.getTeam() == null) {
-			for(User user: userService.getAssociatedWithProject(attachment.getProject().getId()))
-				emails.add(user.getEmail());
+		Team team = teamService.getForAttachment(attachment.getId());
+		if(team != null) {
+			for(User curator: curatorService.getByTeam(team.getId()))
+				emails.add(curator.getEmail());
+			for(Student student: studentService.getByTeam(team.getId()))
+				emails.add(student.getEmail());
 		}
 		else {
-			for(User user: userService.getAssociatedWithTeam(attachment.getTeam().getId()))
-				emails.add(user.getEmail());
-		}*/
-		
+			Project project = projectService.getForAttachment(attachment.getId());
+			for(User curator: curatorService.getByProject(project.getId()))
+				emails.add(curator.getEmail());
+			for(Student student: studentService.getByProject(project.getId()))
+				emails.add(student.getEmail());
+		}
+
 		mailService.send(mail, emails);
 	}
 

@@ -1,6 +1,9 @@
 package com.netcracker.ca.controller.api;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.netcracker.ca.model.Participation;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
+import com.netcracker.ca.model.dto.StudentParticipationDto;
 import com.netcracker.ca.service.CuratorService;
 import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.TeamService;
@@ -58,6 +63,24 @@ public class TeamController extends BaseApiController {
     @GetMapping({"curator/api/students", "student/api/students"})
     public List<Student> teamStudents(@SessionAttribute Team team) {
         return studentService.getByTeam(team.getId());
+    }
+    
+    @GetMapping({"admin/api/team/{teamId}/students-part", "hr/api/team/{teamId}/students-part"})
+    public List<StudentParticipationDto> teamStudentsWithPart(@PathVariable int teamId) {
+    	return teamStudentsWithPartById(teamId);
+    }
+    
+    @GetMapping({"curator/api/students-part", "student/api/students-part"})
+    public List<StudentParticipationDto> teamStudentsWithPart(@SessionAttribute Team team) {
+        return teamStudentsWithPartById(team.getId());
+    }
+    
+    private List<StudentParticipationDto> teamStudentsWithPartById(int teamId) {
+    	List<StudentParticipationDto> result = new ArrayList<>();
+    	Map<Student, Participation> studParts = studentService.getByTeamWithParticipation(teamId);
+    	for(Entry<Student, Participation> studPart: studParts.entrySet())
+    		result.add(new StudentParticipationDto(studPart.getKey(), studPart.getValue()));
+        return result;
     }
     
     @PutMapping("admin/api/team")

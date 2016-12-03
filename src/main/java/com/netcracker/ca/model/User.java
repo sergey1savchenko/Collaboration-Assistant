@@ -124,11 +124,9 @@ public class User {
 		return builder
 			.append(" [id=").append(id)
 			.append(", email=").append(email)
-			.append(", password=").append(password)
 			.append(", firstName=").append(firstName)
 			.append(", secondName=").append(secondName)
 			.append(", lastName=").append(lastName)
-			.append(", isActive=").append(isActive)
 			.append(", role.id=").append(role.getId())
 			.append("]").toString();
 	}

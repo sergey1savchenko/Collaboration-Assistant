@@ -30,8 +30,6 @@ import com.netcracker.ca.model.Attachment;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.dto.ExternalAttachmentDto;
 import com.netcracker.ca.service.AttachmentService;
-import com.netcracker.ca.service.TeamService;
-import com.netcracker.ca.utils.StorageException;
 
 @RestController
 public class AttachmentController extends BaseApiController {
@@ -40,9 +38,6 @@ public class AttachmentController extends BaseApiController {
 
 	@Autowired
 	private AttachmentService attService;
-	
-	@Autowired
-	private TeamService teamService;
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
@@ -91,8 +86,13 @@ public class AttachmentController extends BaseApiController {
 	public List<Attachment> getProjectAttachments(@PathVariable int projectId) {
 		return attService.getProjectAttachments(projectId);
 	}
+	
+	@GetMapping({ "curator/api/files-project", "student/api/files-project" })
+	public List<Attachment> getProjectAttachments(@SessionAttribute Team team) {
+		return attService.getProjectAttachments(team.getProject().getId());
+	}
 
-	@GetMapping({ "curator/api/files", "student/api/files" })
+	@GetMapping({ "curator/api/files-team", "student/api/files-team" })
 	public List<Attachment> getTeamAttachments(@SessionAttribute Team team) {
 		return attService.getTeamAttachments(team.getId());
 	}
@@ -108,9 +108,8 @@ public class AttachmentController extends BaseApiController {
 
 	@GetMapping({ "curator/api/file/{fileId}", "student/api/file/{fileId}" })
 	public ResponseEntity<Resource> download(@PathVariable int fileId, @SessionAttribute Team team) throws IOException {
-		if (!team.equals(teamService.getForAttachment(fileId))) {
+		if (!attService.belongsToTeam(fileId, team.getId()) && !attService.belongsToProject(fileId, team.getProject().getId()))
 			return new ResponseEntity<Resource>(HttpStatus.FORBIDDEN);
-		}
 		Resource resource = attService.getAsResource(fileId);
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("Content-Disposition", "attachment; filename=" + resource.getFilename().replace(" ", "_"));
@@ -125,20 +124,14 @@ public class AttachmentController extends BaseApiController {
 
 	@DeleteMapping("curator/api/file/{fileId}")
 	public void delete(@PathVariable int fileId, @SessionAttribute Team team, HttpServletResponse response) {
-		if (!team.equals(teamService.getForAttachment(fileId))) {
+		if(!attService.belongsToTeam(fileId, team.getId()))
 			response.setStatus(403);
-		}
+		attService.delete(fileId);
 	}
-
+	
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(IOException.class)
 	public void handleIOException(IOException ex) {
 		logger.error("Failed to process file", ex);
-	}
-
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(StorageException.class)
-	public void handleStorageException(StorageException ex) {
-		logger.error("Storage operation failed", ex);
 	}
 }

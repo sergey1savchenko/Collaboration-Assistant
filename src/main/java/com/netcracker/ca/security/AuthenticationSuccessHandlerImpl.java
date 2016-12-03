@@ -34,6 +34,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
         UserAuth userAuth = (UserAuth) auth.getPrincipal();
+        System.out.println(userAuth.getId());
         HttpSession session = request.getSession();
         Team team = null;
         switch(userAuth.getRole().getName()) {

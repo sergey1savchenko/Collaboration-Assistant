@@ -18,8 +18,8 @@ public interface AttachmentDao {
 	
 	List<Attachment> getProjectAttachments(int projectId);
 	
-	Attachment getByNameForTeam(String name, int teamId);
+	Attachment getByLinkForTeam(String link, int teamId);
 	
-	Attachment getByNameForProject(String name, int projectId);
+	Attachment getByLinkForProject(String link, int projectId);
 	
 }

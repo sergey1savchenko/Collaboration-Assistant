@@ -1,7 +1,6 @@
 package com.netcracker.ca.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.netcracker.ca.model.User;
 
@@ -14,8 +13,6 @@ public interface CuratorDao {
 	List<User> getByTeam(int teamId);
 	
 	List<User> getByProject(int projectId);
-	
-	Map<Integer, List<User>> getByProjectInTeams(int projectId);
 	
 	List<User> getByMeeting(int meetingId);
 	

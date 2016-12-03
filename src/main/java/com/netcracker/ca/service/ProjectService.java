@@ -22,5 +22,6 @@ public interface ProjectService {
 	
 	int count();
 	
+	Project getForAttachment(int attachmentId);
 
 }

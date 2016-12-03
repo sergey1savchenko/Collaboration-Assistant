@@ -14,4 +14,6 @@ public interface ProjectDao extends Dao<Project, Integer> {
 	
 	Project getByTitle(String title);
 	
+	Project getForAttachment(int attachmentId);
+	
 }

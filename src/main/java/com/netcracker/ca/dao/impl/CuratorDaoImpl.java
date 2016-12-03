@@ -2,15 +2,10 @@ package com.netcracker.ca.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -27,9 +22,7 @@ public class CuratorDaoImpl implements CuratorDao {
 			+ "FROM users AS u INNER JOIN curators_in_project AS cp ON u.id=cp.user_id";
 	private static final String SQL_SELECT_CURATORS_BY_PROJECT = SQL_SELECT_CURATORS + " WHERE cp.project_id=?";
 	private static final String SQL_SELECT_CURATORS_BY_TEAM = SQL_SELECT_CURATORS + " WHERE cp.team_id=?";
-	private static final String SQL_SELECT_CURATORS_BY_PROJECT_IN_TEAMS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name, cp.team_id AS t_id "
-			+ "FROM users AS u INNER JOIN curators_in_project AS cp ON u.id=cp.user_id WHERE cp.project_id=?";
-	private static final String SQL_SELECT_CURATORS_BY_MEETING = SQL_SELECT_CURATORS + " INNER JOIN meetings AS m ON cp.team_id=m.team_id";
+	private static final String SQL_SELECT_CURATORS_BY_MEETING = SQL_SELECT_CURATORS + " WHERE cp.team_id=(SELECT id FROM meetings WHERE team_id=?)";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -57,34 +50,6 @@ public class CuratorDaoImpl implements CuratorDao {
 	@Override
 	public List<User> getByMeeting(int meetingId) {
 		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_MEETING, new CuratorRowMapper(), meetingId);
-	}
-
-	@Override
-	public Map<Integer, List<User>> getByProjectInTeams(int projectId) {
-		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_PROJECT_IN_TEAMS,
-				new ResultSetExtractor<Map<Integer, List<User>>>() {
-					@Override
-					public Map<Integer, List<User>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-						Map<Integer, List<User>> result = new HashMap<>();
-						while (rs.next()) {
-							User curator = new User();
-							curator.setId(rs.getInt("u_id"));
-							curator.setEmail(rs.getString("email"));
-							curator.setFirstName(rs.getString("first_name"));
-							curator.setSecondName(rs.getString("second_name"));
-							curator.setLastName(rs.getString("last_name"));
-							int teamId = rs.getInt("t_id");
-							List<User> curators = result.get(teamId);
-							if (curators == null) {
-								curators = new ArrayList<User>();
-								result.put(teamId, curators);
-							}
-							curators.add(curator);
-						}
-						return result;
-					}
-				}, projectId);
-
 	}
 
 	private static class CuratorRowMapper implements RowMapper<User> {

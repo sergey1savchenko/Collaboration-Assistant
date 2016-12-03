@@ -1,6 +1,5 @@
 package com.netcracker.ca.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.UserDao;
 import com.netcracker.ca.model.User;
-import com.netcracker.ca.service.CuratorService;
-import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.UserService;
 
 @Service
@@ -20,12 +17,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private StudentService studentService;
-	
-	@Autowired
-	private CuratorService curatorService;
 	
 	@Override
 	public User getById(int id) {
@@ -52,22 +43,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getByRole(String role) {
 		return userDao.getByRole(role);
-	}
-
-	@Override
-	public List<User> getAssociatedWithProject(int projectId) {
-		List<User> users = new ArrayList<>();
-		users.addAll(curatorService.getByProject(projectId));
-		users.addAll(studentService.getByProject(projectId));
-		return users;
-	}
-
-	@Override
-	public List<User> getAssociatedWithTeam(int teamId) {
-		List<User> users = new ArrayList<>();
-		users.addAll(curatorService.getByTeam(teamId));
-		users.addAll(studentService.getByTeam(teamId));
-		return users;
 	}
 	
 }

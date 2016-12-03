@@ -20,15 +20,15 @@ import com.netcracker.ca.model.Attachment;
 @Repository
 public class AttachmentDaoImpl implements AttachmentDao {
 
-	private static String SQL_SELECT_ATTACHMENT = "SELECT id, text, attachment_link, mime_type FROM attachments";
+	private static String SQL_SELECT_ATTACHMENT = "SELECT id, text, attachment_link, mime_type, project_id, team_id FROM attachments";
 	private static String SQL_SELECT_ATTACHMENT_BY_ID = SQL_SELECT_ATTACHMENT + " WHERE id=?";
 	private static String SQL_ADD_ATTACHMENT_TO_PROJECT = "INSERT INTO attachments (text, attachment_link, mime_type, project_id) VALUES (?, ?, ?, ?)";
 	private static String SQL_ADD_ATTACHMENT_TO_TEAM = "INSERT INTO attachments (text, attachment_link, mime_type, project_id, team_id) VALUES (?, ?, ?, (SELECT project_id FROM teams WHERE id=?), ?)";
 	private static String SQL_DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 	private static String SQL_SELECT_TEAM_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
 	private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
-	//private static String SQL_SELECT_TEAM_ATTACHMENTS =_ SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
-	//private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
+	private static String SQL_SELECT_TEAM_ATTACHMENT_BY_LINK = SQL_SELECT_TEAM_ATTACHMENTS + " AND attachment_link=?";
+	private static String SQL_SELECT_PROJECT_ATTACHMENT_BY_LINK = SQL_SELECT_PROJECT_ATTACHMENTS + " AND attachment_link=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -91,6 +91,18 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		return jdbcTemplate.query(SQL_SELECT_PROJECT_ATTACHMENTS, new AttachmentRowMapper(), projectId);
 	}
 
+	@Override
+	public Attachment getByLinkForTeam(String link, int teamId) {
+		List<Attachment> att = jdbcTemplate.query(SQL_SELECT_TEAM_ATTACHMENT_BY_LINK, new AttachmentRowMapper(), teamId, link);
+		return att.isEmpty() ? null : att.get(0);
+	}
+
+	@Override
+	public Attachment getByLinkForProject(String link, int projectId) {
+		List<Attachment> att = jdbcTemplate.query(SQL_SELECT_PROJECT_ATTACHMENT_BY_LINK, new AttachmentRowMapper(), projectId, link);
+		return att.isEmpty() ? null : att.get(0);
+	}
+	
 	private static class AttachmentRowMapper implements RowMapper<Attachment> {
 
 		public Attachment mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -101,18 +113,6 @@ public class AttachmentDaoImpl implements AttachmentDao {
 			attachment.setMimeType(rs.getString("mime_type"));
 			return attachment;
 		}
-	}
-
-	@Override
-	public Attachment getByNameForTeam(String name, int teamId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Attachment getByNameForProject(String name, int projectId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

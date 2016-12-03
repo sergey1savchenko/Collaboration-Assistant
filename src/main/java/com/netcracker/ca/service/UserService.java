@@ -16,8 +16,4 @@ public interface UserService {
 	
 	List<User> getByRole(String role);
 	
-	List<User> getAssociatedWithProject(int projectId);
-	
-	List<User> getAssociatedWithTeam(int teamId);
-	
 }

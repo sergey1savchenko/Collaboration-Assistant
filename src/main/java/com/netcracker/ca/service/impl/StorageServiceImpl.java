@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.ServletContextResource;
 
 import com.netcracker.ca.service.StorageService;
-import com.netcracker.ca.utils.StorageException;
 
 @Service
 @PropertySource("/WEB-INF/properties/storage.properties")
@@ -39,16 +38,13 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public Resource retrieve(String path) {
 		Resource res = new ServletContextResource(context, env.getRequiredProperty("rootDirectory") + path);
-		if (!res.exists())
-			throw new StorageException("No resource found by specified path: " + path);
 		return res;
 	}
 
 	@Override
-	public void delete(String path) {
+	public boolean delete(String path) {
 		File f = new File(context.getRealPath(env.getRequiredProperty("rootDirectory") + path));
-		if (!f.delete())
-			throw new StorageException("Could not delete file: " + path);
+		return f.delete();
 	}
 
 }

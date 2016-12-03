@@ -37,9 +37,9 @@ public class TeamDaoImpl implements TeamDao {
 			+ "INNER JOIN universities AS un ON p.university_id=un.id";
 	private static final String SQL_SELECT_TEAM_AND_PROJECT_BY_ID = SQL_SELECT_TEAM_AND_PROJECT + " WHERE t.id=?";
 	private static final String SQL_SELECT_CURRENT_FOR_CURATOR = SQL_SELECT_TEAM_AND_PROJECT
-			+ " INNER JOIN curators_in_project cp ON p.id=cp.project_id WHERE cp.user_id=? AND p.end_date>?";
+			+ " INNER JOIN curators_in_project cp ON t.id=cp.team_id WHERE cp.user_id=? AND p.end_date>?";
 	private static final String SQL_SELECT_CURRENT_FOR_STUDENT = SQL_SELECT_TEAM_AND_PROJECT
-			+ " INNER JOIN students_in_project AS sp ON p.id=sp.project_id "
+			+ " INNER JOIN students_in_project AS sp ON t.id=sp.team_id "
 			+ "INNER JOIN application_forms AS af ON sp.app_form_id=af.id WHERE af.user_id=? AND p.end_date>?";
 
 	@Autowired

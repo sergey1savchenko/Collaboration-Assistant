@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.netcracker.ca.service.MarkTypeService;
-import com.netcracker.ca.service.ParticipationService;
 import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.UniversityService;
 
@@ -24,10 +23,7 @@ public class AdminController extends BaseController {
 	
 	@Autowired
 	private ProjectService projectService;
-
-	@Autowired
-	private ParticipationService participationService;
-
+	
 	@GetMapping({ "", "projects" })
 	public String projects(Model model) {
 		model.addAttribute("universities", universityService.getAll());

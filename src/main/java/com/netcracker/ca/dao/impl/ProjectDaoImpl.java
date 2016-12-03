@@ -26,6 +26,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	private static final String SQL_SELECT_ALL_PROJECTS_LIMITED = SQL_SELECT_PROJECT + " LIMIT ?,?";
 	private static final String SQL_SELECT_PROJECT_BY_ID = SQL_SELECT_PROJECT + " WHERE p.id = ?";
 	private static final String SQL_SELECT_PROJECT_BY_TITLE = SQL_SELECT_PROJECT + " WHERE p.title = ?";
+	private static final String SQL_SELECT_PROJECT_FOR_ATTACHMENT = SQL_SELECT_PROJECT + " WHERE p.id = (SELECT project_id FROM attachments WHERE id=?)";
 	private static final String SQL_INSERT_PROJECT = "INSERT INTO projects (title, description, start_date, end_date, university_id) VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE_PROJECT = "UPDATE projects SET title = ?, description = ?, start_date = ?, end_date = ?, university_id = ? WHERE projects.id = ?";
 	private static final String SQL_DELETE_PROJECT = "DELETE FROM projects WHERE projects.id = ?";
@@ -53,7 +54,8 @@ public class ProjectDaoImpl implements ProjectDao {
 	
 	@Override
 	public Project getByTitle(String title) {
-		return jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_BY_TITLE, new ProjectMapper(), title);
+		List<Project> projects = jdbcTemplate.query(SQL_SELECT_PROJECT_BY_TITLE, new ProjectMapper(), title);
+		return projects.isEmpty()? null: projects.get(0);
 	}
 
 	@Override
@@ -90,6 +92,13 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int count() {
 		return jdbcTemplate.queryForObject(SQL_COUNT, Integer.class);
 	}
+	
+
+	@Override
+	public Project getForAttachment(int attachmentId) {
+		List<Project> projects = jdbcTemplate.query(SQL_SELECT_PROJECT_FOR_ATTACHMENT, new ProjectMapper(), attachmentId);
+		return projects.isEmpty()? null: projects.get(0);
+	}
 
 	private static class ProjectMapper implements RowMapper<Project> {
 
@@ -107,6 +116,5 @@ public class ProjectDaoImpl implements ProjectDao {
 			return project;
 		}
 	}
-
 
 }

@@ -88,12 +88,9 @@ public class Student extends User {
 		return builder
 			.append(" [id=").append(getId())
 			.append(", email=").append(getEmail())
-			.append(", password=").append(getPassword())
 			.append(", firstName=").append(getFirstName())
 			.append(", secondName=").append(getSecondName())
 			.append(", lastName=").append(getLastName())
-			.append(", isActive=").append(isActive())
-			.append(", role.id=").append(getRole().getId())
 			.append(", appFormId=").append(appFormId)
 			.append(", university.id=").append(university != null ? university.getId(): 0)
 			.append(", course.id=").append(course != null ? course.getId(): 0)

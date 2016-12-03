@@ -1,7 +1,6 @@
 package com.netcracker.ca.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,11 +33,6 @@ public class CuratorServiceImpl implements CuratorService {
 	@Override
 	public List<User> getByTeam(int teamId) {
 		return curatorDao.getByTeam(teamId);
-	}
-
-	@Override
-	public Map<Integer, List<User>> getByProjectInTeams(int projectId) {
-		return curatorDao.getByProjectInTeams(projectId);
 	}
 
 	@Override

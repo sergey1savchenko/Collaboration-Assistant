@@ -11,6 +11,6 @@ public interface StorageService {
 
 	Resource retrieve(String path);
 	
-	void delete(String path);
+	boolean delete(String path);
 	
 }

@@ -21,4 +21,9 @@ public interface AttachmentService {
 	List<Attachment> getTeamAttachments(int teamId);
 
 	List<Attachment> getProjectAttachments(int projectId);
+	
+	boolean belongsToTeam(int attachmentId, int teamId);
+	
+	boolean belongsToProject(int attachmentId, int projectId);
+
 }

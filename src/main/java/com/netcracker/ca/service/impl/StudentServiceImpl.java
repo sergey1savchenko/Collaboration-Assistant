@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.StudentDao;
+import com.netcracker.ca.model.Participation;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.service.StudentService;
 
@@ -49,8 +50,23 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Map<Integer, List<Student>> getByProjectInTeams(int projectId) {
-		return studentDao.getByProjectInTeams(projectId);
+	public Map<Student, Participation> getByProjectWithParticipation(int projectId) {
+		return studentDao.getByProjectWithParticipation(projectId);
+	}
+
+	@Override
+	public Map<Student, Participation> getByTeamWithParticipation(int teamId) {
+		return studentDao.getByTeamWithParticipation(teamId);
+	}
+
+	@Override
+	public List<Student> getByTeamAndStatus(int teamId, int statusId) {
+		return studentDao.getByTeamAndStatus(teamId, statusId);
+	}
+
+	@Override
+	public List<Student> getByMeeting(int meetingId) {
+		return studentDao.getByMeeting(meetingId);
 	}
 
 }
