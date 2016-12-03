@@ -34,12 +34,10 @@ $(function () {
         			// from DB
             // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
         	//{name: "u_id", type: "text", title: "user id", validate: "required"},
-        	{name: "id", type: 'link', url: 'CA-Project/curator/studentPE/{id}', width: 50, title: 'Project evaluation'},
         	{name: "firstName", type: "text", width: 50, title: "First name", validate: "required"},
             {name: "secondName", type: "text", width: 50, title: "Second name", validate: "required"},
             {name: "lastName", type: "text", width: 50, title: "Last name", validate: "required"},
             {name: "email", type: "text", title: "email", validate: "required"},
-            {name: "isActive", type: "checkbox", width: 35, title: " Is active", validate: "required"},
             {name: "university", type: "text", width: 50, title: "University", validate: "required"},
             {name: "status", type: "text", width: 50, title: "Status", validate: "required"}
             //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}

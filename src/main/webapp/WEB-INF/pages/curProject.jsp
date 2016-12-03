@@ -2,8 +2,8 @@
 <div class="container">
 	<div class="wrapper">
 
-	<!-- ${team} 
-	${projects}  -->
+	 ${team} 
+	<!--${projects}  -->
 	<h3>Your current team is "${team.title}" in <c:forEach var="project" items="${projects}"><c:if test="${team.project.id == project.id}">"${project.title}"</c:if></c:forEach> project</h3>
 	<c:forEach var="project" items="${projects}"><c:if test="${team.project.id == project.id}">
 	<h5>Start: ${project.startDate}</h5>
