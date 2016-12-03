@@ -5,9 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.netcracker.ca.model.Meeting;
+import com.netcracker.ca.model.Team;
+import com.netcracker.ca.service.MeetingService;
 import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.service.StudentService;
+import java.util.List;
 
 
 @Controller
@@ -18,6 +24,11 @@ public class CuratorController extends BaseController {
     @Autowired
 	private ProjectService projectService;
     
+    @Autowired
+	private StudentService studentService;
+    
+    @Autowired
+	private MeetingService meetingService;
 
 	@RequestMapping
 	public String project(Model model) {
@@ -31,15 +42,21 @@ public class CuratorController extends BaseController {
 	}
 	
 	@RequestMapping("meeting/{meetingId}/student/{studentId}")
-	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @PathVariable("studentId") int studentId) {
+	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @PathVariable("studentId") int studentId,  @SessionAttribute Team team) {
+		model.addAttribute("student", studentService.getById(studentId));
 		model.addAttribute("meetingId", meetingId);
-		model.addAttribute("studentId", studentId);
+		/*List<Meeting> teamMeetings = meetingService.getAllTeamMeetings(team.getId());
+		for (Meeting i : teamMeetings) {
+		    if(i.getId()==meetingId){
+		    	model.addAttribute("meeting", i);
+		    }
+		}*/
 		return "curMeetingEvaluation";
 	}
 	
 	@RequestMapping("student/{studentId}")
 	public String curStudent(Model model, @PathVariable("studentId") int studentId) {
-		model.addAttribute("studentId", studentId);
+		model.addAttribute("student", studentService.getById(studentId));
 		return "curStudent";
 	}
 	
