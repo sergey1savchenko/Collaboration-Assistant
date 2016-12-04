@@ -15,7 +15,7 @@ $(function () {
         	loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                	url: '/CA-Project/curator/api/files',				// !
+                	url: '/CA-Project/curator/api/files-team',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -39,8 +39,8 @@ $(function () {
         deleteConfirm: "Do you really want to delete the file?",		//!
         fields: [														//!!
         			// from DB
-        	{name: "text", type: "text", title: "File title", validate: "required", width: "75%"},
-        	{name: "id", type: "link", url: '/CA-Project/curator/api/file/{id}', title: "download", validate: "required", width: "15%"},
+        	{name: "text", type: "text", title: "File title", validate: "required", width: "80%"},
+        	{name: "id", type: "link", url: '/CA-Project/curator/api/file/{id}', title: "", width: "10%", align: "center"},
             {type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]
@@ -51,57 +51,63 @@ $(function () {
 function onCreateVerify() {
     $('#new-file').validate({
         rules: {
-            'file': 'required'
+            'file': {
+            	required: true,
+            	depends: isFilePresent
+            },
+            'text': 'required'
         },
         messages: {
-            'file': 'Please choose the file'
+            'file': 'Please choose the file',
+            'text': 'Please set a file title'
         },
         submitHandler: function(form) {
-
+        	if($(document.getElementById("link")).is(':disabled')){        		
+        		onCreateAction();
+        	}else{
+        		onCreateExternalAction()
+        	}
         }
     });
-    var formData = new FormData( $('#new-file')[0]);
-    $.ajax({
-        url: '/CA-Project/curator/api/file',
-        type: 'POST',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false})
-    .done(function(data) {
-		$("#admFilesGrid").jsGrid("insertItem", data);
-		$("#addDialog").modal("hide");
-	}).fail(function() {
-		WebUtils.show("Failed to create data");
-	});
 }
-/*this is called in case of creating a new item
+// this is called in case of creating a new item
 function onCreateAction() {
-	var $file = document.getElementById('file'),
-    $formData = new FormData();
-
-	if ($file.files.length > 0) {
-		for (var i = 0; i < $file.files.length; i++) {
-			$formData.append('file-' + i, $file.files[i]);
-		}
-	}
-
-    var item = {
-        //text: $("#file-name").val(),
-    	file: $formData,
-    	text: "test",
-
-    };
+	var formData = new FormData( $('#new-file')[0]);
     $.ajax({
-        url: '/CA-Project/admin/api/project/'+$("#project_id").val()+'/file',
+    	url: '/CA-Project/curator/api/file',
+    	type: 'POST',
+    	data: formData,
+    	cache: false,
+    	contentType: false,
+    	processData: false})
+    	.done(function(data) {
+    		$("#curFilesGrid").jsGrid("insertItem", data);
+    		$("#addDialog").modal("hide");
+    	}).fail(function() {
+    		WebUtils.show("Failed to create data. Maybe you forget to choose a file?");
+    	});
+}
+
+function onCreateExternalAction() {
+	
+	var item = {
+	        link: $("#link").val(),
+	        text: $("#text").val()
+	    };
+	$.ajax({
+        url: "/CA-Project/curator/api/file-ext",
         method: 'POST',
         data: JSON.stringify(item),
-        contentType: "application/json/multypart; charset=utf-8",
+        contentType: "application/json; charset=utf-8",
         dataType: 'json'
-    }).done(function (data) {
-        $("#admFilesGrid").jsGrid("insertItem", data);
-        $("#addDialog").modal("hide");
-    }).fail(function () {
-        WebUtils.show("Failed to create data");
-    });
-}*/
+	}).done(function(data) {
+    		$("#admFilesGrid").jsGrid("insertItem", data);
+    		$("#addDialog").modal("hide");
+    	}).fail(function() {
+    		WebUtils.show("Failed to create data. Maybe you forgot to choose a file?");
+    	});
+}
+
+function isFilePresent() {
+    return document.getElementById("file").file.length != 0
+}
