@@ -161,12 +161,12 @@ public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 	private static class ProjectEvaluationMapper implements RowMapper<ProjectEvaluation> {
 		public ProjectEvaluation mapRow(ResultSet rs, int rowNum) throws SQLException {
 			ProjectEvaluation pe = new ProjectEvaluation();
-			pe.setId(rs.getInt("peid"));
+			pe.setId(rs.getInt("pe_id"));
 			pe.setIntValue(rs.getInt("int_value"));
 			pe.setTextValue(rs.getString("text_value"));
 			MarkType markType = new MarkType();
-			markType.setId(rs.getInt("mtid"));
-			markType.setTitle(rs.getString("mttitle"));
+			markType.setId(rs.getInt("mt_id"));
+			markType.setTitle(rs.getString("title"));
 			markType.setHasInt(rs.getBoolean("has_int"));
 			markType.setHasText(rs.getBoolean("has_text"));
 			pe.setMarktype(markType);

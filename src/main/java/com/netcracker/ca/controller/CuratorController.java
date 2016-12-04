@@ -13,6 +13,8 @@ import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.MeetingService;
 import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.StudentService;
+import com.netcracker.ca.service.UniversityService;
+
 import java.util.List;
 
 
@@ -29,6 +31,9 @@ public class CuratorController extends BaseController {
     
     @Autowired
 	private MeetingService meetingService;
+    
+    @Autowired
+	private UniversityService universityService;
 
 	@RequestMapping
 	public String project(Model model) {
@@ -57,6 +62,7 @@ public class CuratorController extends BaseController {
 	@RequestMapping("student/{studentId}")
 	public String curStudent(Model model, @PathVariable("studentId") int studentId) {
 		model.addAttribute("student", studentService.getById(studentId));
+		model.addAttribute("universities", universityService.getAll());
 		return "curStudent";
 	}
 	
