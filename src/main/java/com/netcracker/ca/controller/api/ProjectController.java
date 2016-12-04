@@ -1,7 +1,5 @@
 package com.netcracker.ca.controller.api;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +11,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netcracker.ca.model.EvaluationScope;
+import com.netcracker.ca.model.MarkType;
 import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.dto.ProjectMarkTypesDto;
+import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ProjectService;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ProjectController extends BaseApiController {
 
     @Autowired
     private ProjectService projectService;
+    
+    @Autowired
+    private MarkTypeService markTypeService;
 
     @GetMapping({"admin/api/projects", "hr/api/projects"})
     public List<Project> getAll() {
@@ -33,6 +39,22 @@ public class ProjectController extends BaseApiController {
     public Project create(@RequestBody ProjectMarkTypesDto dto) {
         projectService.add(dto.getProject(), dto.getMeetingMarkTypeIds(), dto.getProjectMarkTypeIds());
         return dto.getProject();
+    }
+    
+    @PostMapping("admin/api/projectCopy/{copyOfId}")
+    public Project createCopy(@RequestBody Project project, @PathVariable int copyOfId) {
+    	List<MarkType> m = markTypeService.getAllowed(copyOfId, EvaluationScope.MEETINGS);
+    	List<MarkType> p = markTypeService.getAllowed(copyOfId, EvaluationScope.PROJECTS);
+    	List<Integer> meetingMarkTypeIds = new ArrayList<Integer>();
+    	for ( MarkType i : m){
+    		meetingMarkTypeIds.add(i.getId());
+    	}
+    	List<Integer> projectMarkTypeIds = new ArrayList<Integer>();
+    	for ( MarkType i : p){
+    		projectMarkTypeIds.add(i.getId());
+    	}
+        projectService.add(project, meetingMarkTypeIds, projectMarkTypeIds);
+        return project;
     }
     
     @GetMapping({"admin/api/project/{projectId}", "hr/api/project/{projectId}"})

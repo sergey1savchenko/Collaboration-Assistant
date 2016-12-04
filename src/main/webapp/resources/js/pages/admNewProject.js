@@ -24,17 +24,17 @@ function copyAndCreate() {
     $('#new-project').submit();
 }
 function copyAndCreateInsert() {
-    var item = {
-        id: 0,
-        title: $("#project-title").val(),
-        description: $("#project-description").val(),
-        startDate: $("#project-start").val(),
-        endDate: $("#project-end").val(),
-        university: WebUtils.getItemByDomainAndId('project-university', $("#project-university").val()),
-        //evaluations: $("#project-evals").val(),															// !!! projectID
-    };
+	var pId = $("#project-evals").val();
+	var item = {
+            id: 0,
+            title: $("#project-title").val(),
+            description: $("#project-description").val(),
+            startDate: $("#project-start").val(),
+            endDate: $("#project-end").val(),
+            university: WebUtils.getItemByDomainAndId('project-university', $("#project-university").val())
+        };
     $.ajax({
-        url: "/CA-Project/admin/api/project",																// !!!
+        url: '/CA-Project/admin/api/projectCopy/' + pId,													// !!!
         method: 'POST',
         data: JSON.stringify(item),
         contentType: "application/json; charset=utf-8",
@@ -149,7 +149,7 @@ function chooseAndCreateInsert() {
         WebUtils.show("Failed to create data");
     });
 }
-//////////////////////////////////////// never mind this //////////////////////////////////////////////////
+//////////////////////////////////////// all projects table //////////////////////////////////////////////////
 $(function () {
     $("#projectGrid").jsGrid({															//!
     	

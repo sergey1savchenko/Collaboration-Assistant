@@ -3,6 +3,8 @@
 <div class="container">
     <div class="wrapper">
     
+	<!-- ${projects} -->
+    
 		<div style="width: 40%; margin: auto;">
 			<form id="new-project">
 				<div class="form-group">
