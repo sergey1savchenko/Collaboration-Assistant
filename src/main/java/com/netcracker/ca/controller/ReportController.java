@@ -4,6 +4,7 @@ package com.netcracker.ca.controller;
 import com.netcracker.ca.model.reports.ProjectReport;
 
 import com.netcracker.ca.model.reports.StudentInProjectReport;
+import com.netcracker.ca.model.reports.StudentReport;
 import com.netcracker.ca.service.ReportService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class ReportController extends BaseController{
     ReportService reportService;
 
     private List<ProjectReport> prRep;
+    private List<StudentReport> stRep;
     private List<StudentInProjectReport> stInPrRep;
 
     @RequestMapping(path = "/reports", method = RequestMethod.GET)
@@ -38,8 +40,6 @@ public class ReportController extends BaseController{
     public String getReportParam(Model model, HttpServletRequest request){
         int report = Integer.valueOf(request.getParameter("report"));
         if (report == 1) return "redirect:reports/projectsReport";
-        if (report == 2) return "redirect:reports/stReport";
-
         return "reports";
     }
 
@@ -55,12 +55,27 @@ public class ReportController extends BaseController{
         return new ModelAndView("projectsListExcel", "prRep", prRep);
     }
 
+    @RequestMapping(path = "/reports/studentsReport", method = RequestMethod.POST)
+    public String getStudentReport(Model model, @RequestParam("projectId") Integer projectId, @RequestParam("teamId") Integer teamId){
+        if ((projectId !=0) && (teamId !=0)) stRep = reportService.getStudentsOfTeamReport(teamId);
+        if ((projectId !=0) && (teamId == 0)) stRep = reportService.getStudentsOfProjectReport(projectId);
+        if ((projectId == 0) && (teamId == 0)) stRep = reportService.getAllStudentReport();
+        model.addAttribute("stRep", stRep);
+        return "studentReport";
+    }
+
+    @RequestMapping(value = "reports/studentReportExport", method = RequestMethod.GET)
+    public ModelAndView getExcelStudents() {
+        return new ModelAndView("studentsListExcel", "stRep", stRep);
+    }
+
     @RequestMapping(path = "/reports/studentsInProject", method = RequestMethod.POST)
-    public String getReportParam(Model model, @RequestParam("projectId") int projectId){
+    public String getStudentInProjectReport(Model model, @RequestParam("projectId") int projectId){
         stInPrRep = reportService.getStudentInProjectReport(projectId);
         model.addAttribute("stInPrRep", stInPrRep);
         return "studentInProjectReport";
     }
+
     @RequestMapping(value = "reports/studentInProjectReportExport", method = RequestMethod.GET)
     public ModelAndView getExcelStudentsInProject() {
         return new ModelAndView("studentInProjectListExcel", "stInPrRep", stInPrRep);
