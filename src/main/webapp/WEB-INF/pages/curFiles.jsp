@@ -21,15 +21,16 @@
                 </div>
                 <div class="modal-body">
                    
-                <form id="new-file" method="POST" enctype="multipart/form-data" action="/CA-Project/curator/api/file">
+                <form id="new-file" method="POST" enctype="multipart/form-data">
 						<div class="form-group">
-  						<label for="text">Description:</label>
-  						
-    					<input type="hidden" name="project_id" id="project_id" value=${sessionScope.team.project.id}> 
-    					<input type="hidden" name="team_id" id="team_id" value=${sessionScope.team.id}>   
+  						<label for="text">Title:</label>
+  						  
 						<input type="text" class="form-control" id="text" name="text" required>
-						</div>
-						
+						</div>                   
+                   
+                   <div class="radio">
+  				<label><input onclick="$('#link').prop('disabled', true); $('#file').prop('disabled', false); $('#file-name').prop('disabled', false);" type="radio" name="pc">Upload file from pc</label>
+				</div>
                    
                    <div class="input-group">
                 <label class="input-group-btn">
@@ -41,7 +42,14 @@
             		</div>
 
 
-
+				<div class="radio">
+  				<label><input onclick="$('#file').prop('disabled', true); $('#file-name').prop('disabled', true); $('#link').prop('disabled', false);" type="radio" name="pc">Upload file with link</label>
+				</div>
+				
+				<div class="form-group">
+    			<label for="link">External path:</label>
+    			<input type="text" class="form-control" id="link">
+ 				</div>
 				
 				
                 </div>

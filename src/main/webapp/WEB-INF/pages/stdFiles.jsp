@@ -4,7 +4,7 @@
     <div class="wrapper">
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <div class="above-grid"><span>Files of "${sessionScope.team.title}" student.</span>
+        <div class="above-grid"><span>Files of "${sessionScope.team.title}" team.</span>
         <input type="hidden" name="team_id" id="team_id" value=${sessionScope.team.id}>  
         </div>
         <div class="simple-grid download-link" id="stdFilesGrid"></div>

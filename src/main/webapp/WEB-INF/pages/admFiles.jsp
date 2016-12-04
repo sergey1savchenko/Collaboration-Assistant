@@ -24,20 +24,33 @@
                    
                 <form id="new-file" method="POST" enctype="multipart/form-data" >
 						<div class="form-group">
-  						<label for="text">Description:</label>
+  						<label for="text">Title:</label>
   						
 						<input type="text" class="form-control" id="text" name="text" required>
 						</div>
 						
                    
-                   <div class="input-group">
+                <div class="radio">
+  				<label><input onclick="$('#link').prop('disabled', true); $('#file').prop('disabled', false); $('#file-name').prop('disabled', false);" type="radio" name="pc">Upload file from pc</label>
+				</div>
+				
+                <div class="input-group">
                 <label class="input-group-btn">
                     <span class="btn btn-primary">
-                        Browse&hellip; <input type="file" name="file" style="display: none;">
+                        Browse&hellip; <input type="file" name="file" id="file" style="display: none;">
                     </span>
                 </label>
-                <input type="text" class="form-control" readonly>
-            		</div>
+                <input type="text" class="form-control" id="file-name" readonly>
+            	</div>
+            	
+            	<div class="radio">
+  				<label><input onclick="$('#file').prop('disabled', true); $('#file-name').prop('disabled', true); $('#link').prop('disabled', false);" type="radio" name="pc">Upload file with link</label>
+				</div>
+				
+				<div class="form-group">
+    			<label for="link">External path:</label>
+    			<input type="text" class="form-control" id="link">
+ 				</div>
 
 
 
@@ -45,7 +58,7 @@
 				
                 </div>
                 <div class="modal-footer">
-						<button type="submit" class="btn btn-default" onclick="onCreateVerify();">Upload</button>
+					<button class="btn btn-default" onclick="onCreateVerify();">Upload</button>
 				</form>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
