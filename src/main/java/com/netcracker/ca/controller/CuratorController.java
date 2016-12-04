@@ -49,13 +49,14 @@ public class CuratorController extends BaseController {
 	@RequestMapping("meeting/{meetingId}/student/{studentId}")
 	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @PathVariable("studentId") int studentId,  @SessionAttribute Team team) {
 		model.addAttribute("student", studentService.getById(studentId));
-		model.addAttribute("meetingId", meetingId);
-		/*List<Meeting> teamMeetings = meetingService.getAllTeamMeetings(team.getId());
+		//model.addAttribute("teamMeetings", meetingService.getAllTeamMeetings(team.getId()));			// all team meetings
+		//model.addAttribute("meetingId", meetingId);													// direct team meeting id
+		List<Meeting> teamMeetings = meetingService.getAllTeamMeetings(team.getId());
 		for (Meeting i : teamMeetings) {
 		    if(i.getId()==meetingId){
-		    	model.addAttribute("meeting", i);
+		    	model.addAttribute("meeting", i);														// direct team meeting
 		    }
-		}*/
+		}
 		return "curMeetingEvaluation";
 	}
 	

@@ -1,6 +1,6 @@
-//studentId
+//studentId meetingId
 $(function () {
-    $("#studentProjectEvaluation").jsGrid({
+    $("#studentMeetingEvaluation").jsGrid({
         height: "220px",
         width: "90%",
 
@@ -14,7 +14,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({
-                    url: '/CA-Project/curator/api/student/'+studentId+'/proj-eval',
+                    url: '/CA-Project/curator/api/meeting/'+meetingId+'/student/'+studentId+'/meet-eval',
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -29,7 +29,7 @@ $(function () {
                 var deferred = $.Deferred();
                 return $.ajax({
                     method: "PUT",
-                    url: '/CA-Project/curator/api/student/'+studentId+'/proj-eval',
+                    url: '/CA-Project/curator/api/meeting/'+meetingId+'/student/'+studentId+'/meet-eval',
                     data: JSON.stringify(item),
                     contentType: "application/json; charset=utf-8"
                 }).done(function(){

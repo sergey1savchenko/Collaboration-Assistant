@@ -23,11 +23,16 @@ public class MeetingController extends BaseApiController {
 	@Autowired
 	private MeetingService meetingService;
 
-	@GetMapping({ "admin/api/project/{projectId}/meetings", "admin/api/project/{projectId}/meetings" })
+	@GetMapping("admin/api/project/{projectId}/meetings")
 	public List<Meeting> getProjectMeetings(@PathVariable int projectId) {
 		return meetingService.getAllProjectMeetings(projectId);
 	}
-
+	
+	@GetMapping({ "admin/api/team/{teamId}/meetings", "curator/api/team/{teamId}/meetings" })
+	public List<Meeting> getTeamMeetings(@PathVariable int teamId) {
+		return meetingService.getAllTeamMeetings(teamId);
+	}
+	
 	@PostMapping("admin/api/project/{projectId}/meeting")
 	public Meeting createForProject(@RequestBody Meeting meeting, @PathVariable int projectId) {
 		meetingService.addToProject(meeting, projectId);

@@ -168,12 +168,12 @@ public class MeetingEvaluationDaoImpl implements MeetingEvaluationDao {
 	private static class MeetingEvaluationMapper implements RowMapper<MeetingEvaluation> {
 		public MeetingEvaluation mapRow(ResultSet rs, int rowNum) throws SQLException {
 			MeetingEvaluation me = new MeetingEvaluation();
-			me.setId(rs.getInt("meid"));
+			me.setId(rs.getInt("me_id"));
 			me.setIntValue(rs.getInt("int_value"));
 			me.setTextValue(rs.getString("text_value"));
 			MarkType markType = new MarkType();
-			markType.setId(rs.getInt("mtid"));
-			markType.setTitle(rs.getString("mttitle"));
+			markType.setId(rs.getInt("mt_id"));
+			markType.setTitle(rs.getString("title"));
 			markType.setHasInt(rs.getBoolean("has_int"));
 			markType.setHasText(rs.getBoolean("has_text"));
 			me.setMarktype(markType);

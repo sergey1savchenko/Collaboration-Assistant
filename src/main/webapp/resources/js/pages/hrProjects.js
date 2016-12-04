@@ -3,7 +3,7 @@ $(function () {
         height: "90%",
         width: "100%",
 
-        filtering: false,
+        filtering: true,
         editing: false,
         sorting: true,
         paging: false,
@@ -26,7 +26,7 @@ $(function () {
         },  
         fields: [
             {name: "title", type: "text", title: "Title", validate: "required"},
-            {name: "id", type: 'link', url: '/teams?prj={id}', width: 70, title: 'Settings'},
+            {name: "id", type: 'link', url: '/CA-Project/hr/project/{id}', width: 80, title: 'Project Teams'},
             {name: "description", type: "text",  title: "Description"},
             {name: "startDate", type: "jsDate", width: 150, title: "Start date", validate: "required"},
             {name: "endDate", type: "jsDate", width: 150, title: "End date", validate: "required"},

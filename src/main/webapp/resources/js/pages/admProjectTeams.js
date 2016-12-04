@@ -84,13 +84,12 @@ $(function () {
         			// from DB
             // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
         	//{name: "u_id", type: "text", title: "user id", validate: "required"},
-        	{name: "id", type: 'link', url: 'CA-Project/admin/student/{id}', width: 50, title: 'Student page'},
+        	{name: "id", type: 'link', url: '/CA-Project/admin/student/{id}', width: 50, title: 'Student page'},
             {name: "email", type: "text", title: "email", validate: "required"},
             {name: "firstName", type: "text", title: "First name", validate: "required"},
             {name: "secondName", type: "text", title: "Second name", validate: "required"},
             {name: "lastName", type: "text", title: "Last name", validate: "required"},
-            {name: "isActive", type: "checkbox", title: " Is active", validate: "required"}
-           // {name: "university", type: "text", title: "University", validate: "required"}
+            {name: "university.title", type: "text", title: "University", validate: "required"}
             //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]

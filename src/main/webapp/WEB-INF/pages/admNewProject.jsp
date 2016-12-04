@@ -53,7 +53,7 @@
 					</select>
 				</form>
 				<div class="bottomButton" style="text-align: center;">
-					<button type="button" class="btn btn-default" onclick="copyAndCreate();">Create</button>
+					<button type="button" class="btn btn-primary" onclick="copyAndCreate();">Create</button>
 				</div>
 			</div>
 			</div>
@@ -82,7 +82,7 @@
 			</div>
 			<br/>
 			<div class="bottomButton" style="text-align: center;">
-				<button type="button" class="btn btn-default" onclick="chooseAndCreate();">Create</button>
+				<button type="button" class="btn btn-primary" onclick="chooseAndCreate();">Create</button>
 			</div>
 			
 			</div>

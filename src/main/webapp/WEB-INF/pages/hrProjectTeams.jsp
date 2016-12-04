@@ -23,11 +23,11 @@
 					<div id="collapse${projectTeam.id}" class="panel-collapse collapse">
 					<div class="panel-body">
 						<!--  <p>Team id: ${projectTeam.id}</p>	-->
-						<p><b>Team Curators</b></p>
-						<div class="simple-grid" id="teamCurators${projectTeam.id}"></div>
-						<hr/>
 						<p><b>Team Students</b></p>
 						<div class="simple-grid" id="teamStudents${projectTeam.id}"></div>
+						<hr/>
+						<p><b>Team Curators</b></p>
+						<div class="simple-grid" id="teamCurators${projectTeam.id}"></div>
 					</div>
 					</div>
 				</div>

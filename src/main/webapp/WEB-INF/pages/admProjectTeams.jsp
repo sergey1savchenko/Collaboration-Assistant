@@ -1,6 +1,7 @@
 <%@include file="header.jsp"%>
 <div class="container">
 	<div class="wrapper">
+	
 	<h3>Teams of Project "${project.title}"</h3>
 	<h5>Start: ${project.startDate}</h5>
 	<h5>Finish: ${project.endDate}</h5>
@@ -10,6 +11,11 @@
 	<!--    ${project}
 			${project.teams}  -->
 			
+	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addDialog">Add Team</button>
+	<button type="button" class="btn btn-success">Manage Students</button>
+	<button type="button" class="btn btn-primary">Project Meetings</button>
+	<button type="button" class="btn btn-primary">Project Files</button>
+	<br/><br/>
 	
 		<div class="panel-group" id="accordion">
 			<c:forEach var="projectTeam" items="${project.teams}">
@@ -23,7 +29,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div align="right">
-							<button type="button" class="btn btn-warning btn-primary btn-xs">Manage Curators</button>
+							<button type="button" class="btn btn-success btn-primary btn-xs">Manage Curators</button>
 							<button type="button" onClick="deleteTeam(${projectTeam.id}); return false;" class="btn btn-danger btn-primary btn-xs">Delete Team</button>
 							</div>
 						</div>
@@ -44,10 +50,6 @@
 		</div>
 		
 		<div class="bottomButton">
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addDialog">Add Team</button>
-			<button type="button" class="btn btn-success">Manage Students</button><br/><br/>
-			<button type="button" class="btn btn-success">Project Meetings</button>
-			<button type="button" class="btn btn-success">Project Files</button>
 		</div>
 		
 	</div>
