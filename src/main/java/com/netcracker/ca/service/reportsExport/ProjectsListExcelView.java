@@ -1,9 +1,8 @@
 package com.netcracker.ca.service.reportsExport;
 
 import com.netcracker.ca.model.reports.ProjectReport;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,12 +42,16 @@ public class ProjectsListExcelView extends AbstractXlsxView {
             courseRow.createCell(5).setCellValue(projectReport.getOffered());
             courseRow.createCell(6).setCellValue(projectReport.getRejected());
         }
-        sheet.autoSizeColumn(0);
-        sheet.autoSizeColumn(1);
-        sheet.autoSizeColumn(2);
-        sheet.autoSizeColumn(3);
-        sheet.autoSizeColumn(4);
-        sheet.autoSizeColumn(5);
-        sheet.autoSizeColumn(6);
+
+        CellStyle cellStyle = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setBold(true);
+        font.setColor(HSSFColor.BLUE_GREY.index);
+        cellStyle.setFont(font);
+        cellStyle.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
+        for (int i=0; i<=6; i++){
+            header.getCell(i).setCellStyle(cellStyle);
+            sheet.autoSizeColumn(i);
+        }
     }
 }

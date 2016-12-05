@@ -8,37 +8,37 @@
 <%@include file="header.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<br>
-<br>
-<br>
-<h1>Choose report, please!</h1>
-
-<form id="create-report-form" name = "createReport" action="reports" method='POST'>
-    <br/>
-    <div>
-        <select id = "reports-select" name="report">
-            <option value="1">Projects Report</option>
-            <option value="2">Students Report</option>
-            <option value="3">Student In Project Report</option>
-        </select>
+<div class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Choose report, please!</h1>
+            <form id="create-report-form" name = "createReport" method='POST' action="/CA-Project/reports/projectsReport">
+                <div class="form-group">
+                    <select id = "reports-select" name="report" class="form-control">
+                        <option value="1">Projects Report</option>
+                        <option value="2">Students Report</option>
+                        <option value="3">Student In Project Report</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id = "projects-select" name="projectId" class="form-control hidden"></select>
+                </div>
+                <div class="form-group">
+                    <select id = "teams-select" name="teamId" class="form-control hidden">
+                        <option value="0">All Teams</option>
+                    </select>
+                </div>
+                <p><input id="report-button" type="submit" class="btn btn-success" value="Report"></p>
+            </form>
+        </div>
     </div>
-
-    <div>
-        <select id = "projects-select" name="projectId" class="hidden"></select>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 textBlock">
+            Projects Report contains all Projects and number of Students with different statuses in this Project
+        </div>
     </div>
+</div>
 
-    <div>
-        <select id = "teams-select" name="teamId" class="hidden">
-            <option value="0">All Teams</option>
-        </select>
-    </div>
-
-
-    <br>
-    <div>
-        <p><input id="report-button" type="submit" value="Report"></p>
-    </div>
-</form>
 <%@include file="footer.jsp" %>
 
 <script>
@@ -85,12 +85,15 @@
     $(function() {
         $('#reports-select').change(function () {
             var reportType = $("#reports-select option:selected").val();
-
+            $("#create-report-form").attr("method", "GET");
             //Projects Report
             if (reportType == 1){
-                $("#create-report-form").attr("action", "/CA-Project/reports");
+                $("#create-report-form").attr("action", "/CA-Project/reports/projectsReport");
                 $("#projects-select").empty().addClass('hidden');
                 $("#teams-select").empty().addClass('hidden');
+                $('.textBlock').empty().append(
+                        'Projects Report contains all Projects and number of Students with different statuses in this Project'
+                );
             }
 
             //Students Report
@@ -103,7 +106,14 @@
                     var projectId =$(this).val();
                     getTeams(projectId);
                     $("#teams-select").removeClass('hidden');
+                    if (projectId == 0) {
+                        $("#teams-select").addClass('hidden');
+                    }
                 });
+                $('.textBlock').empty().append(
+                        'Students Report contains list of Students, their feedbacks for defensing project, general and technical interviews and statuses. ' +
+                        'You can generate report by all Students, Students of Project or Students of Team'
+                );
             }
 
             //Students In Project Report
@@ -112,6 +122,10 @@
                 $('#projects-select').empty().removeClass('hidden');
                 $("#teams-select").addClass('hidden');
                 getProjects();
+                $('.textBlock').empty().append(
+                        'Student in Project Report contains list of Students, their statuses in Project, date of creating this status and Curator`s comment. ' +
+                        'You should choose Project for generating Student In Project Report'
+                );
             }
         });
     })

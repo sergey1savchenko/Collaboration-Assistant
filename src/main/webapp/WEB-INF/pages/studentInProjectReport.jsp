@@ -8,12 +8,11 @@
 --%>
 <%@include file="header.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<br><br>
-<h3><a href="studentInProjectReportExport">Export</a></h3>
-<br>
+<div class="container" style="margin-top: 80px; margin-bottom:100px">
+<h3><a href="studentInProjectReportExport">Export to Excel</a></h3>
 
-<div name="t1">
-    <table id="studentInProjectReport" class="table">
+<div class="row">
+    <table id="studentInProjectReport" class="table table-striped table-bordered">
         <thead>
         <tr>
             <td>First Name</td>
@@ -36,4 +35,11 @@
         </tbody>
     </table>
 </div>
+</div>
 <%@include file="footer.jsp" %>
+
+<script>
+    $(document).ready(function() {
+        $('#studentInProjectReport').DataTable();
+    });
+</script>

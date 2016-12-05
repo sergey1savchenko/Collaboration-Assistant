@@ -23,6 +23,9 @@
 	href="<c:url value="/resources/style/grid.less" />" >
 <link rel="stylesheet" href="<c:url value="/resources/style/style.css"/>" >
 <link rel="stylesheet" href="<c:url value="/resources/style/bootstrap.min.css"/>" >
+<link rel="stylesheet" href="<c:url value="/resources/style/dataTablesCss/dataTables.bootstrap.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/style/dataTablesCss/dataTables.responsive.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/style/dataTablesCss/dataTables.tableTools.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/style/bootstrap-theme.min.css"/>" >
 <link rel="stylesheet" href="<c:url value="/resources/js/jqueryui/jquery-ui.min.css"/>" >
 <link rel="stylesheet" href="<c:url value="/resources/js/jqueryui/jquery-ui.structure.min.css"/>" >
@@ -33,6 +36,10 @@
 	href="<c:url value="/resources/style/font-awesome.min.css"/>" >
 <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/resources/js/dataTablesJs/jquery.dataTables.js"/>"></script>
+<script src="<c:url value="/resources/js/dataTablesJs/dataTables.bootstrap.js"/>"></script>
+<script src="<c:url value="/resources/js/dataTablesJs/dataTables.responsive.js"/>"></script>
+<script src="<c:url value="/resources/js/dataTablesJs/dataTables.tableTools.min.js"/>"></script>
 <script
 	src="<c:url value="/resources/js/less.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jqueryui/jquery-ui.min.js"/>"></script>

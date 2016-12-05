@@ -36,14 +36,7 @@ public class ReportController extends BaseController{
         return "reports";
     }
 
-    @RequestMapping(path = "/reports", method = RequestMethod.POST)
-    public String getReportParam(Model model, HttpServletRequest request){
-        int report = Integer.valueOf(request.getParameter("report"));
-        if (report == 1) return "redirect:reports/projectsReport";
-        return "reports";
-    }
-
-    @RequestMapping(path = "/reports/projectsReport", method = RequestMethod.GET)
+    @RequestMapping(path = "/reports/projectsReport", method = { RequestMethod.GET, RequestMethod.POST })
     public String getProjectsReport(Model model){
         prRep = reportService.getProjectsReport();
         model.addAttribute("prRep", prRep);
@@ -55,7 +48,7 @@ public class ReportController extends BaseController{
         return new ModelAndView("projectsListExcel", "prRep", prRep);
     }
 
-    @RequestMapping(path = "/reports/studentsReport", method = RequestMethod.POST)
+    @RequestMapping(path = "/reports/studentsReport", method = { RequestMethod.GET, RequestMethod.POST })
     public String getStudentReport(Model model, @RequestParam("projectId") Integer projectId, @RequestParam("teamId") Integer teamId){
         if ((projectId !=0) && (teamId !=0)) stRep = reportService.getStudentsOfTeamReport(teamId);
         if ((projectId !=0) && (teamId == 0)) stRep = reportService.getStudentsOfProjectReport(projectId);
@@ -69,7 +62,7 @@ public class ReportController extends BaseController{
         return new ModelAndView("studentsListExcel", "stRep", stRep);
     }
 
-    @RequestMapping(path = "/reports/studentsInProject", method = RequestMethod.POST)
+    @RequestMapping(path = "/reports/studentsInProject", method = { RequestMethod.GET, RequestMethod.POST })
     public String getStudentInProjectReport(Model model, @RequestParam("projectId") int projectId){
         stInPrRep = reportService.getStudentInProjectReport(projectId);
         model.addAttribute("stInPrRep", stInPrRep);
