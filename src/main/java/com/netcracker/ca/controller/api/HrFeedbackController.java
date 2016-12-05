@@ -15,7 +15,7 @@ import com.netcracker.ca.service.FeedbackService;
 
 
 @RestController
-public class hrFeedbackController extends BaseApiController{
+public class HrFeedbackController extends BaseApiController{
     
     Logger logger = LogManager.getLogger("Error.Files");
 

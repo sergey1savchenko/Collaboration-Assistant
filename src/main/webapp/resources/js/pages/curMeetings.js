@@ -15,7 +15,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                    url: '/CA-Project/curator/api/project/meetings',				// !
+                    url: '/CA-Project/curator/api/team/'+teamId+'/meetings',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -56,7 +56,7 @@ $(function () {
         fields: [														//!!
         			// from DB
 
-            {name: "id", type: 'link', url: 'curator/meetingEvaluation/={id}', width: 70, title: 'Settings'},
+            {name: "id", type: 'link', url: 'meeting/{id}/meetingEvaluation', width: 70, title: 'Settings'},
             {name: "title", type: "text", title: "Title", validate: "required"},
             {name: "address", type: "text",  title: "address"},
             {name: "datetime", type: "jsDate", width: 150, title: "Date", validate: "required"},
@@ -79,7 +79,7 @@ function onCreateVerify() {
         messages: {
             'meeting-title': 'Please enter the title',
             'meeting-address': 'Please enter the address',
-            'meeting-date': 'Please enter the end date',
+            'meeting-date': 'Please enter the date',
             
         },
         submitHandler: function(form) {
@@ -94,17 +94,17 @@ function onCreateAction() {
         id: 0,
         title: $("#meeting-title").val(),
         address: $("#meeting-address").val(),
-        startDate: $("#meeting-date").val(),
+        datetime: $("#meeting-date").val(),
        
     };
     $.ajax({
-        url: "/CA-Project/curator/api/project/meeting",
+        url: "/CA-Project/curator/api/meeting",
         method: 'POST',
         data: JSON.stringify(item),
         contentType: "application/json; charset=utf-8",
         dataType: 'json'
     }).done(function (data) {
-        $("#admMeetingsGrid").jsGrid("insertItem", data);
+        $("#curMeetingsGrid").jsGrid("insertItem", data);
         $("#addDialog").modal("hide");
     }).fail(function () {
         WebUtils.show("Failed to create meeting");

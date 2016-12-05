@@ -1,6 +1,8 @@
-//studentId meetingId
+function show(studentId){
+	var sme = "studentMeetingEvaluation"+studentId;
+
 $(function () {
-    $("#studentMeetingEvaluation").jsGrid({
+    $('#'+sme).jsGrid({
         height: "220px",
         width: "90%",
 
@@ -9,7 +11,11 @@ $(function () {
         sorting: false,
         paging: false,
         autoload: true,
-
+        
+        rowClick: function(args) {
+        	//window.location.href = '/CA-Project/hr/project/' + args.item.id;
+        },
+        
         controller: {
             loadData: function () {
                 var deferred = $.Deferred();
@@ -56,3 +62,5 @@ $(function () {
 
     });
 });
+
+}

@@ -46,11 +46,9 @@ public class CuratorController extends BaseController {
 		return "curMeetings";
 	}
 	
-	@RequestMapping("meeting/{meetingId}/student/{studentId}")
-	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @PathVariable("studentId") int studentId,  @SessionAttribute Team team) {
-		model.addAttribute("student", studentService.getById(studentId));
-		//model.addAttribute("teamMeetings", meetingService.getAllTeamMeetings(team.getId()));			// all team meetings
-		//model.addAttribute("meetingId", meetingId);													// direct team meeting id
+	@RequestMapping("meeting/{meetingId}/meetingEvaluation")
+	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @SessionAttribute Team team) {
+		model.addAttribute("teamStudents", studentService.getByTeam(team.getId()));						// Students
 		List<Meeting> teamMeetings = meetingService.getAllTeamMeetings(team.getId());
 		for (Meeting i : teamMeetings) {
 		    if(i.getId()==meetingId){
@@ -64,7 +62,7 @@ public class CuratorController extends BaseController {
 	public String curStudent(Model model, @PathVariable("studentId") int studentId) {
 		model.addAttribute("student", studentService.getById(studentId));
 		model.addAttribute("universities", universityService.getAll());
-		return "curStudent";
+		return "curStudent";														// PROJECT EVALUATION
 	}
 	
 	@RequestMapping("files")

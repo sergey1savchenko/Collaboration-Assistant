@@ -1,5 +1,6 @@
 <%@include file="header.jsp" %>
 <div class="container">
+<script type="text/javascript"> var teamId = ${sessionScope.team.id};</script> 
     <div class="wrapper">
         <div class="above-grid"><span>Meetings</span>
             <button type="button" class="btn btn-primary btn-md btn-grid" data-toggle="modal" data-target="#addDialog">Create Meeting</button>
@@ -27,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="meeting-date">Date</label>
-                            <input type="datetime" class="form-control" id="meeting-date" name="meeting-date"/>
+                            <input type="date" class="form-control" id="meeting-date" name="meeting-date"/>
                         </div>  
                     </form>
                 </div>
@@ -41,6 +42,6 @@
     </div>
 </div>
 <%@include file="footer.jsp" %>
-<script type="text/javascript" src="<c:url value="resources/js/pages/curMeetings.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/pages/curMeetings.js"/>"></script>
 </body>
 </html>

@@ -1,18 +1,33 @@
 <%@include file="header.jsp"%>
 <div class="container">
+<script type="text/javascript">var meetingId = ${meeting.id};</script> 
 	<div class="wrapper">
 		
-		<!-- ${student}
+		<!-- ${teamStudents}
 		${meeting} -->
 		
-		<script type="text/javascript"> var studentId = ${student.id}; var meetingId = ${meeting.id};</script> 
+		<h4><b>Meeting:</b> ${meeting.title}</h4>
+		<h5><b>Address:</b> ${meeting.address}</h5>
+		<h5><b>Date:</b> ${meeting.datetime}</h5>
+
 		
-		<h4><b>${student.secondName} ${student.lastName} ${student.firstName}</b></h4>
-		<h5><b>Email:</b> ${student.email}</h5>
-		<h5><b>Meeting:</b> ${meeting.title} | <b>Address:</b> ${meeting.address} | <b>Date:</b> ${meeting.datetime}</h5>
-		<br/>
-		<h4><b>Meeting Evaluation</b></h4>
-		<div class="simple-grid" id="studentMeetingEvaluation"></div>
+		<div class="panel-group" id="accordion">
+			<c:forEach var="student" items="${teamStudents}">
+				<div class="panel panel-default accordion-light">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+						<a onClick="show(${student.id}); return false;" data-toggle="collapse" data-parent="#accordion" href="#collapse${student.id}">Student: ${student.firstName} ${student.secondName} ${student.lastName}</a>
+						</h4>
+					</div>
+					<div id="collapse${student.id}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p><b>Student Meeting Evaluations</b></p>
+						<div class="simple-grid" id="studentMeetingEvaluation${student.id}"></div>
+					</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
 		
 		<div class="bottomButton">
 		</div>
