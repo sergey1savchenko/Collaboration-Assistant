@@ -8,6 +8,6 @@
 
 </div>
 <%@include file="footer.jsp" %>
-<script type="text/javascript" src="<c:url value="resources/js/pages/hrMeetings.js"/>">
+<script type="text/javascript" src="<c:url value="/resources/js/pages/hrMeetings.js"/>"></script>
 </body>
 </html>

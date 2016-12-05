@@ -40,11 +40,11 @@ function copyAndCreateInsert() {
         contentType: "application/json; charset=utf-8",
         dataType: 'json'
     }).done(function (data) {
-    	if (confirm("New project is created. Go to projects page?")) {
-    		 window.location.href = "/CA-Project/admin";
-    	} else {
+    	
+    	WebUtils.confirm(function(){window.location.href = "/CA-Project/admin";},
+    			"New project is created. Go to projects page?");
     		location.reload();
-    	}
+    	
 
     }).fail(function () {
         WebUtils.show("Failed to create data");

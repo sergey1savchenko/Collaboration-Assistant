@@ -2,7 +2,7 @@
 <div class="container">
     <div class="wrapper">
         <div class="above-grid"><span>FeedBack</span>
-            <button type="button" class="btn btn-info btn-md pull-right" data-toggle="modal" data-target="#addDialog">Create FeedBack</button>
+            <button type="button" class="btn btn-primary btn-md btn-grid" data-toggle="modal" data-target="#addDialog">Create FeedBack</button>
         </div>
         <div class="simple-grid" id="hrFeedbackGrid"></div>
     </div>

@@ -5,7 +5,7 @@
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="above-grid"><span>Files of "${sessionScope.team.title}" team.</span>
-            <button type="button" class="btn btn-info btn-md pull-right" data-toggle="modal" data-target="#addDialog">Add File</button>
+            <button type="button" class="btn btn-primary btn-md btn-grid" data-toggle="modal" data-target="#addDialog">Add File</button>
         </div>
         <div class="simple-grid download-link" id="curFilesGrid"></div>
     </div>

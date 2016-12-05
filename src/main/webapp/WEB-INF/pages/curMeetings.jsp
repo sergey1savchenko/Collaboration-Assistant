@@ -2,7 +2,7 @@
 <div class="container">
     <div class="wrapper">
         <div class="above-grid"><span>Meetings</span>
-            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#addDialog">Create Meeting</button>
+            <button type="button" class="btn btn-primary btn-md btn-grid" data-toggle="modal" data-target="#addDialog">Create Meeting</button>
         </div>
         <div class="simple-grid" id="curMeetingsGrid"></div>
     </div>

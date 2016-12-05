@@ -8,6 +8,10 @@ $(function () {
         sorting: true,
         paging: false,
         autoload: true,
+        
+        rowClick: function(args) {
+		    window.location.href = '/CA-Project/admin/project/' + args.item.id;
+		},
 
         controller: {
             loadData: function () {
@@ -53,7 +57,6 @@ $(function () {
         deleteConfirm: "Do you really want to delete the project?",
         fields: [
             {name: "title", type: "text", title: "Title", validate: "required"},
-            {name: "id", type: 'link', url: '/CA-Project/admin/project/{id}', width: 70, title: 'Settings'},
             {name: "description", type: "text",  title: "Description"},
             {name: "startDate", type: "jsDate", width: 150, title: "Start date", validate: "required"},
             {name: "endDate", type: "jsDate", width: 150, title: "End date", validate: "required"},

@@ -2,19 +2,21 @@
 <div class="container">
 	<div class="wrapper">
 	
-	<h3>Teams of Project "${project.title}"</h3>
-	<h5>Start: ${project.startDate}</h5>
-	<h5>Finish: ${project.endDate}</h5>
-	<h5>University: ${project.university.title}</h5>
-	<h5>Description: ${project.description}</h5>
+	<h2 style="text-align: center;">Teams of Project "${project.title}"</h2>
 	
+	<div class="team-details">
+		<h5>Start: ${project.startDate}</h5>
+		<h5>Finish: ${project.endDate}</h5>
+		<h5>University: ${project.university.title}</h5>
+		<h5>Description: ${project.description}</h5>
+	</div>
 	<!--    ${project}
 			${project.teams}  -->
 			
 	
 		<div class="panel-group" id="accordion">
 			<c:forEach var="projectTeam" items="${project.teams}">
-				<div class="panel panel-default">
+				<div class="panel panel-default accordion-light">
 					<div class="panel-heading">
 						<h4 class="panel-title">
 						<a onClick="showTables(${projectTeam.id}); return false;" data-toggle="collapse" data-parent="#accordion" href="#collapse${projectTeam.id}">Team: ${projectTeam.title}</a>

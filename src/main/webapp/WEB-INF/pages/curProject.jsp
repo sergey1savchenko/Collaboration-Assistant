@@ -13,7 +13,7 @@
 	</c:if></c:forEach>
 	
 	<div class="panel-group" id="accordion">
-		<div class="panel panel-default">
+		<div class="panel panel-default accordion-light">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a onClick="showStudents(${team.id}); return false;" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Team students</a>
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			</div>
-			<div class="panel panel-default">
+			<div class="panel panel-default accordion-light">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a onClick="showCurators(${team.id}); return false;" data-toggle="collapse" data-parent="#accordion" href="#collapse2">Team curators</a>

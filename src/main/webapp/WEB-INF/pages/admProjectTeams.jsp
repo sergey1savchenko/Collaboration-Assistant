@@ -7,21 +7,26 @@
 	${project.teams}
 	${freeCurators}  -->
 	
-	<h3>Teams of Project "${project.title}"</h3>
-	<h5>Start: ${project.startDate}</h5>
-	<h5>Finish: ${project.endDate}</h5>
-	<h5>University: ${project.university.title}</h5>
-	<h5>Description: ${project.description}</h5>
+	<h2 style="text-align: center;">Teams of Project "${project.title}"</h2>
+	<div class="team-details">
 	
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addDialog">Add Team</button>
-	<button type="button" class="btn btn-success" onClick="addStudents(); return false;">Manage Students</button>
-	<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Project Meetings</button>
-	<button type="button" class="btn btn-primary" onClick="projectFiles(); return false;">Project Files</button>
-	<br/><br/>
+		
+		<h5>Start: ${project.startDate}</h5>
+		<h5>Finish: ${project.endDate}</h5>
+		<h5>University: ${project.university.title}</h5>
+		<h5>Description: ${project.description}</h5>
+	</div>
+	<div class="team-buttons">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDialog">Add Team</button>
+		<button type="button" class="btn btn-primary" onClick="addStudents(); return false;">Manage Students</button>
+		<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Project Meetings</button>
+		<button type="button" class="btn btn-primary" onClick="projectFiles(); return false;">Project Files</button>
+		<br/><br/>
+	</div>	
 	
 		<div class="panel-group" id="accordion">
 			<c:forEach var="projectTeam" items="${project.teams}">
-				<div class="panel panel-default">
+				<div class="panel panel-default accordion-light">
 					<div class="panel-heading">
 						<div class="row">
 						<div class="col-sm-6">
@@ -31,8 +36,8 @@
 						</div>
 						<div class="col-sm-6">
 							<div align="right">
-							<button type="button" onClick="addCurators(${projectTeam.id}); return false;" class="btn btn-success btn-primary btn-xs" >Manage Curators</button>
-							<button type="button" onClick="deleteTeam(${projectTeam.id}); return false;" class="btn btn-danger btn-primary btn-xs">Delete Team</button>
+							<button type="button" onClick="addCurators(${projectTeam.id}); return false;" class="btn btn-primary btn-xs" >Manage Curators</button>
+							<button type="button" onClick="deleteTeam(${projectTeam.id}); return false;" class="btn btn-primary btn-xs">Delete Team</button>
 							</div>
 						</div>
 						</div>
