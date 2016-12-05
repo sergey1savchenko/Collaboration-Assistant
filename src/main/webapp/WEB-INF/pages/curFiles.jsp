@@ -35,10 +35,10 @@
                    <div class="input-group">
                 <label class="input-group-btn">
                     <span class="btn btn-primary">
-                        Browse&hellip; <input type="file" name="file" style="display: none;">
+                        Browse&hellip; <input type="file" name="file" id="file" style="display: none;">
                     </span>
                 </label>
-                <input type="text" class="form-control" readonly>
+                <input type="text" class="form-control" id="file-name" readonly>
             		</div>
 
 
