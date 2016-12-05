@@ -16,4 +16,5 @@ public interface CuratorService {
 	
 	List<User> getByMeeting(int meetingId);
 	
+	List<User> getFreeCurators();
 }

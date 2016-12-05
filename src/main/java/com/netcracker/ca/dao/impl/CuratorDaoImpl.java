@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.netcracker.ca.dao.CuratorDao;
+import com.netcracker.ca.model.Role;
 import com.netcracker.ca.model.User;
 
 @Repository
@@ -23,6 +24,9 @@ public class CuratorDaoImpl implements CuratorDao {
 	private static final String SQL_SELECT_CURATORS_BY_PROJECT = SQL_SELECT_CURATORS + " WHERE cp.project_id=?";
 	private static final String SQL_SELECT_CURATORS_BY_TEAM = SQL_SELECT_CURATORS + " WHERE cp.team_id=?";
 	private static final String SQL_SELECT_CURATORS_BY_MEETING = SQL_SELECT_CURATORS + " WHERE cp.team_id=(SELECT id FROM meetings WHERE team_id=?)";
+	private static final String SQL_SELECT_FREE_CURATORS = "SELECT u.id AS u_id, u.email, u.first_name, u.second_name, u.last_name "
+														 + "FROM users AS u INNER JOIN user_roles AS ur ON u.id=ur.user_id WHERE ur.role_id = 2 AND u.id NOT IN "
+														 + "(SELECT user_id FROM curators_in_project)";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -36,7 +40,12 @@ public class CuratorDaoImpl implements CuratorDao {
 	public void delete(int curatorId, int projectId) {
 		jdbcTemplate.update(SQL_DELETE_CURATOR, curatorId, projectId);
 	}
-
+	
+	@Override
+	public List<User> getFreeCurators() {
+		return jdbcTemplate.query(SQL_SELECT_FREE_CURATORS, new CuratorRowMapper());
+	}
+	
 	@Override
 	public List<User> getByTeam(int teamId) {
 		return jdbcTemplate.query(SQL_SELECT_CURATORS_BY_TEAM, new CuratorRowMapper(), teamId);
@@ -53,11 +62,12 @@ public class CuratorDaoImpl implements CuratorDao {
 	}
 
 	private static class CuratorRowMapper implements RowMapper<User> {
-
+		Role curator = new Role(2, "CURATOR");
 		@Override
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 			User user = new User();
 			user.setId(rs.getInt("u_id"));
+			user.setRole(curator);
 			user.setEmail(rs.getString("email"));
 			user.setFirstName(rs.getString("first_name"));
 			user.setSecondName(rs.getString("second_name"));
@@ -66,4 +76,5 @@ public class CuratorDaoImpl implements CuratorDao {
 		}
 
 	}
+
 }

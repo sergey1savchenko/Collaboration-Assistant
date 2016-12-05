@@ -15,5 +15,7 @@ public interface CuratorDao {
 	List<User> getByProject(int projectId);
 	
 	List<User> getByMeeting(int meetingId);
+
+	List<User> getFreeCurators();
 	
 }

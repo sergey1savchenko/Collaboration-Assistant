@@ -34,10 +34,20 @@ public class TeamController extends BaseApiController {
     @Autowired
     private StudentService studentService;
     
+    @PostMapping("admin/api/curator/{curatorId}/project/{projectId}/team/{teamId}")
+    public void add(@PathVariable int curatorId,@PathVariable int projectId, @PathVariable int teamId) {
+    	curatorService.add(curatorId, projectId, teamId);
+    }
+    
     @PostMapping("admin/api/project/{projectId}/team")
     public Team create(@RequestBody Team team, @PathVariable int projectId) {
     	teamService.add(team, projectId);
         return team;
+    }
+    
+    @GetMapping("admin/api/freeCurators")
+    public List<User> freeCurators() {
+    	return curatorService.getFreeCurators();
     }
     
     @GetMapping("admin/api/project/{projectId}/teams")
@@ -89,7 +99,12 @@ public class TeamController extends BaseApiController {
     }
     
     @DeleteMapping("admin/api/team/{teamId}")
-    public void delete(@PathVariable int teamId) {
+    public void deleteTeam(@PathVariable int teamId) {
     	teamService.delete(teamId);
+    }
+    
+    @DeleteMapping("admin/api/project/{projectId}/curator/{curatorId}")
+    public void deleteCuratorFromTeam(@PathVariable int projectId, @PathVariable int curatorId) {
+    	curatorService.delete(curatorId, projectId);
     }
 }

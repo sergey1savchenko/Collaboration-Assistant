@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.netcracker.ca.service.CuratorService;
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.UniversityService;
 
 @Controller
@@ -23,6 +25,12 @@ public class AdminController extends BaseController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private TeamService teamService;
+	
+	@Autowired
+	private CuratorService curatorService;
 	
 	@GetMapping({ "", "projects" })
 	public String projects(Model model) {
@@ -47,6 +55,14 @@ public class AdminController extends BaseController {
 	public String project(@PathVariable int projectId, Model model) {
 		model.addAttribute("project", projectService.getByIdWithTeams(projectId));
 		return "admProjectTeams";
+	}
+	
+	@GetMapping("/project/{projectId}/addCurators/{teamId}")
+	public String addCurators(@PathVariable int projectId, @PathVariable int teamId, Model model) {
+		model.addAttribute("team", teamService.getById(teamId));
+		model.addAttribute("project", projectService.getById(projectId));
+		model.addAttribute("freeCurators", curatorService.getFreeCurators());
+		return "admAddCurators";
 	}
 
 	@GetMapping("/project/{projectId}/meetings")

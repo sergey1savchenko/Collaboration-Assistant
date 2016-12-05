@@ -40,4 +40,9 @@ public class CuratorServiceImpl implements CuratorService {
 		return curatorDao.getByMeeting(meetingId);
 	}
 
+	@Override
+	public List<User> getFreeCurators() {
+		return curatorDao.getFreeCurators();
+	}
+
 }

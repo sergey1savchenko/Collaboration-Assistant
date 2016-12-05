@@ -2,19 +2,21 @@
 <div class="container">
 	<div class="wrapper">
 	
+	<script type="text/javascript"> var projectId = ${project.id};</script> 
+	<!-- ${project}
+	${project.teams}
+	${freeCurators}  -->
+	
 	<h3>Teams of Project "${project.title}"</h3>
 	<h5>Start: ${project.startDate}</h5>
 	<h5>Finish: ${project.endDate}</h5>
 	<h5>University: ${project.university.title}</h5>
 	<h5>Description: ${project.description}</h5>
 	
-	<!--    ${project}
-			${project.teams}  -->
-			
 	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addDialog">Add Team</button>
-	<button type="button" class="btn btn-success">Manage Students</button>
-	<button type="button" class="btn btn-primary">Project Meetings</button>
-	<button type="button" class="btn btn-primary">Project Files</button>
+	<button type="button" class="btn btn-success" onClick="addStudents(); return false;">Manage Students</button>
+	<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Project Meetings</button>
+	<button type="button" class="btn btn-primary" onClick="projectFiles(); return false;">Project Files</button>
 	<br/><br/>
 	
 		<div class="panel-group" id="accordion">
@@ -29,7 +31,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div align="right">
-							<button type="button" class="btn btn-success btn-primary btn-xs">Manage Curators</button>
+							<button type="button" onClick="addCurators(${projectTeam.id}); return false;" class="btn btn-success btn-primary btn-xs" >Manage Curators</button>
 							<button type="button" onClick="deleteTeam(${projectTeam.id}); return false;" class="btn btn-danger btn-primary btn-xs">Delete Team</button>
 							</div>
 						</div>
