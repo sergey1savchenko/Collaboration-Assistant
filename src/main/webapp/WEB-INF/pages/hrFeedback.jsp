@@ -2,7 +2,7 @@
 <div class="container">
     <div class="wrapper">
     
-    <input type="text" id="studentId" value="${studentId}">
+    <input type="hidden" id="studentId" value="${studentId}">
     
     <c:if test="${feedbacks != null}">
    
