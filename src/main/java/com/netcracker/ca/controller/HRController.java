@@ -30,9 +30,10 @@ public class HRController extends BaseController {
 		model.addAttribute("project", projectService.getByIdWithTeams(projectId));
 		return "hrProjectTeams";
 	}
-	@GetMapping("project/{projectId}/meetings")
-	public String projectMeetings(@PathVariable int projectId, Model model) {
+	@GetMapping("project/{projectId}/team/{teamId}/meetings")
+	public String projectMeetings(@PathVariable("projectId") int projectId,@PathVariable("teamId") int teamId, Model model) {
 		model.addAttribute("project", projectService.getByIdWithTeams(projectId));
+		model.addAttribute("teamId", teamId);
 		return "hrMeetings";
 	}
 	

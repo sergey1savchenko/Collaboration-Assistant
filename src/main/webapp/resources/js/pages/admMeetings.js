@@ -10,6 +10,9 @@ $(function () {
         sorting: true,
         paging: false,
         autoload: true,
+        rowClick: function(args) {
+		  
+		},
 
         controller: {
             loadData: function () {

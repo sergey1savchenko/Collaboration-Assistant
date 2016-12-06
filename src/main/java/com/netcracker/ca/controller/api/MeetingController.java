@@ -28,7 +28,7 @@ public class MeetingController extends BaseApiController {
 		return meetingService.getAllProjectMeetings(projectId);
 	}
 	
-	@GetMapping({ "admin/api/team/{teamId}/meetings", "curator/api/team/{teamId}/meetings" })
+	@GetMapping({ "admin/api/team/{teamId}/meetings", "curator/api/team/{teamId}/meetings", "hr/api/team/{teamId}/meetings","student/api/team/{teamId}/meetings" })
 	public List<Meeting> getTeamMeetings(@PathVariable int teamId) {
 		return meetingService.getAllTeamMeetings(teamId);
 	}
@@ -46,12 +46,12 @@ public class MeetingController extends BaseApiController {
 		return meeting;
 	}
 
-	@PutMapping("/admin/api/meeting")
+	@PutMapping({"admin/api/meeting", "curator/api/meeting"})
 	public void update(@RequestBody Meeting meeting) {
 		meetingService.update(meeting);
 	}
 
-	@DeleteMapping("/admin/api/meeting/{id}")
+	@DeleteMapping({"/admin/api/meeting/{id}", "curator/api/meeting/{id}"})
 	public void delete(@PathVariable int id) {
 		meetingService.delete(id);
 	}

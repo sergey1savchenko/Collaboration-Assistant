@@ -15,7 +15,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                    url: 'student/api/meetings',				// !
+                    url: '/CA-Project/student/api/team/'+teamId+'/meetings',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);

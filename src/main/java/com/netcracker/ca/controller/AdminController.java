@@ -70,6 +70,11 @@ public class AdminController extends BaseController {
 		model.addAttribute("projectId", projectId);
 		return "admMeetings";
 	}
+	@GetMapping("/project/{projectId}/properties")
+	public String admProjectProperties(@PathVariable("projectId") int projectId, Model model) {
+		model.addAttribute("projectId", projectId);
+		return "admProjectProperties";
+	}
 	
 	@GetMapping("/project/{projectId}/files")
 	public String admFilesPage(@PathVariable("projectId") int projectId, Model model) {
