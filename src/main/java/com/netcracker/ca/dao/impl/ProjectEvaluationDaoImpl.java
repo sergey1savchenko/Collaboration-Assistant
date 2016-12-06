@@ -28,14 +28,14 @@ import java.util.Map;
 @Repository
 public class ProjectEvaluationDaoImpl implements ProjectEvaluationDao {
 
-	private static String SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT = "SELECT id FROM application_forms AS af "
-			+ "INNER JOIN students_in_project AS p ON p.id=p.app_form_id WHERE af_user_id=? AND p.project_id=?";
+	private static String SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT = "SELECT p.id FROM application_forms AS af "
+			+ "INNER JOIN students_in_project AS p ON af.id=p.app_form_id WHERE af.user_id=? AND p.project_id=?";
 	private static String SQL_SELECT_CURATORSHIP_BY_CURATOR_AND_PROJECT = "SELECT id FROM curators_in_project "
 			+ "WHERE user_id=? AND project_id=?";
 	private static String SQL_INSERT_PE = String.format("INSERT INTO project_evaluations (int_value, text_value, marktype_id, student_in_project_id, curator_id) "
 			+ "VALUES (?, ?, ? (%s), (%s))", SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT, SQL_SELECT_CURATORSHIP_BY_CURATOR_AND_PROJECT);
 	private static String SQL_INSERT_ALL_PE = "INSERT INTO project_evaluations (int_value, text_value, marktype_id, student_in_project_id, curator_id) "
-			+ "VALUES (?, ?, ? ?, ?)";
+			+ "VALUES (?, ?, ?, ?, ?)";
 	private static String SQL_UPDATE_PE = "UPDATE project_evaluations SET int_value=?, text_value=? WHERE id=?";
 	private static String SQL_DELETE_PE = "DELETE FROM project_evaluations WHERE id=?";
 	private static String SQL_SELECT_ALL_PE = "SELECT pe.id AS pe_id, mt.id AS mt_id, mt.title, mt.has_int, mt.has_text, pe.int_value, pe.text_value "

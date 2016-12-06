@@ -10,9 +10,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.ProjectEvaluationDao;
+import com.netcracker.ca.model.EvaluationScope;
+import com.netcracker.ca.model.MarkType;
 import com.netcracker.ca.model.ProjectEvaluation;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.CuratorService;
+import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ParticipationService;
 import com.netcracker.ca.service.ProjectEvaluationService;
 
@@ -21,7 +24,7 @@ import com.netcracker.ca.service.ProjectEvaluationService;
  */
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ProjectEvaluationServiceImpl implements ProjectEvaluationService {
 
 	@Autowired
@@ -32,6 +35,9 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService {
 	
 	@Autowired
 	private ParticipationService partService;
+
+	@Autowired
+	private MarkTypeService markTypeService;
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
@@ -58,7 +64,16 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService {
 
 	@Override
 	public List<ProjectEvaluation> getByStudentAndProjectAndCurator(int studentId, int projectId, int curatorId) {
-		return projectEvaluationDao.getByStudentAndProjectAndCurator(studentId, projectId, curatorId);
+		List<ProjectEvaluation> evals = projectEvaluationDao.getByStudentAndProjectAndCurator(studentId, projectId, curatorId);
+		if(evals.isEmpty()) {
+			for(MarkType markType: markTypeService.getAllowed(projectId, EvaluationScope.PROJECTS)) {
+				ProjectEvaluation eval = new ProjectEvaluation();
+				eval.setMarktype(markType);
+				evals.add(eval);
+			}
+			addAll(evals, studentId, projectId, curatorId);
+		}
+		return evals;
 	}
 
 	@Override

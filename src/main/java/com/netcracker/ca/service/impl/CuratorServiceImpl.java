@@ -39,6 +39,7 @@ public class CuratorServiceImpl implements CuratorService {
 		if(teamService.getCurrentForCurator(curatorId) != null)
 			throw new ServiceException("Curator can have only one active project at a time");
 		curatorDao.add(curatorId, projectId, teamId);
+		
 		User curator = userService.getById(curatorId);
 		Project project = projectService.getById(projectId);
 		Team team = teamService.getById(teamId);

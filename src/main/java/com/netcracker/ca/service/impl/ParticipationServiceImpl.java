@@ -2,6 +2,7 @@ package com.netcracker.ca.service.impl;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +13,21 @@ import org.springframework.stereotype.Service;
 
 import com.netcracker.ca.dao.ParticipationDao;
 import com.netcracker.ca.dao.ProjectStatusDao;
+import com.netcracker.ca.model.EvaluationScope;
+import com.netcracker.ca.model.MarkType;
 import com.netcracker.ca.model.Participation;
 import com.netcracker.ca.model.Project;
+import com.netcracker.ca.model.ProjectEvaluation;
 import com.netcracker.ca.model.ProjectStatus;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.model.Team;
+import com.netcracker.ca.model.User;
 import com.netcracker.ca.model.dto.ParticipationDto;
+import com.netcracker.ca.service.CuratorService;
+import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.NotificationService;
 import com.netcracker.ca.service.ParticipationService;
+import com.netcracker.ca.service.ProjectEvaluationService;
 import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.TeamService;
@@ -49,6 +57,8 @@ public class ParticipationServiceImpl implements ParticipationService {
 	@Autowired
 	private ProjectService projectService;
 	
+	@Autowired
+	private CuratorService curatorService;
 	
 	@PostConstruct
 	private void init() {
