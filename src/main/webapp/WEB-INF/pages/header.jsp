@@ -102,7 +102,7 @@
 				</ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li  style="float:right;">
+                <li  class="right-li">
                     <div class="btn-group">
 						  <button type="button" class="btn dropbtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <i class="fa fa-bars fa-lg icon-settings" aria-hidden="true"></i>
