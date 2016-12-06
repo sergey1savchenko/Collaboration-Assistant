@@ -61,6 +61,10 @@ $(function () {
         sorting: true,
         paging: false,
         autoload: true,
+        
+        rowClick: function(args) {
+        		window.location.href = '/CA-Project/hr/project/'+projectId+'/feedback/' + args.item.id;
+        },
 
         controller: {
             loadData: function () {
@@ -81,7 +85,6 @@ $(function () {
 
         fields: [															//!!
         			// from DB
-        	{name: "id", type: 'link', url: '/CA-Project/hr/student/{id}', width: 60, title: 'Evaluation'},
             {name: "email", type: "text", title: "email", validate: "required"},
             {name: "firstName", type: "text", title: "First name", validate: "required"},
             {name: "secondName", type: "text", title: "Second name", validate: "required"},

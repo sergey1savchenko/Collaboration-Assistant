@@ -2,6 +2,7 @@
 <div class="container">
 	<div class="wrapper">
 	
+	<script type="text/javascript"> var projectId = ${project.id};</script> 
 	<h2 style="text-align: center;">Teams of Project "${project.title}"</h2>
 	
 	<div class="team-details">

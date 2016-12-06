@@ -9,7 +9,11 @@ $(function () {
         sorting: false,
         paging: false,
         autoload: true,
-
+        
+        rowClick: function(args) {
+        	
+        },
+        
         controller: {
             loadData: function () {
                 var deferred = $.Deferred();
@@ -51,7 +55,6 @@ $(function () {
             {name: "marktype.hasText", type: "checkbox",  title: "Has text", width: "30px", editing: false},
             {name: "textValue", type: "text",  title: "Text value"},
             {type: "control", editButton: true, deleteButton: false, modeSwitchButton: false, clearFilterButton: true, width: "30px"}
-
         ]
 
     });

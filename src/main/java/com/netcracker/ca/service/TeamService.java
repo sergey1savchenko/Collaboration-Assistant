@@ -32,4 +32,5 @@ public interface TeamService {
 	Team getCurrentForCurator(int curatorId);
 
 	List<Team> generateTeams(List<Student> students, List<Team> teams);
+
 }

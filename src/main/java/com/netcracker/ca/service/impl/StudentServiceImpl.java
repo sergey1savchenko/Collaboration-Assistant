@@ -1,5 +1,6 @@
 package com.netcracker.ca.service.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,16 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public List<Student> getByMeeting(int meetingId) {
 		return studentDao.getByMeeting(meetingId);
+	}
+
+	@Override
+	public List<Student> getFreeStudents() {
+		return studentDao.getFreeStudents();
+	}
+
+	@Override
+	public void addToTeam(int afId, int projectId, int teamId) throws SQLException {
+		studentDao.addToTeam(afId, projectId, teamId);
 	}
 
 }

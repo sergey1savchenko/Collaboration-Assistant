@@ -13,7 +13,7 @@ $(function () {
         autoload: true,
         
         rowClick: function(args) {
-        	//window.location.href = '/CA-Project/hr/project/' + args.item.id;
+        	
         },
         
         controller: {

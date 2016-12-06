@@ -18,7 +18,6 @@
 	</div>
 	<div class="team-buttons">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDialog">Add Team</button>
-		<button type="button" class="btn btn-primary" onClick="addStudents(); return false;">Manage Students</button>
 		<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Project Meetings</button>
 		<button type="button" class="btn btn-primary" onClick="projectFiles(); return false;">Project Files</button>
 		<br/><br/>
@@ -36,6 +35,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div align="right">
+							<button type="button" onClick="addStudents(${projectTeam.id}); return false;" class="btn btn-primary btn-xs">Manage Students</button>
 							<button type="button" onClick="addCurators(${projectTeam.id}); return false;" class="btn btn-primary btn-xs" >Manage Curators</button>
 							<button type="button" onClick="deleteTeam(${projectTeam.id}); return false;" class="btn btn-primary btn-xs">Delete Team</button>
 							</div>

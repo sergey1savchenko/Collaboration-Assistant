@@ -90,7 +90,7 @@ $(function () {
 
         fields: [															//!!
         			// from DB
-            // photo {name: "u_id", type: "text", title: "user id", validate: "required"},
+            //photo {name: "u_id", type: "text", title: "user id", validate: "required"},
         	{name: "id", type: 'link', url: '/CA-Project/admin/student/{id}', width: 50, title: 'Student page'},
             {name: "email", type: "text", title: "email", validate: "required"},
             {name: "firstName", type: "text", title: "First name", validate: "required"},
@@ -145,8 +145,8 @@ function addTeam(projectId){
 function addCurators(teamId){
 	location.href = '/CA-Project/admin/project/'+projectId+'/addCurators/'+teamId;
 }
-function addStudents(){
-	location.href = '/CA-Project/admin/project/'+projectId+'/addStudents';
+function addStudents(teamId){
+	location.href = '/CA-Project/admin/project/'+projectId+'/addStudents/'+teamId;
 }
 function projectMeetings(){
 	location.href = '/CA-Project/admin/project/'+projectId+'/meetings';

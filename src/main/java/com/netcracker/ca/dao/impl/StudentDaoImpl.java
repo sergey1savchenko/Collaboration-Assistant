@@ -55,7 +55,9 @@ public class StudentDaoImpl implements StudentDao {
 			+ "INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id";
 	private static String SQL_SELECT_STUDENTS_BY_PROJECT_WITH_PARTICIPATION =  SQL_SELECT_STUDENTS_WITH_PARTICIPATION + " WHERE p.project_id=?";
 	private static String SQL_SELECT_STUDENTS_BY_TEAM_WITH_PARTICIPATION =  SQL_SELECT_STUDENTS_WITH_PARTICIPATION + " WHERE p.team_id=?";
-	
+	private static String SQL_SELECT_FREE_STUDENTS = SQL_SELECT_STUDENT + " WHERE af.id NOT IN (SELECT app_form_id FROM students_in_project)";
+	private static String SQL_ADD_TO_TEAM = "INSERT INTO students_in_project (comment, datetime, app_form_id, project_id, team_id, status_type_id) "
+			+ "values (?, ?, ?, ?, ?, 1)";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -144,6 +146,24 @@ public class StudentDaoImpl implements StudentDao {
 	}
 	
 	@Override
+	public List<Student> getFreeStudents() {
+		return jdbcTemplate.query(SQL_SELECT_FREE_STUDENTS, new StudentRowMapper());
+	}
+	///////jdbcTemplate.update(SQL_ADD_TO_TEAM, afId, projectId, teamId);
+	@Override
+	public void addToTeam(final int afId, final int projectId, final int teamId) throws SQLException {
+		PreparedStatement ps = jdbcTemplate.getDataSource().getConnection().prepareStatement(SQL_ADD_TO_TEAM);
+			ps.setString(1, "comment");
+			java.util.Date utilDate = new java.util.Date();
+			ps.setTimestamp(2, new java.sql.Timestamp(utilDate.getTime()));
+			ps.setInt(3, afId);
+			ps.setInt(4, projectId);
+			ps.setInt(5, teamId);
+		ps.executeUpdate();
+		ps.close();
+}
+	///////////////////////////////////////////////////////////////////////////////////////////
+	@Override
 	public void delete(Integer id) {
 		throw new UnsupportedOperationException();
 	}
@@ -214,6 +234,5 @@ public class StudentDaoImpl implements StudentDao {
 
 		
 	}
-
 
 }

@@ -1,5 +1,6 @@
 package com.netcracker.ca.controller.api;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,14 @@ public class TeamController extends BaseApiController {
     private StudentService studentService;
     
     @PostMapping("admin/api/curator/{curatorId}/project/{projectId}/team/{teamId}")
-    public void add(@PathVariable int curatorId,@PathVariable int projectId, @PathVariable int teamId) {
+    public void addCuratorToTeam(@PathVariable int curatorId,@PathVariable int projectId, @PathVariable int teamId) {
     	curatorService.add(curatorId, projectId, teamId);
+    }
+    
+    @PostMapping("admin/api/student/{studentId}/project/{projectId}/team/{teamId}")
+    public void addStudentToTeam(@PathVariable int studentId,@PathVariable int projectId, @PathVariable int teamId) throws SQLException {
+    	int afId = studentService.getById(studentId).getAppFormId();
+    	studentService.addToTeam(afId, projectId, teamId);
     }
     
     @PostMapping("admin/api/project/{projectId}/team")
