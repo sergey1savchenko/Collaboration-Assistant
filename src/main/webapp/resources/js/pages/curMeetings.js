@@ -10,6 +10,11 @@ $(function () {
         sorting: true,
         paging: false,
         autoload: true,
+        
+        rowClick: function(args) {
+		    window.location.href = '/CA-Project/curator/meeting/'+args.item.id+'/meetingEvaluation';
+		},
+
 
         controller: {
             loadData: function () {
@@ -56,7 +61,6 @@ $(function () {
         fields: [														//!!
         			// from DB
 
-            {name: "id", type: 'link', url: 'meeting/{id}/meetingEvaluation', width: 70, title: 'Settings'},
             {name: "title", type: "text", title: "Title", validate: "required"},
             {name: "address", type: "text",  title: "address"},
             {name: "datetime", type: "jsDate", width: 150, title: "Date", validate: "required"},

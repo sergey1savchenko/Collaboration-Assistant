@@ -10,12 +10,16 @@ $(function () {
         sorting: true,
         paging: false,
         autoload: true,
+        rowClick: function(args) {
+		    window.location.href = '/CA-Project/hr/meeting/'+args.item.id+'/meetingEvaluation';
+		},
+
 
         controller: {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                    url: '/CA-Project/hr/api/project/{projectId}/meetings',				// !
+                    url: '/CA-Project/hr/api/team/'+teamId+'/meetings',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -31,8 +35,6 @@ $(function () {
         },
         fields: [														//!!
         			// from DB
-
-            {name: "id", type: 'link', url: 'curator/meetingEvaluation/={id}', width: 70, title: 'Settings'},
             {name: "title", type: "text", title: "Title", validate: "required"},
             {name: "address", type: "text",  title: "address"},
             {name: "datetime", type: "jsDate", width: 150, title: "Date", validate: "required"},

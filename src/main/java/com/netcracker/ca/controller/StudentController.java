@@ -5,8 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.netcracker.ca.model.Team;
+import com.netcracker.ca.service.MeetingService;
 import com.netcracker.ca.service.ProjectService;
 
 @Controller
@@ -15,16 +18,18 @@ import com.netcracker.ca.service.ProjectService;
 public class StudentController extends BaseController {
 
     	@Autowired
-	private ProjectService projectService;
+    	private ProjectService projectService;
+        @Autowired
+    	private MeetingService meetingService;
 	
 	@RequestMapping
 	public String project(Model model) {
 		model.addAttribute("projects", projectService.getAll());
 		return "stdProject";
 	}
-	@RequestMapping(value="/meetings")
-	public String stdMeetings(Model model) {
-		model.addAttribute("projects", projectService.getAll());
+	@RequestMapping(value = "meeting")
+	public String stdMeetings(Model model,@SessionAttribute Team team) {
+		
 		return "stdMeetings";
 	}
 	
