@@ -30,7 +30,7 @@ public class ProjectController extends BaseApiController {
     @Autowired
     private MarkTypeService markTypeService;
 
-    @GetMapping({"admin/api/projects", "hr/api/projects"})
+    @GetMapping({"admin/api/projects", "hr/api/projects", "reports/api/projects"})
     public List<Project> getAll() {
         return projectService.getAll();
     }

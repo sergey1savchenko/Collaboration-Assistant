@@ -36,7 +36,12 @@ public class ReportController extends BaseController{
         return "reports";
     }
 
-    @RequestMapping(path = "/reports/projectsReport", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(path={"/reports/projectsReport", "/reports/studentsReport", "studentsInProject"}, method = RequestMethod.GET)
+    public String returnToReports(Model model){
+        return "reports";
+    }
+
+    @RequestMapping(path = "/reports/projectsReport", method = RequestMethod.POST)
     public String getProjectsReport(Model model){
         prRep = reportService.getProjectsReport();
         model.addAttribute("prRep", prRep);
@@ -48,7 +53,7 @@ public class ReportController extends BaseController{
         return new ModelAndView("projectsListExcel", "prRep", prRep);
     }
 
-    @RequestMapping(path = "/reports/studentsReport", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(path = "/reports/studentsReport", method = RequestMethod.POST)
     public String getStudentReport(Model model, @RequestParam("projectId") Integer projectId, @RequestParam("teamId") Integer teamId){
         if ((projectId !=0) && (teamId !=0)) stRep = reportService.getStudentsOfTeamReport(teamId);
         if ((projectId !=0) && (teamId == 0)) stRep = reportService.getStudentsOfProjectReport(projectId);
@@ -62,7 +67,7 @@ public class ReportController extends BaseController{
         return new ModelAndView("studentsListExcel", "stRep", stRep);
     }
 
-    @RequestMapping(path = "/reports/studentsInProject", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(path = "/reports/studentsInProject", method = RequestMethod.POST)
     public String getStudentInProjectReport(Model model, @RequestParam("projectId") int projectId){
         stInPrRep = reportService.getStudentInProjectReport(projectId);
         model.addAttribute("stInPrRep", stInPrRep);

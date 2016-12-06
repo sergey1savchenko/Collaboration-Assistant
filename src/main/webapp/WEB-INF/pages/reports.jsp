@@ -45,7 +45,7 @@
     function getProjects() {
         $.ajax({
             type: "GET",
-            url: "/CA-Project/admin/api/projects",
+            url: "/CA-Project/reports/api/projects",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -65,7 +65,7 @@
     function getTeams(projectId){
         $.ajax({
             type: "GET",
-            url: "/CA-Project/admin/api/project/"+projectId+"/teams",
+            url: "/CA-Project/reports/api/project/"+projectId+"/teams",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -85,7 +85,7 @@
     $(function() {
         $('#reports-select').change(function () {
             var reportType = $("#reports-select option:selected").val();
-            $("#create-report-form").attr("method", "GET");
+            //$("#create-report-form").attr("method", "GET");
             //Projects Report
             if (reportType == 1){
                 $("#create-report-form").attr("action", "/CA-Project/reports/projectsReport");

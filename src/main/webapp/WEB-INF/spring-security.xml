@@ -16,6 +16,7 @@
 		<intercept-url pattern="/curator/**" access="hasRole('CURATOR')" />
 		<intercept-url pattern="/hr/**" access="hasRole('HR')" />
 		<intercept-url pattern="/student/**" access="hasRole('STUDENT')" />
+		<intercept-url pattern="/reports/**" access="hasAnyRole('ADMIN','HR')" />
 
 		<form-login login-page='/login' login-processing-url="/j_spring_security_check"
 			default-target-url="/projects" always-use-default-target="false"
