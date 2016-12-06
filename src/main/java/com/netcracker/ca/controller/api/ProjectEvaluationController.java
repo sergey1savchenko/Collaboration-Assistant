@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,11 @@ public class ProjectEvaluationController extends BaseApiController {
 			@PathVariable int studentId, HttpSession session, @AuthenticationPrincipal UserAuth userAuth) {
 		Team team = (Team) session.getAttribute("team");
 		projectEvalService.addAll(dto.getProjectEvaluations(), studentId, team.getProject().getId(), userAuth.getId());
+	}
+	
+	@PutMapping("curator/api/student/{studentId}/proj-eval")
+	public void update(@RequestBody ProjectEvaluation pe) {
+		projectEvalService.update(pe);
 	}
 	
 	@GetMapping("curator/api/student/{studentId}/proj-eval")

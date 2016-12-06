@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netcracker.ca.model.MeetingEvaluation;
+import com.netcracker.ca.model.ProjectEvaluation;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.model.UserAuth;
 import com.netcracker.ca.model.dto.CuratorMeetingEvaluationsDto;
@@ -40,6 +42,11 @@ public class MeetingEvaluationController extends BaseApiController {
 	public void evaluateMeeting(@RequestBody MeetingEvaluationsDto dto, @PathVariable int meetingId,
 			@PathVariable int studentId, @AuthenticationPrincipal UserAuth userAuth) {
 		meetEvalService.addAll(dto.getMeetingEvaluations(), studentId, meetingId, userAuth.getId());
+	}
+	
+	@PutMapping("curator/api/meeting/{meetingId}/student/{studentId}/meet-eval")
+	public void update(@RequestBody MeetingEvaluation me) {
+		meetEvalService.update(me);
 	}
 	
 	@GetMapping("curator/api/meeting/{meetingId}/student/{studentId}/meet-eval")
