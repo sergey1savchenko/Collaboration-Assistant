@@ -154,3 +154,6 @@ function projectMeetings(){
 function projectFiles(){
 	location.href = '/CA-Project/admin/project/'+projectId+'/files';
 }
+function properties(){
+	location.href = '/CA-Project/admin/project/'+projectId+'/properties';
+}

@@ -1,11 +1,11 @@
 $(function () {
     $("#MeetingPropertiesGrid").jsGrid({								//!
     	
-        height: "40%",
+        height: "30%",
         width: "100%",
         
     	
-        filtering: true,
+        filtering: false,
         editing: false,
         sorting: true,
         paging: false,
@@ -34,7 +34,7 @@ $(function () {
         	{name: "title", type: "text", title: "Title", validate: "required"},
             {name: "hasInt", type: "checkbox",  title: "Numerical"},
             {name: "hasText", type: "checkbox", title: "Text"},
-            {type: "control", editButton: false, deleteButton: false, modeSwitchButton: false, clearFilterButton: false}
+            //{type: "control", editButton: false, deleteButton: false, modeSwitchButton: false, clearFilterButton: false}
 
         ]
 
@@ -44,11 +44,11 @@ $(function () {
 $(function () {
     $("#ProjectPropertiesGrid").jsGrid({								//!
     	
-        height: "40%",
+        height: "30%",
         width: "100%",
         
     	
-        filtering: true,
+        filtering: false,
         editing: false,
         sorting: true,
         paging: false,
@@ -77,7 +77,7 @@ $(function () {
         	{name: "title", type: "text", title: "Title", validate: "required"},
             {name: "hasInt", type: "checkbox",  title: "Numerical"},
             {name: "hasText", type: "checkbox", title: "Text"},
-            {type: "control", editButton: false, deleteButton: false, modeSwitchButton: false, clearFilterButton: false}
+            //{type: "control", editButton: false, deleteButton: false, modeSwitchButton: false, clearFilterButton: false}
 
         ]
 

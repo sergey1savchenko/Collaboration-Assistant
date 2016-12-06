@@ -18,8 +18,9 @@
 	</div>
 	<div class="team-buttons">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDialog">Add Team</button>
-		<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Project Meetings</button>
-		<button type="button" class="btn btn-primary" onClick="projectFiles(); return false;">Project Files</button>
+		<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Meetings</button>
+		<button type="button" class="btn btn-primary" onClick="projectFiles(); return false;">Files</button>
+		<button type="button" class="btn btn-primary" onClick="properties(); return false;">Evaluation Properties</button>
 		<br/><br/>
 	</div>	
 	
