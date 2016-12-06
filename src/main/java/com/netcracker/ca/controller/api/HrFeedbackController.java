@@ -9,7 +9,7 @@ import com.netcracker.ca.model.Feedback;
 import com.netcracker.ca.service.FeedbackService;
 
 @RestController
-public class HRFeedbackController extends BaseApiController {
+public class HrFeedbackController extends BaseApiController {
 
 	Logger logger = LogManager.getLogger("Error.Files");
 

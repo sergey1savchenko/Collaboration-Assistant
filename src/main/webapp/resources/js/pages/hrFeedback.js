@@ -5,7 +5,7 @@ $(function () {
         width: "100%",
         
     	
-        filtering: true,
+        filtering: false,
         editing: true,
         sorting: false,
         paging: false,
@@ -16,7 +16,7 @@ $(function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
                     type: 'GET',
-                	url: '/CA-Project/hr/feedback/hrFeedbackStudent' + $("#app_form_id").val(),				// !
+                	url: '/CA-Project/hr/api/feedback/' + $("#studentId").val(),				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
@@ -31,7 +31,7 @@ $(function () {
                 var deferred = $.Deferred();
                 return $.ajax({
                     method: "PUT",
-                    url: '/CA-Project/hr/hrFeedback/hrFeedbackStudent',				//!
+                    url: '/CA-Project/hr/api/feedback',				//!
                     data: JSON.stringify(item),
                     contentType: "application/json; charset=utf-8"
                 }).done(function(){
@@ -46,7 +46,7 @@ $(function () {
             deleteItem: function (item) {
                 return $.ajax({
                     method: "DELETE",
-                    url: "/CA-Project/hrFeedbackStudent" + item.id	//!
+                    url: "/CA-Project/hr/api/feedback/" + item.id	//!
                 }).fail(function () {
                     WebUtils.show('Failed to delete');
                 });
@@ -90,10 +90,11 @@ function onCreateAction() {
         id: 0,
         generalReport: $("#general_report").val(),
         techReport: $("#tech_report").val(),
-        interviewer: $("#interviewer").val(),
+        interviewer: $("#interviewer").val()
+        
     };
     $.ajax({
-        url: "/CA-Project/hrFeedbackStudent",
+        url: "/CA-Project/hr/api/feedback/" + $("#studentId").val(),
         method: 'POST',
         data: JSON.stringify(item),
         contentType: "application/json; charset=utf-8",
