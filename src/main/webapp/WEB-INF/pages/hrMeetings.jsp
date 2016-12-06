@@ -1,6 +1,6 @@
 <%@include file="header.jsp" %>
 <div class="container">
-<script type="text/javascript"> var teamId = ${teamId};</script> 
+<script type="text/javascript"> var projectId = ${projectId};</script> 
     <div class="wrapper">
         <div class="above-grid"><span>Meetings</span>
         </div>
