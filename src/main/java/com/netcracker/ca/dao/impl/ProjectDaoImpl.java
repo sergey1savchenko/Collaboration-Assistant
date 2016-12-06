@@ -27,6 +27,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	private static final String SQL_SELECT_PROJECT_BY_ID = SQL_SELECT_PROJECT + " WHERE p.id = ?";
 	private static final String SQL_SELECT_PROJECT_BY_TITLE = SQL_SELECT_PROJECT + " WHERE p.title = ?";
 	private static final String SQL_SELECT_PROJECT_FOR_ATTACHMENT = SQL_SELECT_PROJECT + " WHERE p.id = (SELECT project_id FROM attachments WHERE id=?)";
+	private static final String SQL_SELECT_PROJECT_FOR_MEETING = SQL_SELECT_PROJECT + " WHERE p.id = (SELECT project_id FROM meetings WHERE id=?)";
 	private static final String SQL_INSERT_PROJECT = "INSERT INTO projects (title, description, start_date, end_date, university_id) VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE_PROJECT = "UPDATE projects SET title = ?, description = ?, start_date = ?, end_date = ?, university_id = ? WHERE projects.id = ?";
 	private static final String SQL_DELETE_PROJECT = "DELETE FROM projects WHERE projects.id = ?";
@@ -96,8 +97,13 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public Project getForAttachment(int attachmentId) {
-		List<Project> projects = jdbcTemplate.query(SQL_SELECT_PROJECT_FOR_ATTACHMENT, new ProjectMapper(), attachmentId);
-		return projects.isEmpty()? null: projects.get(0);
+		return jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_FOR_ATTACHMENT, new ProjectMapper(), attachmentId);
+	}
+	
+
+	@Override
+	public Project getForMeeting(int meetingId) {
+		return jdbcTemplate.queryForObject(SQL_SELECT_PROJECT_FOR_MEETING, new ProjectMapper(), meetingId);
 	}
 
 	private static class ProjectMapper implements RowMapper<Project> {

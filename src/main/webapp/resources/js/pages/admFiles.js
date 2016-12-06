@@ -107,7 +107,7 @@ function onCreateExternalAction() {
     		$("#admFilesGrid").jsGrid("insertItem", data);
     		$("#addDialog").modal("hide");
     	}).fail(function() {
-    		WebUtils.show("Failed to create data. Maybe you forget to choose a file?");
+    		WebUtils.show("Failed to create data. Maybe you forgot to choose a file?");
     	});
 }
 	

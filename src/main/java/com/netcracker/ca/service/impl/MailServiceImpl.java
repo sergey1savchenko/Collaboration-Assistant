@@ -50,7 +50,8 @@ public class MailServiceImpl implements MailService {
 				message.setText(mail.getContent(), true);
 			}
 		};
-		mailSender.send(preparator);
+		//Temporarily switched off
+		//mailSender.send(preparator);
 	}
 
 }

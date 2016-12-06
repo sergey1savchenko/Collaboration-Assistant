@@ -26,7 +26,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	private static String SQL_ADD_ATTACHMENT_TO_TEAM = "INSERT INTO attachments (text, attachment_link, mime_type, project_id, team_id) VALUES (?, ?, ?, (SELECT project_id FROM teams WHERE id=?), ?)";
 	private static String SQL_DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 	private static String SQL_SELECT_TEAM_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE team_id=?";
-	private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=?";
+	private static String SQL_SELECT_PROJECT_ATTACHMENTS = SQL_SELECT_ATTACHMENT + " WHERE project_id=? AND team_id IS NULL";
 	private static String SQL_SELECT_TEAM_ATTACHMENT_BY_LINK = SQL_SELECT_TEAM_ATTACHMENTS + " AND attachment_link=?";
 	private static String SQL_SELECT_PROJECT_ATTACHMENT_BY_LINK = SQL_SELECT_PROJECT_ATTACHMENTS + " AND attachment_link=?";
 

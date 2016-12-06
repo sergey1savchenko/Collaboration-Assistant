@@ -22,4 +22,8 @@ public interface MeetingDao {
     List<Meeting> getAllTeamMeetings(int id);
 
     List<Meeting> getAllProjectMeetings(int id);
+    
+    Meeting getByTitleForProject(String title, int projectId);
+    
+    Meeting getByTitleForTeam(String title, int teamId);
 }

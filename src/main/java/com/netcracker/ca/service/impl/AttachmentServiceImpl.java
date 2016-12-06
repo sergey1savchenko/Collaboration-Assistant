@@ -15,6 +15,7 @@ import com.netcracker.ca.model.Attachment;
 import com.netcracker.ca.model.Project;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.AttachmentService;
+import com.netcracker.ca.service.NotificationService;
 import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.StorageService;
 import com.netcracker.ca.service.TeamService;
@@ -38,6 +39,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public Attachment addToProject(Attachment att, InputStream is, int projectId) throws IOException {
@@ -48,6 +52,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		if (!isExternal(att))
 			storageService.store(is, att.getLink());
 		attachmentDao.addToProject(att, projectId);
+		notificationService.onAttachmentAddedToProject(att, projectId);
 		return att;
 	}
 
@@ -60,6 +65,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		if (!isExternal(att))
 			storageService.store(is, att.getLink());
 		attachmentDao.addToTeam(att, teamId);
+		notificationService.onAttachmentAddedToTeam(att, teamId);
 		return att;
 	}
 
@@ -74,7 +80,11 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Override
 	public void delete(int id) {
 		Attachment att = attachmentDao.getById(id);
-		storageService.delete(att.getLink());
+		if (!isExternal(att)) {
+			if(!storageService.delete(att.getLink())) {
+				throw new ServiceException("Failed to delete file");
+			}
+		}
 		attachmentDao.delete(id);
 	}
 

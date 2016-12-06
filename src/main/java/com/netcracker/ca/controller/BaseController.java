@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.netcracker.ca.utils.NotPermittedException;
 import com.netcracker.ca.utils.RepositoryException;
 
 public class BaseController {
@@ -17,6 +18,13 @@ public class BaseController {
 	public String handleRepositoryException(RepositoryException e) {
 		logger.error("Internal exception", e);
 		return "errorPage";
+	}
+	
+
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ExceptionHandler(NotPermittedException.class)
+	public String handleRepositoryException(NotPermittedException e) {
+		return "redirect:login";
 	}
 	
 }

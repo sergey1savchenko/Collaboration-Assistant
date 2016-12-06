@@ -27,12 +27,14 @@ public class ParticipationDaoImpl implements ParticipationDao {
 			+ "st.description AS st_desc FROM students_in_project AS p INNER JOIN student_in_project_status_types AS st ON p.status_type_id=st.id";
 	private static String SQL_SELECT_PARTICIPATION_BY_ID = SQL_SELECT_PARTICIPATION + " WHERE id=?";
 	private static String SQL_SELECT_PARTICIPATION_BY_STUDENT_AND_PROJECT = SQL_SELECT_PARTICIPATION
-			+ " INNER JOIN application_forms AS af ON st.app_form_id=af.id " + " WHERE af_user_id=? AND p.project_id=?";
+			+ " INNER JOIN application_forms AS af ON st.app_form_id=af.id WHERE af_user_id=? AND p.project_id=?";
 	private static String SQL_SELECT_PARTICIPATION_BY_PROJECT = SQL_SELECT_PARTICIPATION + " WHERE p.project_id=?";
 	private static String SQL_INSERT_PARTICIPATION = "INSERT INTO students_in_project (app_form_id, project_id, status_type_id, comment, datetime, team_id) "
 			+ "VALUES ((SELECT id FROM application_forms WHERE user_id=?), ?, ?, ?, ?, ?) ";
 	private static String SQL_UPDATE_PARTICIPATION = "UPDATE students_in_project SET status_type_id=?, comment=?, datetime=?, team_id=? WHERE id=?";
 	private static String SQL_DELETE_PARTICIPATION = "DELETE FROM students_in_project WHERE id=?";
+	private static String SQL_DELETE_PARTICIPATION_BY_STUDENT_AND_PROJECT = "DELETE FROM students_in_project "
+			+ "WHERE app_form_id IN (SELECT id FROM application_forms WHERE user_id=?) AND project_id=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -81,6 +83,12 @@ public class ParticipationDaoImpl implements ParticipationDao {
 	@Override
 	public void delete(int id) {
 		jdbcTemplate.update(SQL_DELETE_PARTICIPATION, id);
+	}
+	
+
+	@Override
+	public void delete(int studentId, int projectId) {
+		jdbcTemplate.update(SQL_DELETE_PARTICIPATION_BY_STUDENT_AND_PROJECT, studentId, projectId);
 	}
 
 	@Override

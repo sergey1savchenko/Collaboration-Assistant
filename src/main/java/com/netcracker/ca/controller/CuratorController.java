@@ -8,15 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.netcracker.ca.model.Meeting;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.service.MeetingService;
 import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.UniversityService;
-
-import java.util.List;
-
+import com.netcracker.ca.utils.NotPermittedException;
 
 @Controller
 @SessionAttributes("team")
@@ -46,15 +43,13 @@ public class CuratorController extends BaseController {
 		return "curMeetings";
 	}
 	
-	@RequestMapping("meeting/{meetingId}/meetingEvaluation")
-	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @SessionAttribute Team team) {
-		model.addAttribute("teamStudents", studentService.getByTeam(team.getId()));						// Students
-		List<Meeting> teamMeetings = meetingService.getAllTeamMeetings(team.getId());
-		for (Meeting i : teamMeetings) {
-		    if(i.getId()==meetingId){
-		    	model.addAttribute("meeting", i);														// direct team meeting
-		    }
-		}
+	@RequestMapping("meeting/{meetingId}/student/{studentId}")
+	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, 
+			@PathVariable("studentId") int studentId, @SessionAttribute Team team) {
+		model.addAttribute("student", studentService.getById(studentId));
+		if(!meetingService.belongsToTeam(meetingId, team.getId()))
+			throw new NotPermittedException("Meeting does not belong to curator's team");
+		model.addAttribute("meeting", meetingService.getById(meetingId));
 		return "curMeetingEvaluation";
 	}
 	

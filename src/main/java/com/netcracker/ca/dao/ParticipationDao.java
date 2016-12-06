@@ -12,6 +12,8 @@ public interface ParticipationDao {
 	
 	void delete(int id);
 	
+	void delete(int studentId, int projectId);
+	
 	Participation getById(int id);
 
 	Participation getByStudentAndProject(int studentId, int projectId);

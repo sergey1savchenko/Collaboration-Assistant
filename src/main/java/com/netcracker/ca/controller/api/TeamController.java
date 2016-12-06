@@ -25,6 +25,7 @@ import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.model.dto.StudentParticipationDto;
 import com.netcracker.ca.service.CuratorService;
+import com.netcracker.ca.service.ParticipationService;
 import com.netcracker.ca.service.StudentService;
 import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.validator.TeamFormValidator;
@@ -40,6 +41,9 @@ public class TeamController extends BaseApiController {
 
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private ParticipationService partService;
 
 	@Autowired
 	private TeamFormValidator teamFormValidator;
@@ -55,10 +59,8 @@ public class TeamController extends BaseApiController {
 	}
 
 	@PostMapping("admin/api/student/{studentId}/project/{projectId}/team/{teamId}")
-	public void addStudentToTeam(@PathVariable int studentId, @PathVariable int projectId, @PathVariable int teamId)
-			throws SQLException {
-		int afId = studentService.getById(studentId).getAppFormId();
-		studentService.addToTeam(afId, projectId, teamId);
+	public void addStudentToTeam(@PathVariable int studentId, @PathVariable int projectId, @PathVariable int teamId) {
+		partService.add(teamId, studentId, projectId);
 	}
 
 	@PostMapping("admin/api/project/{projectId}/team")
@@ -129,4 +131,10 @@ public class TeamController extends BaseApiController {
 	public void deleteCuratorFromTeam(@PathVariable int projectId, @PathVariable int curatorId) {
 		curatorService.delete(curatorId, projectId);
 	}
+
+    @DeleteMapping("admin/api/project/{projectId}/student/{studentId}")
+    public void deleteStudentFromTeam(@PathVariable int projectId, @PathVariable int studentId) {
+    	partService.delete(studentId, projectId);
+    }
+    
 }

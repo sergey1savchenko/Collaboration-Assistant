@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.netcracker.ca.model.Attachment;
 import com.netcracker.ca.model.Mail;
@@ -18,12 +19,11 @@ import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.CuratorService;
 import com.netcracker.ca.service.MailService;
 import com.netcracker.ca.service.NotificationService;
-import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.StudentService;
-import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.TemplateBuilder;
 import com.netcracker.ca.service.UserService;
 
+@Service
 public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
@@ -41,12 +41,6 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	private StudentService studentService;
 	
-	@Autowired
-	private TeamService teamService;
-	
-	@Autowired
-	private ProjectService projectService;
-
 	@Override
 	public void onProjectCreation(Project project) {
 		Map<String, Object> model = new HashMap<>();
@@ -130,39 +124,45 @@ public class NotificationServiceImpl implements NotificationService {
 		
 		mailService.send(mail, emails);
 	}
-	
+
 	@Override
-	public void onAttachmentAdded(Attachment attachment) {
+	public void onAttachmentAddedToProject(Attachment attachment, int projectId) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("attachment", attachment);
 		Mail mail = build("Collaboration Assistant - File attachment added", "attachment-added.ftl", model);
 		
 		List<String> emails = new ArrayList<>();
-		Team team = teamService.getForAttachment(attachment.getId());
-		if(team != null) {
-			for(User curator: curatorService.getByTeam(team.getId()))
-				emails.add(curator.getEmail());
-			for(Student student: studentService.getByTeam(team.getId()))
-				emails.add(student.getEmail());
-		}
-		else {
-			Project project = projectService.getForAttachment(attachment.getId());
-			for(User curator: curatorService.getByProject(project.getId()))
-				emails.add(curator.getEmail());
-			for(Student student: studentService.getByProject(project.getId()))
-				emails.add(student.getEmail());
-		}
-
+		for(User curator: curatorService.getByProject(projectId))
+			emails.add(curator.getEmail());
+		for(Student student: studentService.getByProject(projectId))
+			emails.add(student.getEmail());
+		
 		mailService.send(mail, emails);
 	}
 
 	@Override
-	public void onProjectStatusChanged(Participation part) {
+	public void onAttachmentAddedToTeam(Attachment attachment, int teamId) {
+		Map<String, Object> model = new HashMap<>();
+		model.put("attachment", attachment);
+		Mail mail = build("Collaboration Assistant - File attachment added", "attachment-added.ftl", model);
+		
+		List<String> emails = new ArrayList<>();
+
+		for(User curator: curatorService.getByTeam(teamId))
+			emails.add(curator.getEmail());
+		for(Student student: studentService.getByTeam(teamId))
+			emails.add(student.getEmail());
+		
+		mailService.send(mail, emails);
+	}
+
+	@Override
+	public void onProjectStatusChanged(Participation part, int studentId) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("participation", part);
 		Mail mail = build("Collaboration Assistant - Project status changed", "project-status-changed.ftl", model);
 		
-		//mailService.send(mail, part.getStudent().getEmail());
+		mailService.send(mail, studentService.getById(studentId).getEmail());
 	}
 	
 	private Mail build(String subject, String template, Map<String, Object> model) {
