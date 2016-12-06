@@ -43,13 +43,12 @@ public class CuratorController extends BaseController {
 		return "curMeetings";
 	}
 	
-	@RequestMapping("meeting/{meetingId}/student/{studentId}")
-	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, 
-			@PathVariable("studentId") int studentId, @SessionAttribute Team team) {
-		model.addAttribute("student", studentService.getById(studentId));
+	@RequestMapping("meeting/{meetingId}/meetingEvaluation")
+	public String curMeetingEvaluation(Model model,@PathVariable("meetingId") int meetingId, @SessionAttribute Team team) {
 		if(!meetingService.belongsToTeam(meetingId, team.getId()))
 			throw new NotPermittedException("Meeting does not belong to curator's team");
 		model.addAttribute("meeting", meetingService.getById(meetingId));
+		model.addAttribute("teamStudents", studentService.getByTeam(team.getId()));
 		return "curMeetingEvaluation";
 	}
 	
@@ -57,7 +56,7 @@ public class CuratorController extends BaseController {
 	public String curStudent(Model model, @PathVariable("studentId") int studentId) {
 		model.addAttribute("student", studentService.getById(studentId));
 		model.addAttribute("universities", universityService.getAll());
-		return "curStudent";														// PROJECT EVALUATION
+		return "curStudent";																// PROJECT EVALUATION
 	}
 	
 	@RequestMapping("files")
