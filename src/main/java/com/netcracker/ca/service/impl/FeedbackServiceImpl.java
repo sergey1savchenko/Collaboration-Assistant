@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.netcracker.ca.dao.FeedbackDao;
 import com.netcracker.ca.model.Feedback;
+import com.netcracker.ca.model.Student;
 import com.netcracker.ca.service.FeedbackService;
 
 @Service
@@ -27,10 +28,16 @@ public class FeedbackServiceImpl implements FeedbackService {
 	public Feedback getById(int id) {
 		return feedbackDao.getById(id);
 	}
+	
+	@Override
+	public Feedback getByStudentId(int id) {
+		return feedbackDao.getByStudentId(id);
+	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public void add(Feedback feedback) {
+	public void add(Feedback feedback, int studentId) {
+		feedback.setStudent(new Student(studentId));
 		feedbackDao.add(feedback);
 	}
 
