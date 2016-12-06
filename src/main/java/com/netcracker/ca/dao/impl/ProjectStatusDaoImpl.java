@@ -56,7 +56,6 @@ public class ProjectStatusDaoImpl implements ProjectStatusDao {
 			}
 		}, keyHolder);
 		status.setId(keyHolder.getKey().intValue());
-
 	}
 
 	@Override
@@ -78,7 +77,5 @@ public class ProjectStatusDaoImpl implements ProjectStatusDao {
 			ps.setDescription(rs.getString("description"));
 			return ps;
 		}
-
 	}
-
 }

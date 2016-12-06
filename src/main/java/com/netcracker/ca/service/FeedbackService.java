@@ -9,8 +9,10 @@ public interface FeedbackService {
 	List<Feedback> getAll();
 
 	Feedback getById(int id);
+	
+	Feedback getByStudentId(int id);
 
-	void add(Feedback feedback);
+	void add(Feedback feedback, int studentId);
 
 	void update(Feedback feedback);
 

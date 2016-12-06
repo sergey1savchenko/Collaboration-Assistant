@@ -33,7 +33,6 @@ public class MainController extends BaseController {
 	
 	@RequestMapping("404")
 	public String error404(){
-		//System.out.println("custom error handler");
 		return "/errorPage";
 	}
 	

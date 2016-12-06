@@ -8,4 +8,6 @@ public interface FeedbackDao extends Dao<Feedback, Integer> {
 
 	List<Feedback> getAll();
 	
+	Feedback getByStudentId(Integer id);
+	
 }

@@ -28,7 +28,7 @@
                         <option value="0">All Teams</option>
                     </select>
                 </div>
-                <p><input id="report-button" type="submit" class="btn btn-success" value="Report"></p>
+                <p><input id="report-button" type="submit" class="btn btn-primary" value="Report"></p>
             </form>
         </div>
     </div>
