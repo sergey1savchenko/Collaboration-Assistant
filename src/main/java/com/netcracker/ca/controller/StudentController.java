@@ -17,25 +17,25 @@ import com.netcracker.ca.service.ProjectService;
 @RequestMapping("student")
 public class StudentController extends BaseController {
 
-    	@Autowired
-    	private ProjectService projectService;
-        @Autowired
-    	private MeetingService meetingService;
-	
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private MeetingService meetingService;
+
 	@RequestMapping
 	public String project(Model model) {
 		model.addAttribute("projects", projectService.getAll());
 		return "stdProject";
 	}
+
 	@RequestMapping(value = "meeting")
-	public String stdMeetings(Model model,@SessionAttribute Team team) {
-		
+	public String stdMeetings(Model model, @SessionAttribute Team team) {
+
 		return "stdMeetings";
 	}
-	
+
 	@RequestMapping(value = "files", method = RequestMethod.GET)
 	public String curFilesPage(Model model) {
 		return "stdFiles";
 	}
-	
 }

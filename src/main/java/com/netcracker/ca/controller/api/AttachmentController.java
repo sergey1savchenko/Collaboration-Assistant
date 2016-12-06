@@ -14,9 +14,12 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +33,7 @@ import com.netcracker.ca.model.Attachment;
 import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.dto.ExternalAttachmentDto;
 import com.netcracker.ca.service.AttachmentService;
+import com.netcracker.ca.validator.AttachmentFormValidator;
 
 @RestController
 public class AttachmentController extends BaseApiController {
@@ -41,9 +45,17 @@ public class AttachmentController extends BaseApiController {
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
+	
+	@Autowired
+    private AttachmentFormValidator attachmentFormValidator;
+    
+    @InitBinder("attachmentForm")
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(attachmentFormValidator);
+	}
 
 	@PostMapping("admin/api/project/{projectId}/file")
-	public Attachment uploadForProject(@RequestParam MultipartFile file, @RequestParam("text") String text,
+	public Attachment uploadForProject(@RequestParam @Validated MultipartFile file, @RequestParam("text") String text,
 			@PathVariable int projectId) throws IOException {
 		try (InputStream input = file.getInputStream()) {
 			Attachment att = new Attachment(text, file.getOriginalFilename(), file.getContentType());
@@ -63,7 +75,7 @@ public class AttachmentController extends BaseApiController {
 	}
 
 	@PostMapping("curator/api/file")
-	public Attachment uploadForTeam(@RequestParam MultipartFile file, @RequestParam("text") String text,
+	public Attachment uploadForTeam(@RequestParam @Validated MultipartFile file, @RequestParam("text") String text,
 			@SessionAttribute Team team) throws IOException {
 		try (InputStream input = file.getInputStream()) {
 			Attachment att = new Attachment(text, file.getOriginalFilename(), file.getContentType());

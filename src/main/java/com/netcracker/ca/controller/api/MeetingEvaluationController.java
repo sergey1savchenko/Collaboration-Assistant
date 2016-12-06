@@ -6,7 +6,9 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +20,21 @@ import com.netcracker.ca.model.UserAuth;
 import com.netcracker.ca.model.dto.CuratorMeetingEvaluationsDto;
 import com.netcracker.ca.model.dto.MeetingEvaluationsDto;
 import com.netcracker.ca.service.MeetingEvaluationService;
+import com.netcracker.ca.validator.MeetingEvaluationFormValidator;
 
 @RestController
 public class MeetingEvaluationController extends BaseApiController {
 
 	@Autowired
 	private MeetingEvaluationService meetEvalService;
+	
+	@Autowired
+	private MeetingEvaluationFormValidator meetingEvaluationFormValidator;
+
+	@InitBinder("meetingEvaluationForm")
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(meetingEvaluationFormValidator);
+	}
 
 	@PostMapping("curator/api/meeting/{meetingId}/student/{studentId}/meet-eval")
 	public void evaluateMeeting(@RequestBody MeetingEvaluationsDto dto, @PathVariable int meetingId,
@@ -46,5 +57,4 @@ public class MeetingEvaluationController extends BaseApiController {
 		}
 		return dtos;
 	}
-
 }
