@@ -35,7 +35,7 @@ public class MeetingController extends BaseApiController {
 		binder.setValidator(meetingFormValidator);
 	}
 
-	@GetMapping("admin/api/project/{projectId}/meetings")
+	@GetMapping({"admin/api/project/{projectId}/meetings","hr/api/project/{projectId}/meetings"})
 	public List<Meeting> getProjectMeetings(@PathVariable int projectId) {
 		return meetingService.getAllProjectMeetings(projectId);
 	}
