@@ -34,10 +34,10 @@ public class TeamController extends BaseApiController {
 
 	@Autowired
 	private TeamService teamService;
-	
+
 	@Autowired
 	private CuratorService curatorService;
-	
+
 	@Autowired
 	private StudentService studentService;
 
@@ -72,7 +72,7 @@ public class TeamController extends BaseApiController {
 		return curatorService.getFreeCurators();
 	}
 
-	@GetMapping("admin/api/project/{projectId}/teams")
+	@GetMapping({ "admin/api/project/{projectId}/teams", "reports/api/project/{projectId}/teams" })
 	public List<Team> getByProject(@PathVariable int projectId) {
 		return teamService.getByProject(projectId);
 	}
