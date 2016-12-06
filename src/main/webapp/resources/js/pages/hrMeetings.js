@@ -11,7 +11,7 @@ $(function () {
         paging: false,
         autoload: true,
         rowClick: function(args) {
-		    window.location.href = '/CA-Project/hr/meeting/'+args.item.id+'/meetingEvaluation';
+		  
 		},
 
 
@@ -19,7 +19,7 @@ $(function () {
             loadData: function () {
                 var deferred = $.Deferred();
                 $.ajax({									//GET
-                    url: '/CA-Project/hr/api/team/'+teamId+'/meetings',				// !
+                    url: '/CA-Project/hr/api/project/'+projectId+'/meetings',				// !
                     dataType: 'json'
                 }).done(function (data) {
                     deferred.resolve(data);
