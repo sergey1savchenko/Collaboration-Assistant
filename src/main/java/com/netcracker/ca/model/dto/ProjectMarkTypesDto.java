@@ -11,7 +11,7 @@ public class ProjectMarkTypesDto {
 	private List<Integer> projectMarkTypeIds;
 
 	private List<Integer> meetingMarkTypeIds;
-
+	
 	public ProjectMarkTypesDto() {
 	}
 
@@ -38,5 +38,4 @@ public class ProjectMarkTypesDto {
 	public void setMeetingMarkTypeIds(List<Integer> meetingMarkTypeIds) {
 		this.meetingMarkTypeIds = meetingMarkTypeIds;
 	}
-
 }

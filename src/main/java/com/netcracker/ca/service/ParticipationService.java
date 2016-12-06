@@ -15,7 +15,7 @@ public interface ParticipationService {
 	
 	void update(Participation participation);
 	
-	void delete(int id);
+	void delete(int studentId, int projectId);
 	
 	void setAll(List<ParticipationDto> partDtos, int projectId);
 	

@@ -1,6 +1,6 @@
 package com.netcracker.ca.service.impl;
 
-import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.netcracker.ca.dao.ProjectStatusDao;
 import com.netcracker.ca.dao.StudentDao;
 import com.netcracker.ca.model.Participation;
+import com.netcracker.ca.model.ProjectStatus;
 import com.netcracker.ca.model.Student;
 import com.netcracker.ca.service.StudentService;
 
@@ -19,6 +21,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentDao studentDao;
+	
+	@Autowired
+	private ProjectStatusDao projectStatusDao;
 
 	@Override
 	public Student getById(int id) {
@@ -61,8 +66,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> getByTeamAndStatus(int teamId, int statusId) {
-		return studentDao.getByTeamAndStatus(teamId, statusId);
+	public List<Student> getByTeamAndStatus(int teamId, String status) {
+		ProjectStatus projectStatus = projectStatusDao.getByDesc(status);
+		if(projectStatus == null)
+			return Collections.emptyList();
+		return studentDao.getByTeamAndStatus(teamId, projectStatus.getId());
 	}
 
 	@Override
@@ -73,11 +81,6 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public List<Student> getFreeStudents() {
 		return studentDao.getFreeStudents();
-	}
-
-	@Override
-	public void addToTeam(int afId, int projectId, int teamId) throws SQLException {
-		studentDao.addToTeam(afId, projectId, teamId);
 	}
 
 }

@@ -6,7 +6,7 @@
 	<div class="wrapper">
 		<div class="jumbotron">
 			<img src="/CA-Project/resources/img/logo.png" class="img-rounded main-logo">
-			<h2 class="welcome-header">Ooops! There's no such page</h2>
+			<h2 class="welcome-header">Ooops! Something went wrong</h2>
 			
 			<p class="text">Try starting over</p>
 			<div class="text-center">

@@ -22,8 +22,10 @@ public interface NotificationService {
 	
 	void onMeetingDeleted(Meeting meeting);
 	
-	void onAttachmentAdded(Attachment attachment);
+	void onAttachmentAddedToProject(Attachment attachment, int projectId);
 	
-	void onProjectStatusChanged(Participation part);
+	void onAttachmentAddedToTeam(Attachment attachment, int teamId);
+	
+	void onProjectStatusChanged(Participation part, int studentId);
 	
 }

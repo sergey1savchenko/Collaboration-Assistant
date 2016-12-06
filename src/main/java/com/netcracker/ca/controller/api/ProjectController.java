@@ -3,8 +3,11 @@ package com.netcracker.ca.controller.api;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +21,8 @@ import com.netcracker.ca.model.Team;
 import com.netcracker.ca.model.dto.ProjectMarkTypesDto;
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ProjectService;
+import com.netcracker.ca.validator.ProjectFormValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +34,14 @@ public class ProjectController extends BaseApiController {
     
     @Autowired
     private MarkTypeService markTypeService;
+    
+    @Autowired
+    private ProjectFormValidator projectFormValidator;
+    
+    @InitBinder("projectForm")
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(projectFormValidator);
+	}
 
     @GetMapping({"admin/api/projects", "hr/api/projects", "reports/api/projects"})
     public List<Project> getAll() {
@@ -42,7 +55,7 @@ public class ProjectController extends BaseApiController {
     }
     
     @PostMapping("admin/api/projectCopy/{copyOfId}")
-    public Project createCopy(@RequestBody Project project, @PathVariable int copyOfId) {
+    public Project createCopy(@RequestBody @Validated Project project, @PathVariable int copyOfId) {
     	List<MarkType> m = markTypeService.getAllowed(copyOfId, EvaluationScope.MEETINGS);
     	List<MarkType> p = markTypeService.getAllowed(copyOfId, EvaluationScope.PROJECTS);
     	List<Integer> meetingMarkTypeIds = new ArrayList<Integer>();
@@ -72,7 +85,7 @@ public class ProjectController extends BaseApiController {
     }
 
     @PutMapping("admin/api/project")
-    public void update(@RequestBody Project project) {
+    public void update(@RequestBody @Validated Project project) {
         projectService.update(project);
     }
 

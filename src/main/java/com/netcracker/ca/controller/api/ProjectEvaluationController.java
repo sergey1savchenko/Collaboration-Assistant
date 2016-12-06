@@ -8,9 +8,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,18 +24,32 @@ import com.netcracker.ca.model.UserAuth;
 import com.netcracker.ca.model.dto.CuratorProjectEvaluationsDto;
 import com.netcracker.ca.model.dto.ProjectEvaluationsDto;
 import com.netcracker.ca.service.ProjectEvaluationService;
+import com.netcracker.ca.validator.ProjectEvaluationFormValidator;
 
 @RestController
 public class ProjectEvaluationController extends BaseApiController {
 
 	@Autowired
 	private ProjectEvaluationService projectEvalService;
+	
+	@Autowired
+	private ProjectEvaluationFormValidator projectEvaluationFormValidator;
+
+	@InitBinder("projectEvaluationForm")
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(projectEvaluationFormValidator);
+	}
 
 	@PostMapping("curator/api/student/{studentId}/proj-eval")
 	public void evaluateProject(@RequestBody ProjectEvaluationsDto dto,
 			@PathVariable int studentId, HttpSession session, @AuthenticationPrincipal UserAuth userAuth) {
 		Team team = (Team) session.getAttribute("team");
 		projectEvalService.addAll(dto.getProjectEvaluations(), studentId, team.getProject().getId(), userAuth.getId());
+	}
+	
+	@PutMapping("curator/api/student/{studentId}/proj-eval")
+	public void update(@RequestBody ProjectEvaluation pe) {
+		projectEvalService.update(pe);
 	}
 	
 	@GetMapping("curator/api/student/{studentId}/proj-eval")
@@ -49,5 +66,4 @@ public class ProjectEvaluationController extends BaseApiController {
 		}
 		return dtos;
 	}
-
 }

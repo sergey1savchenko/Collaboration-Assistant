@@ -1,19 +1,13 @@
 package com.netcracker.ca.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.netcracker.ca.model.Feedback;
-import com.netcracker.ca.service.FeedbackService;
 
 @Component
 public class FeedbackFormValidator implements Validator {
-
-	@Autowired
-	FeedbackService feedbackService;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -25,8 +19,16 @@ public class FeedbackFormValidator implements Validator {
 
 		Feedback feedback = (Feedback) target;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "generalReport", "NotEmpty.feedbackForm.generalReport");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "techReport", "NotEmpty.feedbackForm.techReport");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "interviewer", "NotEmpty.feedbackForm.interviewer");
+		if (feedback.getGeneralReport().length() > 500) {
+			errors.rejectValue("generalReport", "Size.feedbackForm.generalReport");
+		}
+
+		if (feedback.getTechReport().length() > 500) {
+			errors.rejectValue("techReport", "Size.feedbackForm.techReport");
+		}
+		
+		if (feedback.getInterviewer().length() > 64) {
+			errors.rejectValue("interviewer", "Size.feedbackForm.interviewer");
+		}
 	}
 }

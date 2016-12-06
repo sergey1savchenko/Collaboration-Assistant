@@ -1,6 +1,5 @@
 package com.netcracker.ca.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,12 +24,10 @@ public interface StudentService {
 	
 	Map<Student, Participation> getByTeamWithParticipation(int teamId);
 	
-	List<Student> getByTeamAndStatus(int teamId, int statusId);
+	List<Student> getByTeamAndStatus(int teamId, String status);
 	
 	List<Student> getByMeeting(int meetingId);
 	
 	List<Student> getFreeStudents();
-
-	void addToTeam(int afId, int projectId, int teamId) throws SQLException;
 
 }

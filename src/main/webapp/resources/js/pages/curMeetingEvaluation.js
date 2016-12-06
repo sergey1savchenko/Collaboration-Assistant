@@ -32,14 +32,56 @@ $(function () {
             },
 
             updateItem: function (item) {
+            	if(item.marktype.hasText && item.marktype.hasInt){					// text AND int
+            		var markType = {
+                    		id: item.marktype.id,
+                    		title: item.marktype.title,
+                    		hasText: item.marktype.hasText,
+                    		hasInt: item.marktype.hasInt
+                    	}
+                    	var me = {
+                    		id: item.id,
+                    		intValue: item.intValue,
+                    		textValue: item.textValue,
+                    		marktype: markType
+                    	}
+            	} else if (item.marktype.hasText && !item.marktype.hasInt){			// text
+            		var markType = {
+                    		id: item.marktype.id,
+                    		title: item.marktype.title,
+                    		hasText: item.marktype.hasText,
+                    		hasInt: item.marktype.hasInt
+                    	}
+                    	var me = {
+                    		id: item.id,
+                    		intValue: null,
+                    		textValue: item.textValue,
+                    		marktype: markType
+                    	}
+            	} else if (!item.marktype.hasText && item.marktype.hasInt){			// int
+            		var markType = {
+                    		id: item.marktype.id,
+                    		title: item.marktype.title,
+                    		hasText: item.marktype.hasText,
+                    		hasInt: item.marktype.hasInt
+                    	}
+                    	var me = {
+                    		id: item.id,
+                    		intValue: item.intValue,
+                    		textValue: null,
+                    		marktype: markType
+                    	}
+            	}
+            	
+            	
                 var deferred = $.Deferred();
                 return $.ajax({
                     method: "PUT",
                     url: '/CA-Project/curator/api/meeting/'+meetingId+'/student/'+studentId+'/meet-eval',
-                    data: JSON.stringify(item),
+                    data: JSON.stringify(me),
                     contentType: "application/json; charset=utf-8"
                 }).done(function(){
-                    deferred.resolve(item);
+                    deferred.resolve(me);
                 }).fail(function () {
                     WebUtils.show('Failed to update');
                     deferred.reject("loading error");

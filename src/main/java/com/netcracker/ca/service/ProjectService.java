@@ -23,5 +23,7 @@ public interface ProjectService {
 	int count();
 	
 	Project getForAttachment(int attachmentId);
+	
+	Project getForMeeting(int meetingId);
 
 }

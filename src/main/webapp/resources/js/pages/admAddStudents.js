@@ -24,9 +24,21 @@ $(function () {
                 });
                 return deferred.promise();
             },
+            
+            deleteItem: function (item) {
+                return $.ajax({
+                    method: "DELETE",
+                    url: '/CA-Project/admin/api/project/'+projectId+'/student/'+item.id
+                }).done(function (data) {
+                	location.reload();
+            	}).fail(function () {
+                    WebUtils.show('Failed to delete');
+                });
+            }
 
         },
 
+        deleteConfirm: "Do you really want to delete student from this team?",
         fields: [															//!!
         			// from DB
             //photo {name: "u_id", type: "text", title: "user id", validate: "required"},
@@ -35,8 +47,8 @@ $(function () {
             {name: "firstName", type: "text", title: "First name", validate: "required"},
             {name: "secondName", type: "text", title: "Second name", validate: "required"},
             {name: "lastName", type: "text", title: "Last name", validate: "required"},
-            {name: "university.title", type: "text", title: "University", validate: "required"}
-            //{type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
+            {name: "university.title", type: "text", title: "University", validate: "required"},
+            {type: "control", editButton: false, deleteButton: true, modeSwitchButton: false, clearFilterButton: false}
 
         ]
 

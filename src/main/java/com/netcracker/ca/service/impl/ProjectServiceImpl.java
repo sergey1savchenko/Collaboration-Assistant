@@ -12,6 +12,7 @@ import com.netcracker.ca.model.Project;
 import com.netcracker.ca.service.MarkTypeService;
 import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.TeamService;
+import com.netcracker.ca.utils.ServiceException;
 
 @Service
 @Transactional
@@ -47,6 +48,8 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public void add(Project project, List<Integer> meetingMarkTypeIds, List<Integer> projectMarkTypeIds) {
+		if(projectDao.getByTitle(project.getTitle()) != null)
+			throw new ServiceException("Project title must be unique");
 		projectDao.add(project);
 		markTypeService.allow(meetingMarkTypeIds, project.getId(), EvaluationScope.MEETINGS);
 		markTypeService.allow(projectMarkTypeIds, project.getId(), EvaluationScope.PROJECTS);	
@@ -54,6 +57,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void update(Project project) {
+		if(projectDao.getByTitle(project.getTitle()) != null)
+			throw new ServiceException("Project title must be unique");
 		projectDao.update(project);
 	}
 
@@ -75,6 +80,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project getForAttachment(int attachmentId) {
 		return projectDao.getForAttachment(attachmentId);
+	}
+
+	@Override
+	public Project getForMeeting(int meetingId) {
+		return projectDao.getForMeeting(meetingId);
 	}
 
 }

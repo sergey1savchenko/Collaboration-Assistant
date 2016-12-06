@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.netcracker.ca.utils.NotPermittedException;
 import com.netcracker.ca.utils.RepositoryException;
 import com.netcracker.ca.utils.ServiceException;
 
@@ -25,5 +27,9 @@ private Logger logger = LogManager.getLogger("Error.Repository");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 	
+	@ExceptionHandler(NotPermittedException.class)
+	public ResponseEntity<String> handleRepositoryException(NotPermittedException e) {
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+	}
 	
 }

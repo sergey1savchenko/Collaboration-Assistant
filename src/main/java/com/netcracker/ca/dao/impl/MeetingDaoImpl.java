@@ -31,7 +31,9 @@ public class MeetingDaoImpl implements MeetingDao {
 	private static String SQL_SELECT_MEETING = "SELECT id, title, address, datetime FROM meetings";
 	private static String SQL_SELECT_MEETING_BY_ID = SQL_SELECT_MEETING + " WHERE id=?";
 	private static String SQL_SELECT_TEAM_MEETINGS = SQL_SELECT_MEETING + " WHERE team_id=?";
-	private static String SQL_SELECT_PROJECT_MEETINGS = SQL_SELECT_MEETING + " WHERE project_id=?";
+	private static String SQL_SELECT_PROJECT_MEETINGS = SQL_SELECT_MEETING + " WHERE project_id=? AND team_id IS NULL";
+	private static String SQL_SELECT_TEAM_MEETINGS_BY_TITLE = SQL_SELECT_TEAM_MEETINGS + " AND title=?";
+	private static String SQL_SELECT_PROJECT_MEETINGS_BY_TITLE = SQL_SELECT_PROJECT_MEETINGS + " AND title=?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -100,6 +102,18 @@ public class MeetingDaoImpl implements MeetingDao {
 	@Override
 	public List<Meeting> getAllProjectMeetings(int id) {
 		return jdbcTemplate.query(SQL_SELECT_PROJECT_MEETINGS, new MeetingMapper(), id);
+	}
+	
+	@Override
+	public Meeting getByTitleForProject(String title, int projectId) {
+		List<Meeting> meetings = jdbcTemplate.query(SQL_SELECT_PROJECT_MEETINGS_BY_TITLE, new MeetingMapper(), projectId, title);
+		return meetings.isEmpty() ? null : meetings.get(0);
+	}
+
+	@Override
+	public Meeting getByTitleForTeam(String title, int teamId) {
+		List<Meeting> meetings = jdbcTemplate.query(SQL_SELECT_TEAM_MEETINGS_BY_TITLE, new MeetingMapper(), teamId, title);
+		return meetings.isEmpty() ? null : meetings.get(0);
 	}
 
 	private static class MeetingMapper implements RowMapper<Meeting> {

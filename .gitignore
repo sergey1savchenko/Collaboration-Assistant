@@ -12,6 +12,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+WebContent/
 local.properties
 database.properties
 .classpath
