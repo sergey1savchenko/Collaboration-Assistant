@@ -1,5 +1,6 @@
 package com.netcracker.ca.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -8,8 +9,8 @@ public class Project {
 	private int id;
 	private String title;
 	private String description;
-	private Timestamp startDate;
-	private Timestamp endDate;
+	private Date startDate;
+	private Date endDate;
 	private University university;
 	private List<Team> teams;
 
@@ -20,7 +21,7 @@ public class Project {
 		this.id = id;
 	}
 
-	public Project(int id, String title, String description, Timestamp startDate, Timestamp endDate,
+	public Project(int id, String title, String description, Date startDate, Date endDate,
 			University university) {
 		super();
 		this.id = id;
@@ -55,19 +56,19 @@ public class Project {
 		this.description = description;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public Timestamp getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

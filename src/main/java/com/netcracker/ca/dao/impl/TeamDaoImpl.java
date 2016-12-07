@@ -145,8 +145,8 @@ public class TeamDaoImpl implements TeamDao {
 			Project project = new Project(rs.getInt("p_id"));
 			project.setTitle(rs.getString("p_title"));
 			project.setDescription(rs.getString("description"));
-			project.setStartDate(rs.getTimestamp("start_date"));
-			project.setEndDate(rs.getTimestamp("end_date"));
+			project.setStartDate(rs.getDate("start_date"));
+			project.setEndDate(rs.getDate("end_date"));
 			University uni = new University(rs.getInt("un_id"));
 			uni.setTitle(rs.getString("un_title"));
 			project.setUniversity(uni);

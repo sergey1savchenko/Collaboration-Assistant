@@ -36,7 +36,7 @@ public class StudentInProjectListExcelView extends AbstractXlsxView {
             courseRow.createCell(0).setCellValue(studentInProjectReport.getFirstName());
             courseRow.createCell(1).setCellValue(studentInProjectReport.getLastName());
             courseRow.createCell(2).setCellValue(studentInProjectReport.getStatus());
-            courseRow.createCell(3).setCellValue(studentInProjectReport.getDatetime());
+            courseRow.createCell(3).setCellValue(studentInProjectReport.getDatetime().toString().substring(0,10));
             courseRow.createCell(4).setCellValue(studentInProjectReport.getComment());
         }
 

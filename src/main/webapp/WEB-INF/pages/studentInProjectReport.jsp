@@ -28,7 +28,7 @@
                 <td><c:out value="${studentInProjectReport.firstName}" /></td>
                 <td><c:out value="${studentInProjectReport.lastName}" /></td>
                 <td><c:out value="${studentInProjectReport.status}" /></td>
-                <td><c:out value="${studentInProjectReport.datetime}" /></td>
+                <td><c:out value="${studentInProjectReport.datetime.toString().substring(0,10)}" /></td>
                 <td><c:out value="${studentInProjectReport.comment}" /></td>
             </tr>
         </c:forEach>

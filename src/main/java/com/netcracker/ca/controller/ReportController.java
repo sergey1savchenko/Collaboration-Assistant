@@ -36,7 +36,7 @@ public class ReportController extends BaseController{
         return "reports";
     }
 
-    @RequestMapping(path={"/reports/projectsReport", "/reports/studentsReport", "studentsInProject"}, method = RequestMethod.GET)
+    @RequestMapping(path={"/reports/projectsReport", "/reports/studentsReport", "/reports/studentsInProject"}, method = RequestMethod.GET)
     public String returnToReports(Model model){
         return "reports";
     }

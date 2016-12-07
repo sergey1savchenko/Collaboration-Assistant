@@ -69,8 +69,8 @@ public class ProjectDaoImpl implements ProjectDao {
 				PreparedStatement ps = con.prepareStatement(SQL_INSERT_PROJECT, new String[] { "id" });
 				ps.setString(1, project.getTitle());
 				ps.setString(2, project.getDescription());
-				ps.setTimestamp(3, project.getStartDate());
-				ps.setTimestamp(4, project.getEndDate());
+				ps.setDate(3, project.getStartDate());
+				ps.setDate(4, project.getEndDate());
 				ps.setInt(5, project.getUniversity().getId());
 				return ps;
 			}
@@ -113,8 +113,8 @@ public class ProjectDaoImpl implements ProjectDao {
 			project.setId(rs.getInt("id"));
 			project.setTitle(rs.getString("p_title"));
 			project.setDescription(rs.getString("description"));
-			project.setStartDate(rs.getTimestamp("start_date"));
-			project.setEndDate(rs.getTimestamp("end_date"));
+			project.setStartDate(rs.getDate("start_date"));
+			project.setEndDate(rs.getDate("end_date"));
 			University university = new University();
 			university.setId(rs.getInt("university_id"));
 			university.setTitle(rs.getString("un_title"));
