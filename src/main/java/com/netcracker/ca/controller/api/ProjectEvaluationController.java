@@ -43,13 +43,13 @@ public class ProjectEvaluationController extends BaseApiController {
 		projectEvalService.update(pe);
 	}
 	
-	@GetMapping("hr/api/student/{studentId}/proj-eval")
+	@GetMapping({"hr/api/student/{studentId}/proj-eval", "curator/api/student/{studentId}/proj-eval"})
 	public List<ProjectEvaluation> getEvaluations(@PathVariable int studentId, HttpSession session, @AuthenticationPrincipal UserAuth userAuth) {
 		Team team = (Team) session.getAttribute("team");
 		return projectEvalService.getByStudentAndProjectAndCurator(studentId, team.getProject().getId(), userAuth.getId());
 	}
 	
-	@GetMapping("hr/api/project/{projectId}/student/{studentId}/proj-eval")
+	@GetMapping({"hr/api/project/{projectId}/student/{studentId}/proj-eval", "curator/api/project/{projectId}/student/{studentId}/proj-eval"})
 	public List<CuratorProjectEvaluationsDto> getEvaluations(@PathVariable int projectId, @PathVariable int studentId) {
 		List<CuratorProjectEvaluationsDto> dtos = new ArrayList<>();
 		for(Entry<User, List<ProjectEvaluation>> curatorEvaluations: projectEvalService.getByStudentAndProjectPerCurator(studentId, projectId).entrySet()) {

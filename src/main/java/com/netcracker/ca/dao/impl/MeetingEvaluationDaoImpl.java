@@ -89,7 +89,7 @@ public class MeetingEvaluationDaoImpl implements MeetingEvaluationDao {
 		final int attendanceId = jdbcTemplate.queryForObject(SQL_SELECT_ATTENDANCE_BY_STUDENT_AND_MEETING,
 				new Object[] { studentId, meetingId }, Integer.class);
 		final int curatorshipId = jdbcTemplate.queryForObject(SQL_SELECT_CURATORSHIP_BY_CURATOR_AND_MEETING,
-				new Object[] { studentId, meetingId }, Integer.class);
+				new Object[] { curatorId, meetingId }, Integer.class);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		for(final MeetingEvaluation me: mes) {
 			jdbcTemplate.update(new PreparedStatementCreator() {

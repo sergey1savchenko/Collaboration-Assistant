@@ -25,7 +25,7 @@ import com.netcracker.ca.service.ProjectService;
  */
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class MeetingEvaluationServiceImpl implements MeetingEvaluationService {
 
     @Autowired

@@ -40,7 +40,7 @@
 	</div>
 	
 		<div class="bottomButton">
-			<button type="button" class="btn btn-primary" onclick="location.href='<c:url value="/curator/meeting"/>'">View Team Meetings</button>
+			
 		</div>
 	
 	

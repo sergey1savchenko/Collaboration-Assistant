@@ -108,7 +108,8 @@ function onCreateAction() {
     }).done(function (data) {
         $("#admMeetingsGrid").jsGrid("insertItem", data);
         $("#addDialog").modal("hide");
-    }).fail(function () {
+    }).fail(function (data) {
+    	console.log(data);
         WebUtils.show("Failed to create meeting");
     });
 }

@@ -36,9 +36,11 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 		MarkType byTitle = markTypeDao.getByTitle(markType.getTitle());
 		if(byTitle != null && !byTitle.equals(markType))
 			throw new ServiceException("Evaluation property title must be unique");
-		MarkType merged = markTypeDao.getById(markType.getId());
-		if(merged.getHasInt() != markType.getHasInt() || merged.getHasText() != markType.getHasText())
-			throw new ServiceException("Evaluation property is already used in project(s)");
+		if(markTypeDao.isAllowed(markType.getId())) {
+			MarkType merged = markTypeDao.getById(markType.getId());
+			if(merged.getHasInt() != markType.getHasInt() || merged.getHasText() != markType.getHasText())
+				throw new ServiceException("Evaluation property is already used in project(s)");
+		}
 		markTypeDao.update(markType);
 	}
 
