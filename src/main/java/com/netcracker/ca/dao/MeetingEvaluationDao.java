@@ -23,4 +23,5 @@ public interface MeetingEvaluationDao {
 	List<MeetingEvaluation> getByStudentAndMeetingAndCurator(int studentId, int meetingId, int curatorId);
 	
 	Map<Integer, List<MeetingEvaluation>> getByStudentAndMeetingPerCurator(int studentId, int meetingId);
+
 }

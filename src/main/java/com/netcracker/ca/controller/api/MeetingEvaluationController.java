@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netcracker.ca.model.MeetingEvaluation;
-import com.netcracker.ca.model.ProjectEvaluation;
 import com.netcracker.ca.model.User;
 import com.netcracker.ca.model.UserAuth;
 import com.netcracker.ca.model.dto.CuratorMeetingEvaluationsDto;

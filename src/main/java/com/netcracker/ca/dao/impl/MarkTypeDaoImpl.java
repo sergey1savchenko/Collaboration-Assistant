@@ -23,6 +23,7 @@ import com.netcracker.ca.utils.ExistsResultExtractor;
 public class MarkTypeDaoImpl implements MarkTypeDao {
 	private static String SQL_SELECT_MARK_TYPE = "SELECT m.id, m.title, m.has_text, m.has_int FROM marktypes AS m";
 	private static String SQL_SELECT_MARK_TYPE_BY_ID = SQL_SELECT_MARK_TYPE + " WHERE m.id=?";
+	private static String SQL_SELECT_MARK_TYPE_BY_TITLE = SQL_SELECT_MARK_TYPE + " WHERE m.title=?";
 	private static String SQL_INSERT_MARK_TYPE = "INSERT INTO marktypes (title, has_text, has_int) VALUES (?, ?, ?)";
 	private static String SQL_UPDATE_MARK_TYPE = "UPDATE marktypes SET title=?, has_text=?, has_int=? WHERE id=?";
 	private static String SQL_DELETE_MARK_TYPE = "DELETE FROM marktypes WHERE id=?";
@@ -96,6 +97,12 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 		return jdbcTemplate.query(SQL_ALLOW_EXISTS, new ExistsResultExtractor(), id);
 	}
 
+	@Override
+	public MarkType getByTitle(String title) {
+		List<MarkType> markTypes = jdbcTemplate.query(SQL_SELECT_MARK_TYPE_BY_TITLE, new MarkTypeRowMapper(), title);
+		return markTypes.isEmpty() ? null : markTypes.get(0);
+	}
+
 	private static class MarkTypeRowMapper implements RowMapper<MarkType> {
 
 		public MarkType mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -107,4 +114,5 @@ public class MarkTypeDaoImpl implements MarkTypeDao {
 			return markType;
 		}
 	}
+
 }

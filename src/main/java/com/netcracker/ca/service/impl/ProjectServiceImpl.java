@@ -57,7 +57,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void update(Project project) {
-		if(projectDao.getByTitle(project.getTitle()) != null)
+		Project byTitle = projectDao.getByTitle(project.getTitle());
+		if(byTitle != null && !byTitle.equals(project))
 			throw new ServiceException("Project title must be unique");
 		projectDao.update(project);
 	}

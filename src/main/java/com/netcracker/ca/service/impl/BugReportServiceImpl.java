@@ -34,7 +34,7 @@ public class BugReportServiceImpl implements BugReportService {
 		model.put("email", email);
 		Mail mail = new Mail("Collaboration Assistant - Bug Report", builder.build("bug-report.ftl", model));
 		
-		mailService.send(mail, env.getRequiredProperty("smtp.host"));
+		mailService.send(mail, env.getRequiredProperty("smtp.username"));
 	}
 
 }

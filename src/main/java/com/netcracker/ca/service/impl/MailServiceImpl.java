@@ -21,6 +21,7 @@ import com.netcracker.ca.service.MailService;
 @PropertySource("/WEB-INF/properties/smtp.properties")
 public class MailServiceImpl implements MailService {
 	
+	@Autowired
 	private Environment env;
 
 	@Autowired
@@ -44,14 +45,13 @@ public class MailServiceImpl implements MailService {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
 				message.setTo(to);
-				message.setFrom(env.getRequiredProperty("smtp.host"));
+				message.setFrom(env.getRequiredProperty("smtp.username"));
 				message.setSubject(mail.getSubject());
 				message.setSentDate(new Date());
 				message.setText(mail.getContent(), true);
 			}
 		};
-		//Temporarily switched off
-		//mailSender.send(preparator);
+		mailSender.send(preparator);
 	}
 
 }

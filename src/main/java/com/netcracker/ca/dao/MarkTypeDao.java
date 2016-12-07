@@ -16,4 +16,6 @@ public interface MarkTypeDao extends Dao<MarkType, Integer> {
 	List<MarkType> getAll();
 	
 	boolean isAllowed(int id);
+	
+	MarkType getByTitle(String title);
 }

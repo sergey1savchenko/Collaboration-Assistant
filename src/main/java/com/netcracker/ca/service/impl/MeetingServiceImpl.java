@@ -78,9 +78,15 @@ public class MeetingServiceImpl implements MeetingService{
     @Override
     public void update(Meeting meeting) {
     	Team meetingTeam = teamService.getByMeeting(meeting.getId());
-    	if((meetingTeam != null && meetingDao.getByTitleForTeam(meeting.getTitle(), meetingTeam.getId()) != null) || 
-    			(meetingTeam == null && meetingDao.getByTitleForProject(meeting.getTitle(), projectService.getForMeeting(meeting.getId()).getId()) != null))
-        		throw new ServiceException("Meeting title must be unique");
+    	if(meetingTeam != null) {
+    		Meeting byTitleForTeam = meetingDao.getByTitleForTeam(meeting.getTitle(), meetingTeam.getId());
+    		if(byTitleForTeam != null && !byTitleForTeam.equals(meeting))
+    			throw new ServiceException("Meeting title must be unique");
+    	}
+		Meeting byTitleForProject = meetingDao.getByTitleForProject(meeting.getTitle(), projectService.getForMeeting(meeting.getId()).getId());
+		if(byTitleForProject != null && !byTitleForProject.equals(meeting))
+			throw new ServiceException("Meeting title must be unique");
+    	
         meetingDao.update(meeting);
         notificationService.onMeetingEdited(meeting);
     }

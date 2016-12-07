@@ -26,18 +26,26 @@ public class MarkTypeServiceImpl implements MarkTypeService {
 
 	@Override
 	public void add(MarkType markType) {
+		if(markTypeDao.getByTitle(markType.getTitle()) != null)
+			throw new ServiceException("Evaluation property title must be unique");
 		markTypeDao.add(markType);
 	}
 	
 	@Override
 	public void update(MarkType markType) {
+		MarkType byTitle = markTypeDao.getByTitle(markType.getTitle());
+		if(byTitle != null && !byTitle.equals(markType))
+			throw new ServiceException("Evaluation property title must be unique");
+		MarkType merged = markTypeDao.getById(markType.getId());
+		if(merged.getHasInt() != markType.getHasInt() || merged.getHasText() != markType.getHasText())
+			throw new ServiceException("Evaluation property is already used in project(s)");
 		markTypeDao.update(markType);
 	}
 
 	@Override
 	public void delete(int id) {
 		if (markTypeDao.isAllowed(id))
-			throw new ServiceException("MarkType is already used in project(s)");
+			throw new ServiceException("Evaluation property is already used in project(s)");
 		markTypeDao.delete(id);
 	}
 
