@@ -19,7 +19,7 @@ public class MarkTypeFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		MarkType type = (MarkType) target;
-		String title = type.getTitle().replaceAll(" ", "");
+		String title = type.getTitle().replaceAll(" ", "").toLowerCase();
 		type.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty.markTypeForm.title");

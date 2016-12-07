@@ -19,7 +19,7 @@ public class TeamFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		Team team = (Team) target;
-		String title = team.getTitle().replaceAll(" ", "");
+		String title = team.getTitle().replaceAll(" ", "").toLowerCase();
 		team.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty.teamForm.title");

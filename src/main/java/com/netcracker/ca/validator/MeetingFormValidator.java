@@ -19,7 +19,7 @@ public class MeetingFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		Meeting meeting = (Meeting) target;
-		String title = meeting.getTitle().replaceAll(" ", "");
+		String title = meeting.getTitle().replaceAll(" ", "").toLowerCase();
 		meeting.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty.meetingForm.title");

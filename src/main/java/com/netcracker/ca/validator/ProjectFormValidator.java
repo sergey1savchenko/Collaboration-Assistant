@@ -19,7 +19,7 @@ public class ProjectFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		Project project = (Project) target;
-		String title = project.getTitle().replaceAll(" ", "");
+		String title = project.getTitle().replaceAll(" ", "").toLowerCase();
 		project.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty.projectForm.title");
