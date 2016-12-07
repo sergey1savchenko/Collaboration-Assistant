@@ -38,6 +38,7 @@
 		</div>
 		
 		<div class="bottomButton">
+			<button type="button" class="btn btn-primary" onClick="projectMeetings(); return false;">Meetings</button>
 		</div>
 		
 	</div>

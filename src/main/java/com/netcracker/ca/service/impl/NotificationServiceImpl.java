@@ -19,7 +19,9 @@ import com.netcracker.ca.model.User;
 import com.netcracker.ca.service.CuratorService;
 import com.netcracker.ca.service.MailService;
 import com.netcracker.ca.service.NotificationService;
+import com.netcracker.ca.service.ProjectService;
 import com.netcracker.ca.service.StudentService;
+import com.netcracker.ca.service.TeamService;
 import com.netcracker.ca.service.TemplateBuilder;
 import com.netcracker.ca.service.UserService;
 
@@ -40,6 +42,12 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private TeamService teamService;
+	
+	@Autowired
+	private ProjectService projectService;
 	
 	@Override
 	public void onProjectCreation(Project project) {
@@ -86,13 +94,7 @@ public class NotificationServiceImpl implements NotificationService {
 		model.put("meeting", meeting);
 		Mail mail = build("Collaboration Assistant - Meeting created", "meeting-created.ftl", model);
 		
-		List<String> emails = new ArrayList<>();
-		for(User curator: curatorService.getByMeeting(meeting.getId()))
-			emails.add(curator.getEmail());
-		for(Student student: studentService.getByMeeting(meeting.getId()))
-			emails.add(student.getEmail());
-		
-		mailService.send(mail, emails);
+		mailService.send(mail, getEmailsForMeeting(meeting));
 	}
 
 	@Override
@@ -101,13 +103,7 @@ public class NotificationServiceImpl implements NotificationService {
 		model.put("meeting", meeting);
 		Mail mail = build("Collaboration Assistant - Meetind rescheduled", "meeting-edited.ftl", model);
 		
-		List<String> emails = new ArrayList<>();
-		for(User curator: curatorService.getByMeeting(meeting.getId()))
-			emails.add(curator.getEmail());
-		for(Student student: studentService.getByMeeting(meeting.getId()))
-			emails.add(student.getEmail());
-		
-		mailService.send(mail, emails);
+		mailService.send(mail, getEmailsForMeeting(meeting));
 	}
 
 	@Override
@@ -116,13 +112,7 @@ public class NotificationServiceImpl implements NotificationService {
 		model.put("meeting", meeting);
 		Mail mail = build("Collaboration Assistant - Meeting canceled", "meeting-deleted.ftl", model);
 		
-		List<String> emails = new ArrayList<>();
-		for(User curator: curatorService.getByMeeting(meeting.getId()))
-			emails.add(curator.getEmail());
-		for(Student student: studentService.getByMeeting(meeting.getId()))
-			emails.add(student.getEmail());
-		
-		mailService.send(mail, emails);
+		mailService.send(mail, getEmailsForMeeting(meeting));
 	}
 
 	@Override
@@ -169,4 +159,22 @@ public class NotificationServiceImpl implements NotificationService {
 		return new Mail(subject, builder.build(template, model));
 	}
 	
+	private List<String> getEmailsForMeeting(Meeting meeting) {
+		List<String> emails = new ArrayList<>();
+		Team meetingTeam = teamService.getByMeeting(meeting.getId());
+		if(meetingTeam != null) {
+			for(User curator: curatorService.getByMeeting(meeting.getId()))
+				emails.add(curator.getEmail());
+			for(Student student: studentService.getByMeeting(meeting.getId()))
+				emails.add(student.getEmail());
+		}
+		else {
+			Project project = projectService.getForMeeting(meeting.getId());
+			for(User curator: curatorService.getByProject(project.getId()))
+				emails.add(curator.getEmail());
+			for(Student student: studentService.getByProject(project.getId()))
+				emails.add(student.getEmail());
+		}
+		return emails;
+	}
 }

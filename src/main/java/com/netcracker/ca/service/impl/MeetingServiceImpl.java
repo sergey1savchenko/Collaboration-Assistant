@@ -59,7 +59,7 @@ public class MeetingServiceImpl implements MeetingService{
     	if(meetingDao.getByTitleForProject(meeting.getTitle(), projectId) != null)
     		throw new ServiceException("Meeting title must be unique");
         meetingDao.addToProject(meeting, projectId);
-        //notificationService.onMeetingCreated(meeting);
+        notificationService.onMeetingCreated(meeting);
     }
     
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
@@ -71,7 +71,7 @@ public class MeetingServiceImpl implements MeetingService{
         for(Student student: studentService.getByTeamAndStatus(teamId, "Involved")) {
         	attendanceDao.add(new Attendance(DEFAULT_IS_PRESENT), student.getId(), meeting.getId());
         }
-        //notificationService.onMeetingCreated(meeting);
+        notificationService.onMeetingCreated(meeting);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
@@ -88,7 +88,7 @@ public class MeetingServiceImpl implements MeetingService{
 			throw new ServiceException("Meeting title must be unique");
     	
         meetingDao.update(meeting);
-        //notificationService.onMeetingEdited(meeting);
+        notificationService.onMeetingEdited(meeting);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
@@ -96,8 +96,8 @@ public class MeetingServiceImpl implements MeetingService{
     public void delete(int id) {
         meetingDao.delete(id);
         Meeting meeting = meetingDao.getById(id);
-    	//if(meeting != null)
-    	//	 notificationService.onMeetingDeleted(meeting);
+    	if(meeting != null)
+    		notificationService.onMeetingDeleted(meeting);
     }
 
     @Override

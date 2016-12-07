@@ -99,3 +99,6 @@ $(function () {
 });
 
 }
+function projectMeetings(){
+	location.href = '/CA-Project/hr/project/'+projectId+'/meetings';
+}

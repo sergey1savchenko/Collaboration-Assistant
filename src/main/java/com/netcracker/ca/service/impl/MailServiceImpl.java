@@ -29,9 +29,11 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public void send(Mail mail, List<String> to) {
-		String[] toArr = new String[to.size()];
-		to.toArray(toArr);
-		send(mail, toArr);
+		if(!to.isEmpty()) {
+			String[] toArr = new String[to.size()];
+			to.toArray(toArr);
+			send(mail, toArr);
+		}
 	}
 
 	@Override
