@@ -45,7 +45,7 @@ $(function () {
         deleteConfirm: "Do you really want to delete curator from this team?",
         fields: [															//!!
         			// from DB
-            //{name: "id", type: "text", title: "User id", validate: "required"},
+            {name: "id", type: "text", title: "User id", validate: "required"},
             {name: "email", type: "text", title: "email", validate: "required"},
             {name: "firstName", type: "text", title: "First name", validate: "required"},
             {name: "secondName", type: "text", title: "Second name", validate: "required"},
@@ -70,6 +70,10 @@ $(function () {
         sorting: true,
         paging: false,
         autoload: true,
+		
+	rowClick: function(args) {
+		window.location.href = "/CA-Project/admin/student/"+args.item.id;
+	},
 
         controller: {
             loadData: function () {
@@ -91,7 +95,7 @@ $(function () {
         fields: [															//!!
         			// from DB
             //photo {name: "u_id", type: "text", title: "user id", validate: "required"},
-        	{name: "id", type: 'link', url: '/CA-Project/admin/student/{id}', width: 50, title: 'Student page'},
+        	//{name: "id", type: 'link', url: '/CA-Project/admin/student/{id}', width: 50, title: 'Student page'},
             {name: "email", type: "text", title: "email", validate: "required"},
             {name: "firstName", type: "text", title: "First name", validate: "required"},
             {name: "secondName", type: "text", title: "Second name", validate: "required"},
