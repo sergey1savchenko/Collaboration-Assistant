@@ -1,0 +1,4 @@
+# Vendoring style files
+src/main/webapp/resources/style/dataTablesCss/* linguist-vendored=true
+src/main/webapp/resources/js/dataTablesJs/* linguist-vendored=true
+src/main/webapp/resources/js/jqueryui/* linguist-vendored=true
