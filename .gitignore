@@ -13,12 +13,10 @@ tmp/
 *.swp
 *~.nib
 WebContent/
-local.properties
-database.properties
 .classpath
 .settings/
 .loadpath
-src/main/webapp/WEB-INF/properties
+###src/main/webapp/WEB-INF/properties
 
 # External tool builders
 .externalToolBuilders/
